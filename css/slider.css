@@ -1,0 +1,178 @@
+/* range slider */
+
+
+.range {
+    position: relative;
+    width: 40%;
+    height: 100%;
+    float: right;
+    margin-right: 17px;
+}
+
+input[type=range] {
+    position: absolute;
+    
+    -webkit-appearance: none;
+    width: 100%;
+    outline: none;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    cursor: pointer;
+}
+
+input[type=range]:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+input[type=range]:disabled {
+    cursor: not-allowed;
+}
+
+/* safari only */
+_::-webkit-full-page-media, _:future, :root input[type=range] {
+    margin-top: 21px; 
+    height: 2px; 
+    background: #077bff;
+}
+_::-webkit-full-page-media, _:future, :root input[type=range]:disabled {
+    background: graytext;
+}
+
+/* chrome */
+@media screen and (-webkit-min-device-pixel-ratio:0) and (min-resolution:.001dpcm) { /* chrome */
+    input[type=range] {
+        margin-top: 21px; 
+        height: 2px; 
+        background: #077bff;
+    }
+    input[type=range]:disabled {
+        background: graytext;
+    }
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    border: 1px solid #cacaca;
+}
+input[type=range]:disabled::-webkit-slider-thumb {
+    cursor: not-allowed;
+    background: #f5f5f5;;
+}
+
+/* range moz-firefox */ 
+@-moz-document url-prefix()  { 
+    input[type=range] {
+        margin-top: 21px; 
+        height: 2px; 
+        background: #077bff;
+    }
+    input[type=range]:disabled {
+        background: graytext;
+    }
+}
+input[type=range]::-moz-focus-outer {
+    border: 0;
+}
+input[type=range]::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    border-width: 1px;
+    border-color: #cacaca;
+}
+input[type=range]:disabled::-moz-range-thumb {
+    cursor: not-allowed;
+    background: #f5f5f5;
+}
+
+/* range ie */
+@supports (-ms-ime-align:auto) { /* edge*/
+    input[type=range] {
+        margin-top: 9px; 
+    }
+}
+input[type=range]::-ms-track {
+    width: 300px;
+    height: 3px;
+    background: transparent;
+    border-color: transparent;
+    border-width: 6px 0;
+    color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+    background:  #077bff;
+    border-radius: 10px;
+}
+input[type=range]::-ms-fill-upper {
+    background: #ddd;
+    border-radius: 10px;
+}
+input[type=range]::-ms-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: white;
+}
+input[type=range]:focus::-ms-fill-lower {
+    background: #077bff;
+}
+input[type=range]:focus::-ms-fill-upper {
+    background: #ccc;
+}
+input[type=range]:disabled::-ms-fill-lower {
+    background: #777;
+}
+input[type=range]:disabled::-ms-fill-upper {
+    background: #ccc;
+}
+
+/* range buttons */
+
+/*.range .minus{
+    left: 15px;
+}
+.range .plus{
+    right: 15px;
+}
+
+.range .plus, .range .minus {
+    position: absolute;
+    top: 10px;
+    background-color: #cacaca;
+    width: 25px;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.range .plus:hover:not(.disabled), .range .minus:hover:not(.disabled) {
+    background-color: #007bff;
+    color: #fff;
+}
+.range .plus.disabled, .range .minus.disabled {
+    background-color: #989898;
+    cursor: not-allowed;
+}
+
+.range .range_value{
+    position: absolute;
+    width: 100%;
+    top: -7px;
+    font-size: 12px;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto; 
+    color: #6f6f6f;
+}*/
