@@ -54,14 +54,14 @@ range_control.load = function(on_range_control_changed, units, min , max, step, 
 
 	range_control.HEIGHT = range_control.WIDTH;
 	range_control.radius = range_control.WIDTH / 2.0;
-	range_control.track_width = range_control.radius*0.28;
+	range_control.track_width = range_control.radius*0.26;
 
 	range_control.minusX = range_control.getXofCircle(range_control.radius- range_control.track_width/2, range_control.WIDTH/2.0, range_control.startAngleInRadians);
 	range_control.minusY = range_control.getYofCircle(range_control.radius- range_control.track_width/2, range_control.HEIGHT/2.0, range_control.startAngleInRadians);
 	range_control.plusX = range_control.getXofCircle(range_control.radius- range_control.track_width/2, range_control.WIDTH/2.0, range_control.endAngleInRadians);
 	range_control.plusY = range_control.getYofCircle(range_control.radius- range_control.track_width/2, range_control.HEIGHT/2.0, range_control.endAngleInRadians);
 
-	range_control.percent_value = value.to_percent(min, max);
+	range_control.percent_value = parseInt(value).to_percent(min, max);
 	range_control.draw(range_control.percent_value);
 
 	// todo turn_on_listeners
@@ -282,7 +282,7 @@ range_control.draw = function(percent_value){
 	
 	} else {
 
-		var text_value = range_control.value.toFixed(range_control.decimal_places);
+		var text_value = parseInt(range_control.value).toFixed(range_control.decimal_places);
 		if(range_control.special_cased_values.length > 0){
 			var i;
 			for(i=0;i<range_control.special_cased_values.length;i++){

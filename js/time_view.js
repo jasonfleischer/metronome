@@ -3,8 +3,10 @@ var time_view = {
 	HEIGHT: 0,
 	WIDTH: 0,
 	radius: 0,
-	start_time: 0
+	start_time: 0,
 
+	color_primary: getComputedStyle(document.documentElement).getPropertyValue("--tertiary-background-color"),
+	color_secondary: getComputedStyle(document.documentElement).getPropertyValue("--primary-font-color")
 }
 
 var animation_request_id;
@@ -14,7 +16,6 @@ var array_of_lines = [];
 const TWO_PI = 2 * Math.PI;
 
 time_view.init = function(){
-
 	time_view.resize();
 }
 
@@ -53,6 +54,8 @@ var number_of_beats = 0;
 var time_division_milli_seconds = 0;
 time_view.start =  function(time_signature, BPM){
 
+	var container = document.getElementById("time_view_container");
+	container.style.display = "block";
 
 	number_of_beats = time_signature
 
@@ -67,6 +70,9 @@ time_view.start =  function(time_signature, BPM){
 }
 
 time_view.stop = function(){
+
+	var container = document.getElementById("time_view_container");
+	container.style.display = "none";
 
 
 	var canvas = document.getElementById("time_view_canvas");
@@ -173,7 +179,7 @@ time_view.draw_background = function(){
 
 	if (number_of_beats == 2) { // draw arc
 		ctx.beginPath();
-		ctx.strokeStyle = "#eee";
+		ctx.strokeStyle = time_view.color_primary;
 		ctx.lineWidth = track_width;
 		ctx.arc(centerPt.x, centerPt.y, time_view.radius - track_width/2, 0, TWO_PI);
 		ctx.stroke();
@@ -228,7 +234,7 @@ time_view.draw_background = function(){
 	}
 
 	var outer_polygon = new Polygon(array_of_outer_points);
-	outer_polygon.draw(ctx, "#eee");
+	outer_polygon.draw(ctx, time_view.color_primary);
 
 	var inner_polygon = new Polygon(array_of_inner_points);
 	inner_polygon.draw(ctx, 'clear');
@@ -247,7 +253,7 @@ time_view.draw = function(){
 	var angle = (TWO_PI*percentage) - (TWO_PI /4);
 	var pt = new Point(time_view.getXofCircle(time_view.radius - point_size, centerPt.x, angle), 
 								time_view.getYofCircle(time_view.radius - point_size, centerPt.y, angle));
-	pt.draw(ctx, point_size - 3, number_of_beats == 2 ? "#000" : "#eee");
+	pt.draw(ctx, point_size - 3, number_of_beats == 2 ? time_view.color_secondary : time_view.color_primary);
 
 	if(number_of_beats > 2){
 		
@@ -255,7 +261,7 @@ time_view.draw = function(){
 		var beat = parseInt ( (delta / (time_division_milli_seconds / number_of_beats) ) % number_of_beats );
 		var line = array_of_lines[beat];
 		var pt2 = reference_line.getIntersectionPtBetweenTwoLines(line);
-		if (pt2.isValid) pt2.draw(ctx, point_size -3, "#000");
+		if (pt2.isValid) pt2.draw(ctx, point_size -3, time_view.color_secondary);
 	}
   	animation_request_id = requestAnimationFrame(time_view.draw);
 }

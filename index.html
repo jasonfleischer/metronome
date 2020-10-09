@@ -1,54 +1,88 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<!-- (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-170120616-1"></script>
 	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
-
-	  gtag('config', 'UA-170120616-1');
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-170120616-1');
 	</script>
 	<!-- end of - Google Analytics -->
-
 	<title>Metronome</title>
 	<meta charset="utf-8">
 	<meta name="author" content="Jason Fleischer">
 	<link rel="icon" type="image/png" sizes="32x32" href="img/favicon.png">
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="css/slider.css">
-
 </head>
-<body onload="init()">
+<body onload="init()">	
+	<div id="info_alert_container">
+		<div id="info_alert">
+			<h3>Settings</h3>
+			<ul>
+				<li id="darkmode">
+					<div class="nav-toggle-item">
+						<span>Dark Mode</span>
+						<label class="switch">
+							<input id="darkmode_checkbox" type="checkbox" checked="checked"/>
+							<span class="switch_track round" tabindex="0"></span>
+						</label>
+					</div>
+				</li>
+				<!-- google translate -->
+				<li>
+					<div id="google_translate_element"></div>
+					<script>
+						function googleTranslateElementInit() {
+							new google.translate.TranslateElement({
+								pageLanguage: 'en',
+								layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+							}, 'google_translate_element');
+						}
+					</script>
+					<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+				</li>
+			</ul>
+			<br/>
+			<h3>Information</h3>
+			<p>Thank you for using this website. If you wish to submit feedback, comment or report an error click <a href="mailto:jason_fleischer@hotmail.ca?Subject=Metronome%20Website%20Feedback">here</a>.
+			</p>
+			<p>
+			<br/>
+			Information about the developer can be found <a href="https://jasonfleischer.github.io/website/" target="_blank">here</a>.</p><br/>
+			<button id="dismiss_alert_button" onclick="dismissInfo()">OK</button>
+		</div>
+	</div>
 	<header>
 		<div id="page_name" class="text-center">
-			<p>Metronome</p>
+			<p onclick="info()">Metronome</p>
 		</div>
-		<a id="kofi" href="https://ko-fi.com/jasonfleischer" target="_blank">
-			<img src="img/kofi.webp" alt="Buy Me a Coffee at ko-fi.com" class="desktop-only">
-			<img src="img/kofi_mobile.webp" alt="Buy Me a Coffee at ko-fi.com" class="mobile-only">
-		</a>
-		<img id="info_img" src="img/info.png" alt="info" onclick="info()">
+		<button id="kofi_button" onclick="kofi()">
+			<span>
+				<img src="img/kofi_mobile.png" alt="Buy Me a Coffee at ko-fi.com" />
+				<p class="desktop-only">Buy me a coffee</p>
+			</span>
+		</button>
+		<button id="info_button" onclick="info()" ><img id="info_button_svg" src="img/gear_black.svg" alt="Settings"/></button>
 	</header>
 	<div id="nav-side-menu" >
 		<div id="page_contents">
 			<div id="canvas_wrapper">
-				
 				<p id="bpm_text">120</p>
 				<p id="tempo_marking">&nbsp;</p>
 				<canvas id="dial_canvas"></canvas>
 			</div>
 		</div>
 		<div id="button_control_container">
-			<button id="tap_button" onclick="tapMetronome()">Tap</button>
+			<button id="tap_button" onclick="tap_controller.tap()">Tap</button>
 			<button id="play_pause_button" onclick="playPause()">Play</button>
 		</div>
 		<br/>
 		<div id="ul_wrapper">
 			<ul>	
 				<li class="menu_item_divider desktop-only"></li>
-
 				<li id="bpm_control" >
 					<div class="nav-side-menu-item">
 						<span id="bpm_row_text">BPM: 120</span>
@@ -57,12 +91,11 @@
 						</div>
 					</div>
 				</li>
-
 				<li>
 					<div class="nav-side-menu-item">
 						<span>Mode</span>
 						<select id="mode_select">
-							<option value="0" selected="selected">Normal</option>
+							<option value="0" selected="selected">Click</option>
 							<option value="1">Talking</option>
 							<option value="2">Syllables</option>
 						</select>
@@ -75,6 +108,11 @@
 						<option value="2">2 / 4</option>
 						<option value="3">3 / 4</option>
 						<option value="4" selected="selected">4 / 4</option>
+						<option value="5">5 / 4</option>
+						<option value="6">6 / 4</option>
+						<option value="7">7 / 4</option>
+						<option value="8">8 / 4</option>
+						<option value="9">9 / 4</option>
 					</select>
 					</div>
 				</li>
@@ -93,26 +131,25 @@
 					<div class="nav-toggle-item">
 						<span>Accent First Beat</span>
 						<label class="switch">
-							<input id="accent_first_beat_checkbox" type="checkbox" checked="checked">
+							<input id="accent_first_beat_checkbox" type="checkbox" checked="checked"/>
 							<span class="switch_track round" tabindex="0"></span>
 						</label>
 					</div>
-				</li>	
+				</li>
 			</ul>
 		</div>
 	</div>
 	<div id="content_view">
 		<div id="init_view">
-			<p >Configure / press 'Play' to begin</p>
+			<p id="status_msg">Configure / press 'Play' to begin</p>
 		</div>
 		<div id="time_view_container">
 			<canvas id="time_view_background_canvas" ></canvas>
 			<canvas id="time_view_canvas" ></canvas>		
 			<p id="count_text">&nbsp;</p>
 		</div>
-
-
 	</div>
+
 	<script src="js/midi/webAudioFontPlayer.js"></script>
 	<script src="js/midi/midi_sound_1150_Aspirin_sf2_file.js"></script>
 	<script src="js/midi/midi_controller.js"></script>
@@ -123,7 +160,8 @@
 	<script src="js/range_control.js"></script>
 	<script src="js/time_view.js"></script>
 	<script src="js/audio_controller.js"></script>
-	
+	<script src="js/tap_controller.js"></script>
 	<script src="js/main.js"></script>
+
 </body>
 </html>

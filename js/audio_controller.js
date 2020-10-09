@@ -36,30 +36,16 @@ audio_controller.play = function(){
 
 	if(model.mode === MODE.TALKING){
 
+		beat_array = [];
+		beat_text_array = [];
+		audio_array = ["audio/talking/one.wav", "audio/talking/two.wav", "audio/talking/three.wav", "audio/talking/four.wav", "audio/talking/five.wav", "audio/talking/six.wav", "audio/talking/seven.wav", "audio/talking/eight.wav", "audio/talking/nine.wav"];
 
-		var one_audio = document.createElement("AUDIO");
-		one_audio.setAttribute("src","audio/talking/one.wav");
-
-		var two_audio = document.createElement("AUDIO");
-		two_audio.setAttribute("src","audio/talking/two.wav");
-
-
-		beat_array = [one_audio, two_audio];
-		beat_text_array = ["1", "2"];
-
-
-		if(model.time_signature === TIME_SIGNATURE.TS_3_4 || model.time_signature === TIME_SIGNATURE.TS_4_4){
-			var three_audio = document.createElement("AUDIO");
-			three_audio.setAttribute("src","audio/talking/three.wav");
-			beat_array[2] = three_audio;
-			beat_text_array[2] = "3";
-		}
-
-		if(model.time_signature === TIME_SIGNATURE.TS_4_4){
-			var four_audio = document.createElement("AUDIO");
-			four_audio.setAttribute("src","audio/talking/four.wav");
-			beat_array[3] = four_audio;
-			beat_text_array[3] = "4";
+		var i;
+		for(i=0; i<model.time_signature; i++){
+			var audio = document.createElement("AUDIO");
+			audio.setAttribute("src", audio_array[i]);
+			beat_array[i] = audio;
+			beat_text_array[i] = (i+1).toString();
 		}
 
 		if (model.beat_division === 2){
@@ -100,17 +86,13 @@ audio_controller.play = function(){
 		var ta_audio = document.createElement("AUDIO");
 		ta_audio.setAttribute("src","audio/syllables/ta.wav");
 
-		beat_array = [ta_audio, ta_audio];
-		beat_text_array = ["1", "2"];
+		beat_array = [];
+		beat_text_array = [];
 
-		if(model.time_signature === TIME_SIGNATURE.TS_3_4 || model.time_signature === TIME_SIGNATURE.TS_4_4){
-			beat_array[2] = ta_audio;
-			beat_text_array[2] = "3";
-		}
-
-		if(model.time_signature === TIME_SIGNATURE.TS_4_4){
-			beat_array[3] = ta_audio;
-			beat_text_array[3] = "4";
+		var i;
+		for(i=0; i<model.time_signature; i++){
+			beat_array[i] = ta_audio;
+			beat_text_array[i] = (i+1).toString();
 		}
 		
 		if (model.beat_division === 2){
@@ -151,23 +133,26 @@ audio_controller.play = function(){
 
 		var click_accent_audio = new WoodblockSound("loud");
 		var click_audio = new WoodblockSound("normal");
+		var click_division_audio = new WoodblockSound("soft");
 
-		beat_array = [model.accent_first_beat ? click_accent_audio : click_audio, click_audio];
-		beat_text_array = ["1", "2"];
+		beat_array = [model.accent_first_beat ? click_accent_audio : click_audio];
+		beat_text_array = ["1"];
 
-		if(model.time_signature === TIME_SIGNATURE.TS_3_4 || model.time_signature === TIME_SIGNATURE.TS_4_4){
-			beat_array[2] = click_audio;
-			beat_text_array[2] = "3";
-		}
-		if(model.time_signature === TIME_SIGNATURE.TS_4_4){
-			beat_array[3] = click_audio;
-			beat_text_array[3] = "4";
+		var i;
+		for(i=1; i<model.time_signature; i++){
+			beat_array[i] = click_audio;
+			beat_text_array[i] = (i+1).toString();
 		}
 
-		for(var i = 0 ; i < model.beat_division -1; i ++){
-			var click_division_audio = new WoodblockSound("soft");
-			division_array[i] = click_division_audio;
-			division_text_array[i] = "\xa0"; //"&nbsp;";
+		if (model.beat_division === 2){
+			division_array = [click_division_audio];
+			division_text_array = ["&"];
+		} else if (model.beat_division === 3){
+			division_array = [click_division_audio, click_division_audio];
+			division_text_array = ["trip", "let"];
+		} else if (model.beat_division === 4) {
+			division_array = [click_division_audio, click_division_audio, click_division_audio];
+			division_text_array = ["e", "&", "a"];
 		}
 	}
 
@@ -191,15 +176,30 @@ audio_controller.play = function(){
 
 	audio_controller.executeAudioTimer(audio_queue_index, audio_queue, text_queue);
 	
-	timer_id = setInterval(function() {
+
+	var interval = time_division_milli_seconds;
+	var expected = Date.now() + interval;
+	timer_id = setTimeout(step, interval);
+	function step() {
+	    var drift = Date.now() - expected; 
+	    if (drift > interval) {
+	    	logE("something really bad happened. Maybe the browser (tab) was inactive? possibly special handling to avoid futile 'catch up' run");
+	        audio_controller.pause();
+	    }
 		audio_queue_index = (audio_queue_index + 1) % audio_queue.length;
 		audio_controller.executeAudioTimer(audio_queue_index, audio_queue, text_queue);
-	}, time_division_milli_seconds);
 
+	    expected += interval;
+	    timer_id = setTimeout(step, Math.max(0, interval - drift));
+	}
 }
 
 audio_controller.executeAudioTimer = function(index, audio_queue, text_queue) {
 	audio_queue[index].play();
   	$("count_text").innerHTML = text_queue[index];
+  	if(index == 0){
+  		// resync on one beat
+  		time_view.start(model.time_signature, model.BPM);
+  	}
 }
 
