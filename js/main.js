@@ -2,21 +2,24 @@
 //todo 
 
 // higher bpm msg
+// dont restart on active changes
+// mobile
 // other browsers test, audio broken
 // drums sounds
-// arrows divisions
-// space on switch broken
+// spacebar for stop start
 
 function init() {
 	load_cookies();
-	setup_bpm_controls();
+	setup_darkmode_switch();
 	setup_up_mode_select();
 	setup_time_signature_select();
 	setup_beat_division_select();
 	setup_accent_first_beat_switch();
 	setup_keyboard_listeners();
-	setup_darkmode_switch();
+	setup_info_alert();
+	show_hidden_views();
 	time_view.init();
+	setup_bpm_controls();
 }
 
 function load_cookies(){
@@ -26,6 +29,12 @@ function load_cookies(){
 	model.accent_first_beat = cookies.get_accent_first_beat(true);
 	model.mode = cookies.get_mode(MODE.NORMAL);
 	model.darkmode = cookies.get_darkmode(false);
+}
+
+function show_hidden_views(){
+	$("header").style.display = "block";
+	$("nav-side-menu").style.display = "block";
+	$("content_view").style.display = "block";
 }
 
 function window_resized_end(){
@@ -67,7 +76,7 @@ function setup_bpm_controls() {
 			model.BPM = BPM_value;
 			cookies.set_BPM(model.BPM);
 			update_UI_BPM(model.BPM);
-			forcePlay();
+			reloadActivePlayer();
 		};
 		range_control.load(on_range_control_changed, "", min , max, step, model.BPM, false, 0);
 	}
@@ -85,7 +94,7 @@ function setup_bpm_controls() {
 			range_control.load(range_control.on_range_control_changed, "", min , max, step, model.BPM, false, 0);
 			cookies.set_BPM(model.BPM);
 			update_UI_BPM(model.BPM);
-			forcePlay();
+			reloadActivePlayer();
 		});
 	}
 }
@@ -96,14 +105,11 @@ function setup_up_mode_select() {
 		log("on mode_select: " + value);
 		model.mode = value;
 		cookies.set_mode(value);
-
-		if(model.mode == MODE.NORMAL)
-			$("accent_first_beat").style.display = "block"; // show
-		else 
-			$("accent_first_beat").style.display = "none"; // hide
+		update_UI_mode();
 		reloadActivePlayer();
 	});
 	$("mode_select").value = model.mode;
+	update_UI_mode();
 }
 
 function setup_time_signature_select() {
@@ -132,6 +138,9 @@ function setup_accent_first_beat_switch() {
 	$("accent_first_beat").addEventListener("click", function(e){
 		$("accent_first_beat_checkbox").click();
 	});
+	$("accent_first_beat_checkbox_switch").addEventListener('keyup', function(e) {
+		if (event.code === 'Space' || event.code === 'Enter') $("accent_first_beat_checkbox").click();
+	});
 	$("accent_first_beat_checkbox").addEventListener("change", function(e){
 		var value = this.checked;
 		log("on accent beat change: " + value);
@@ -139,21 +148,15 @@ function setup_accent_first_beat_switch() {
 		cookies.set_accent_first_beat(value);
 		reloadActivePlayer();
 	});
-
-	$("accent_first_beat_checkbox").addEventListener('keypress', function() {
-	   log(event.code)
-		 alert('ec'+ event.code);
-	  if (event.code == 'KeyZ' && (event.ctrlKey || event.metaKey)) {
-	    alert('Undo!')
-	  }
-	});
-
 	$("accent_first_beat_checkbox").checked = model.accent_first_beat;
 }
 
 function setup_darkmode_switch() {
 	$("darkmode").addEventListener("click", function(e){
 		$("darkmode_checkbox").click();
+	});
+	$("darkmode_checkbox_switch").addEventListener('keyup', function(event){
+		if (event.code === 'Space'|| event.code === 'Enter') $("darkmode_checkbox").click();
 	});
 	$("darkmode_checkbox").addEventListener("change", function(e){
 		var value = this.checked;
@@ -170,31 +173,37 @@ function setup_keyboard_listeners() {
 
 	document.addEventListener('keyup', function(event){
 
-		if (event.code === 'Space') {
+		//logE(event.code)
+		var code = event.code;
+		if (code === 'Space') {
 			// double call with focus on play playPause();
-		} else if (event.code === 'ArrowUp' || event.code === 'ArrowRight' || event.code === 'NumpadAdd' || event.code === 'Equal') {
+		} else if (code === 'ArrowUp' || code === 'NumpadAdd' || code === 'Equal') {
 			range_control.plus_pressed();
-		} else if (event.code === 'ArrowDown' || event.code === 'ArrowLeft' || event.code === 'NumpadSubtract' || event.code === 'Minus') {
+		} else if (code === 'ArrowDown' || code === 'NumpadSubtract' || code === 'Minus') {
 			range_control.minus_pressed();
-		} else if (event.code == 'Digit1' || event.code == 'Numpad1') {
+		} else if (code === 'ArrowLeft') {
+			decrementDivision();
+		} else if (code === 'ArrowRight') {
+			incrementDivision();
+		} else if (code == 'Digit1' || code == 'Numpad1') {
 			setBPM(60);
-		} else if (event.code == 'Digit2' || event.code == 'Numpad2') {
+		} else if (code == 'Digit2' || code == 'Numpad2') {
 			setBPM(75);
-		} else if (event.code == 'Digit3' || event.code == 'Numpad3') {
+		} else if (code == 'Digit3' || code == 'Numpad3') {
 			setBPM(90);
-		} else if (event.code == 'Digit4' || event.code == 'Numpad4') {
+		} else if (code == 'Digit4' || code == 'Numpad4') {
 			setBPM(105);
-		} else if (event.code == 'Digit5' || event.code == 'Numpad5') {
+		} else if (code == 'Digit5' || code == 'Numpad5') {
 			setBPM(120);
-		} else if (event.code == 'Digit6' || event.code == 'Numpad6') {
+		} else if (code == 'Digit6' || code == 'Numpad6') {
 			setBPM(135);
-		} else if (event.code == 'Digit7' || event.code == 'Numpad7') {
+		} else if (code == 'Digit7' || code == 'Numpad7') {
 			setBPM(150);
-		} else if (event.code == 'Digit8' || event.code == 'Numpad8') {
+		} else if (code == 'Digit8' || code == 'Numpad8') {
 			setBPM(165);
-		} else if (event.code == 'Digit9' || event.code == 'Numpad9') {
+		} else if (code == 'Digit9' || code == 'Numpad9') {
 			setBPM(180);
-		} else if (event.code == 'Digit0' || event.code == 'Numpad0') {
+		} else if (code == 'Digit0' || code == 'Numpad0') {
 			setBPM(195);
 		}
 
@@ -204,7 +213,24 @@ function setup_keyboard_listeners() {
 			range_control.load(range_control.on_range_control_changed, "", MIN_BPM , MAX_BPM, 1, model.BPM, false, 0);
 			cookies.set_BPM(model.BPM);
 			update_UI_BPM(model.BPM);
-			forcePlay();
+			reloadActivePlayer();
+		}
+
+		function decrementDivision(){
+			var new_beat_division = Math.max(model.beat_division - 1, 1);
+			if(new_beat_division != model.beat_division){
+				model.beat_division = new_beat_division;
+				$("division_select").value = model.beat_division;
+				reloadActivePlayer();
+			}
+		}
+		function incrementDivision(){
+			var new_beat_division = Math.min(model.beat_division + 1, 4);
+			if(new_beat_division != model.beat_division){
+				model.beat_division = new_beat_division;
+				$("division_select").value = model.beat_division;
+				reloadActivePlayer();
+			}
 		}
 	});
 }
@@ -233,6 +259,16 @@ function playPause(){
 
 function kofi(){
 	window.open("https://ko-fi.com/jasonfleischer", "_blank");
+}
+
+function setup_info_alert(){
+	$("info_alert_container").addEventListener("click", function(event){
+		dismissInfo();
+	});
+	$("info_alert").addEventListener("click", function(event){
+		event.stopPropagation();
+		return false;
+	});
 }
 
 function info(){
@@ -299,6 +335,10 @@ function update_UI_BPM(value) {
 	}
 }
 
+function update_UI_mode(){
+	$("accent_first_beat").style.display = (model.mode == MODE.NORMAL || model.mode == MODE.DRUM) ? "block" : "none";
+}
+
 function update_UI_playing(){
 	$("play_pause_button").innerHTML = "Stop"; 
 	$("init_view").style.display = "none"; // hide
@@ -317,6 +357,9 @@ function update_UI_darkmode(){
 		setDarkMode();
 	else
 		setLightMode();
+
+	range_control.reload_colors();
+	time_view.reload_colors();
 
 	function setDarkMode(){
 		var root = document.documentElement;

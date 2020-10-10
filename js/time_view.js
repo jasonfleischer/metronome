@@ -168,6 +168,19 @@ class Polygon {
 	}
 }
 
+time_view.reload_colors = function(){
+
+	function clear_background (){
+		var canvas = document.getElementById("time_view_background_canvas");
+		var ctx = canvas.getContext("2d");
+		ctx.clearRect(0, 0, time_view.WIDTH, time_view.HEIGHT);
+	}
+	clear_background();
+	time_view.color_primary = getComputedStyle(document.documentElement).getPropertyValue("--tertiary-background-color");
+	time_view.color_secondary = getComputedStyle(document.documentElement).getPropertyValue("--primary-font-color");
+	time_view.draw_background();
+	time_view.draw();
+}
 
 time_view.draw_background = function(){
 

@@ -1,4 +1,10 @@
-var range_control = {}
+var range_control = {
+
+	color_track: '#077bff',
+	color_background_track: getComputedStyle(document.documentElement).getPropertyValue("--tertiary-background-color"),
+	color_font: getComputedStyle(document.documentElement).getPropertyValue("--primary-font-color"),
+	color_button: getComputedStyle(document.documentElement).getPropertyValue("--secondary-background-color")
+}
 
 range_control.percent_value = 0;
 range_control.WIDTH = 0;
@@ -276,6 +282,13 @@ range_control.plus_pressed = function(){
 	}
 }
 
+range_control.reload_colors = function(){
+	range_control.color_background_track = getComputedStyle(document.documentElement).getPropertyValue("--tertiary-background-color");
+	range_control.color_font = getComputedStyle(document.documentElement).getPropertyValue("--primary-font-color");
+	range_control.color_button = getComputedStyle(document.documentElement).getPropertyValue("--secondary-background-color");
+	range_control.draw(range_control.percent_value);
+}
+
 range_control.draw = function(percent_value){
 	if(range_control.show_percent){
 		draw_dial(percent_value, percent_value.toFixed(range_control.decimal_places) + " %");
@@ -312,7 +325,7 @@ range_control.draw = function(percent_value){
 		// fulltrack
 		
 		ctx.beginPath();
-		ctx.strokeStyle = "#eee";
+		ctx.strokeStyle = range_control.color_background_track;
 		ctx.lineWidth = range_control.track_width;
 		ctx.arc(range_control.WIDTH/2.0, range_control.HEIGHT/2.0, range_control.radius - range_control.track_width/2, 0, TWO_PI);
 		ctx.stroke();
@@ -320,7 +333,7 @@ range_control.draw = function(percent_value){
 		// color track
 
 		ctx.beginPath();
-		ctx.strokeStyle = '#077bff';
+		ctx.strokeStyle = range_control.color_track;
 		ctx.lineWidth = range_control.track_width;
 		ctx.arc(range_control.WIDTH/2.0, range_control.HEIGHT/2.0, range_control.radius - range_control.track_width/2,
 			range_control.startAngleInRadians, range_control.controlAngleInRadians);
@@ -329,7 +342,7 @@ range_control.draw = function(percent_value){
 		// control indicator
 
 		ctx.beginPath();
-		ctx.fillStyle = "#fff";
+		ctx.fillStyle = range_control.color_button;
 		ctx.strokeStyle = '#ddd';
 		ctx.lineWidth = 2;
 		ctx.arc(range_control.getXofCircle(range_control.radius - range_control.track_width/2, range_control.WIDTH/2.0, range_control.controlAngleInRadians), 
@@ -340,7 +353,7 @@ range_control.draw = function(percent_value){
 		// minus button
 
 		ctx.beginPath();
-		ctx.fillStyle = "#fff";
+		ctx.fillStyle = range_control.color_button;
 		ctx.strokeStyle = '#ddd';
 		ctx.lineWidth = 1;
 		ctx.arc(range_control.minusX, range_control.minusY, range_control.track_width/2, 0, TWO_PI);
@@ -348,7 +361,7 @@ range_control.draw = function(percent_value){
 		ctx.stroke();
 		
 		ctx.beginPath();
-		ctx.strokeStyle = '#000';
+		ctx.strokeStyle = range_control.color_font;
 		var pad = range_control.WIDTH * 0.017;
 		ctx.lineWidth = range_control.WIDTH *0.008;
 		ctx.moveTo(range_control.minusX-pad, range_control.minusY);
@@ -366,7 +379,7 @@ range_control.draw = function(percent_value){
 		ctx.stroke();
 
 		ctx.beginPath();
-		ctx.strokeStyle = '#000';
+		ctx.strokeStyle = range_control.color_font;
 		pad = range_control.WIDTH * 0.022;
 		ctx.lineWidth = range_control.WIDTH *0.006;
 		ctx.moveTo(range_control.plusX-pad, range_control.plusY);

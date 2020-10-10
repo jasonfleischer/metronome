@@ -80,7 +80,44 @@ audio_controller.play = function(){
 			division_text_array = ["e", "&", "a"];
 		}	
 		
-	} else if(model.mode === MODE.SYLLABLES){
+	} else if(model.mode === MODE.DRUM){
+
+		beat_array = [];
+		beat_text_array = [];
+
+		var bass_and_crash_audio = document.createElement("AUDIO");
+		bass_and_crash_audio.setAttribute("src","audio/drum/bass_and_crash.wav");
+
+		var bass_audio = document.createElement("AUDIO");
+		bass_audio.setAttribute("src","audio/drum/bass.wav");
+		
+		var snare_audio = document.createElement("AUDIO");
+		snare_audio.setAttribute("src","audio/drum/snare.wav");
+
+		var highhat_audio = document.createElement("AUDIO");
+		highhat_audio.setAttribute("src","audio/drum/highhat.wav");
+
+		var first_audio = model.accent_first_beat ? bass_and_crash_audio : bass_audio;
+		audio_array = [first_audio, snare_audio, bass_audio, snare_audio, bass_audio, snare_audio, bass_audio, snare_audio, bass_audio];
+
+		var i;
+		for(i=0; i<model.time_signature; i++){
+			beat_array[i] = audio_array[i];
+			beat_text_array[i] = (i+1).toString();
+		}
+
+		if (model.beat_division === 2){
+			division_array = [highhat_audio];
+			division_text_array = ["&"];
+		} else if (model.beat_division === 3){
+			division_array = [highhat_audio, highhat_audio];
+			division_text_array = ["trip", "let"];
+		} else if (model.beat_division === 4) {
+			division_array = [highhat_audio, highhat_audio, highhat_audio];
+			division_text_array = ["e", "&", "a"];
+		}
+
+	}else if(model.mode === MODE.SYLLABLES){
 
 
 		var ta_audio = document.createElement("AUDIO");

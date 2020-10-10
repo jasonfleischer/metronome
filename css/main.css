@@ -32,6 +32,7 @@ html, body {
 
 #nav-side-menu, #content_view, #header{
     min-width: 320px;
+    display: none;
 }
 
 @media (min-width: 650px) { /*desktop*/
@@ -54,7 +55,7 @@ html, body {
         z-index: 1;
     }
     #content_view {
-       overflow-x: hidden;
+        overflow-x: hidden;
         padding-left: var(--left-column-width);
         height: calc(100% - var(--header-height));
     }
@@ -324,6 +325,7 @@ button:hover {
 
     cursor: pointer;
 }
+
 #button_control_container {
     width: calc(100% - 26px);
     height: 40px;
@@ -447,8 +449,8 @@ button:hover {
     position: absolute;
     height: 100%;
     width: 100%;
-    background-color: #00000055; /*transparent*/
-    z-index: 2;
+    background-color: #00000099; /*transparent*/
+    z-index: 3;
 
 }
 #info_alert{
@@ -490,6 +492,10 @@ button:hover {
     color: var(--primary-font-color);
     text-align: center;
     font-size: 12px;
+}
+
+#accent_first_beat {
+    display: none;
 }
 
 .switch {

@@ -2,8 +2,9 @@
 
 const MODE = Object.freeze({
 	NORMAL: 0,
-	TALKING: 1,
-	SYLLABLES: 2
+	DRUM: 1,
+	TALKING: 2,
+	SYLLABLES: 3
 });
 
 const TIME_SIGNATURE = Object.freeze({

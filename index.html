@@ -13,11 +13,13 @@
 	<title>Metronome</title>
 	<meta charset="utf-8">
 	<meta name="author" content="Jason Fleischer">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" type="image/png" sizes="32x32" href="img/favicon.png">
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="css/slider.css">
 </head>
-<body onload="init()">	
+<body onload="init()">
+	<!-- alert -->
 	<div id="info_alert_container">
 		<div id="info_alert">
 			<h3>Settings</h3>
@@ -29,7 +31,8 @@
 						function googleTranslateElementInit() {
 							new google.translate.TranslateElement({
 								pageLanguage: 'en',
-								layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+								layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+								//layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
 							}, 'google_translate_element');
 						}
 					</script>
@@ -38,7 +41,7 @@
 				<li id="darkmode">
 					<div class="nav-toggle-item">
 						<span>Dark Mode</span>
-						<label class="switch">
+						<label id="darkmode_checkbox_switch" class="switch">
 							<input id="darkmode_checkbox" type="checkbox" checked="checked"/>
 							<span class="switch_track round" tabindex="0"></span>
 						</label>
@@ -94,8 +97,9 @@
 						<span>Mode</span>
 						<select id="mode_select">
 							<option value="0" selected="selected">Click</option>
-							<option value="1">Talking</option>
-							<option value="2">Syllables</option>
+							<!--<option value="1">Drum</option>-->
+							<option value="2">Talking</option>
+							<!--<option value="3">Syllables</option>-->
 						</select>
 					</div>
 				</li>
@@ -128,7 +132,7 @@
 				<li id="accent_first_beat">
 					<div class="nav-toggle-item">
 						<span>Accent First Beat</span>
-						<label class="switch">
+						<label id="accent_first_beat_checkbox_switch" class="switch">
 							<input id="accent_first_beat_checkbox" type="checkbox" checked="checked"/>
 							<span class="switch_track round" tabindex="0"></span>
 						</label>
