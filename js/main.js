@@ -4,6 +4,7 @@
 // higher bpm msg
 // other browsers test, audio broken
 // drums sounds
+// arrows divisions
 // space on switch broken
 
 function init() {
@@ -132,7 +133,7 @@ function setup_accent_first_beat_switch() {
 		$("accent_first_beat_checkbox").click();
 	});
 	$("accent_first_beat_checkbox").addEventListener("change", function(e){
-		var value = this.checked ? 1 : 0;
+		var value = this.checked;
 		log("on accent beat change: " + value);
 		model.accent_first_beat = value;
 		cookies.set_accent_first_beat(value);
@@ -155,7 +156,7 @@ function setup_darkmode_switch() {
 		$("darkmode_checkbox").click();
 	});
 	$("darkmode_checkbox").addEventListener("change", function(e){
-		var value = this.checked ? 1 : 0;
+		var value = this.checked;
 		log("on darkmode change: " + value);
 		model.darkmode = value;
 		cookies.set_darkmode(value);
