@@ -30,7 +30,7 @@ html, body {
     min-width: 320px;
 }
 
-#nav-side-menu, #content_view, #page_name, header{
+#nav-side-menu, #content_view, #header{
     min-width: 320px;
 }
 
@@ -206,10 +206,6 @@ body{
     user-select: none;
 }
 
-header {
-    box-shadow: 1px 0px 5px var(--highlight-color-darker);
-}
-
 p {
     margin: 0px;
     color: var(--primary-font-color);
@@ -345,13 +341,15 @@ button:hover {
     height: 100%;
 }
 
-#page_name{
+#header {
     position: relative;
     background: var(--secondary-background-color);
     height: var(--header-height);
-    
+    box-shadow: 1px 0px 5px var(--highlight-color-darker);
+    z-index: 2;
 }
-#page_name p{
+
+#page_name {
     font-size: 24px;  
     line-height:var(--header-height);
     height: var(--header-height);
@@ -363,6 +361,7 @@ button:hover {
 
 #canvas_wrapper{
     position: relative;
+    min-height: 293px;
 }
 #dial_canvas {
     width:100%;
@@ -431,8 +430,11 @@ button:hover {
     padding-right: 7px;
     line-height: 36px;
     font-size: 12px;
+    width: 77px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-
 
 #kofi_button img {
     padding-top: 2px;

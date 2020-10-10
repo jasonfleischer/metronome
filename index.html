@@ -22,15 +22,6 @@
 		<div id="info_alert">
 			<h3>Settings</h3>
 			<ul>
-				<li id="darkmode">
-					<div class="nav-toggle-item">
-						<span>Dark Mode</span>
-						<label class="switch">
-							<input id="darkmode_checkbox" type="checkbox" checked="checked"/>
-							<span class="switch_track round" tabindex="0"></span>
-						</label>
-					</div>
-				</li>
 				<!-- google translate -->
 				<li>
 					<div id="google_translate_element"></div>
@@ -44,6 +35,15 @@
 					</script>
 					<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 				</li>
+				<li id="darkmode">
+					<div class="nav-toggle-item">
+						<span>Dark Mode</span>
+						<label class="switch">
+							<input id="darkmode_checkbox" type="checkbox" checked="checked"/>
+							<span class="switch_track round" tabindex="0"></span>
+						</label>
+					</div>
+				</li>
 			</ul>
 			<br/>
 			<h3>Information</h3>
@@ -55,10 +55,8 @@
 			<button id="dismiss_alert_button" onclick="dismissInfo()">OK</button>
 		</div>
 	</div>
-	<header>
-		<div id="page_name" class="text-center">
-			<p onclick="info()">Metronome</p>
-		</div>
+	<div id="header">
+		<p id="page_name" onclick="info()">Metronome</p>
 		<button id="kofi_button" onclick="kofi()">
 			<span>
 				<img src="img/kofi_mobile.png" alt="Buy Me a Coffee at ko-fi.com" />
@@ -66,11 +64,11 @@
 			</span>
 		</button>
 		<button id="info_button" onclick="info()" ><img id="info_button_svg" src="img/gear_black.svg" alt="Settings"/></button>
-	</header>
+	</div>
 	<div id="nav-side-menu" >
 		<div id="page_contents">
 			<div id="canvas_wrapper">
-				<p id="bpm_text">120</p>
+				<p id="bpm_text">&nbsp;</p>
 				<p id="tempo_marking">&nbsp;</p>
 				<canvas id="dial_canvas"></canvas>
 			</div>

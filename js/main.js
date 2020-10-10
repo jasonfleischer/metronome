@@ -162,6 +162,7 @@ function setup_darkmode_switch() {
 		update_UI_darkmode();
 	});
 	$("darkmode_checkbox").checked = model.darkmode;
+	update_UI_darkmode();
 }
 
 function setup_keyboard_listeners() {
