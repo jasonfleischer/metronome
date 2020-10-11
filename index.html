@@ -26,17 +26,20 @@
 			<ul>
 				<!-- google translate -->
 				<li>
-					<div id="google_translate_element"></div>
-					<script>
-						function googleTranslateElementInit() {
-							new google.translate.TranslateElement({
-								pageLanguage: 'en',
-								layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-								//layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
-							}, 'google_translate_element');
-						}
-					</script>
-					<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+					<div class="nav-toggle-item">
+						<span>Language</span>
+						<div id="google_translate_element"></div>
+						<script>
+							function googleTranslateElementInit() {
+								new google.translate.TranslateElement({
+									pageLanguage: 'en',
+									layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+									//layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+								}, 'google_translate_element');
+							}
+						</script>
+						<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+					</div>
 				</li>
 				<li id="darkmode">
 					<div class="nav-toggle-item">
@@ -151,9 +154,8 @@
 			<p id="count_text">&nbsp;</p>
 		</div>
 	</div>
-
+	<!--<script src="https://surikov.github.io/webaudiofont/npm/dist/WebAudioFontPlayer.js"></script>-->
 	<script src="js/midi/webAudioFontPlayer.js"></script>
-	<script src="js/midi/midi_sound_1150_Aspirin_sf2_file.js"></script>
 	<script src="js/midi/midi_controller.js"></script>
 	<script src="js/model.js"></script>
 	<script src="js/prototypes.js"></script>

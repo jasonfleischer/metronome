@@ -4,9 +4,13 @@
 // higher bpm msg
 // dont restart on active changes
 // mobile
-// other browsers test, audio broken
+// other browsers
+// 	 safari - no issues
+//   firefox - no issues
+//	 edge - no issues
+// shortcut pdf
+// talking volume too loud
 // drums sounds
-// spacebar for stop start
 
 function init() {
 	load_cookies();
@@ -176,7 +180,12 @@ function setup_keyboard_listeners() {
 		//logE(event.code)
 		var code = event.code;
 		if (code === 'Space') {
-			// double call with focus on play playPause();
+			// double call with focus on play
+			var play_button = $('play_pause_button');
+			if(document.activeElement !== play_button) {
+				playPause();
+				play_button.focus();
+			}
 		} else if (code === 'ArrowUp' || code === 'NumpadAdd' || code === 'Equal') {
 			range_control.plus_pressed();
 		} else if (code === 'ArrowDown' || code === 'NumpadSubtract' || code === 'Minus') {
@@ -236,7 +245,6 @@ function setup_keyboard_listeners() {
 }
 
 function reloadActivePlayer(){
-
 	if(audio_controller.playing){
 		forcePlay();
 	}
