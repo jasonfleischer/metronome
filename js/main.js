@@ -254,7 +254,7 @@ function setup_keyboard_listeners() {
 
 function show_keyboard_shortcuts(){
 	dismissInfo();
-	var keyboard_shorcut_window = window.open("", "Keyboard shortcuts", "width=280,height=400");
+	var keyboard_shorcut_window = window.open("", "Keyboard shortcuts", "width=280,height=430");
 	keyboard_shorcut_window.document.write(
 		`<table style="width:100%; text-align: left;">
 			<tr><th>Key</th><th>Command</th></tr>
@@ -274,7 +274,17 @@ function show_keyboard_shortcuts(){
 			<tr><td>Digit 8</td><td>165 BPM</td></tr>
 			<tr><td>Digit 9</td><td>180 BPM</td></tr>
 			<tr><td>Digit 0</td><td>195 BPM</td></tr>
-		</table>`);
+		</table>
+		<div id="google_translate_element"></div>
+		<script>
+			function googleTranslateElementInit() {
+				new google.translate.TranslateElement({
+					pageLanguage: 'en',
+					layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+				}, 'google_translate_element');
+			}
+		</script>
+		<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>`);
 }
 
 function reloadActivePlayer(){
