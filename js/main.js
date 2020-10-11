@@ -15,6 +15,7 @@
 function init() {
 	load_cookies();
 	setup_darkmode_switch();
+	setup_portrait_for_mobile();
 	setup_up_mode_select();
 	setup_time_signature_select();
 	setup_beat_division_select();
@@ -33,6 +34,11 @@ function load_cookies(){
 	model.accent_first_beat = cookies.get_accent_first_beat(true);
 	model.mode = cookies.get_mode(MODE.NORMAL);
 	model.darkmode = cookies.get_darkmode(false);
+}
+
+function setup_portrait_for_mobile(){
+	if(isMobile())
+		document.documentElement.classList.add("is-mobile-device");
 }
 
 function show_hidden_views(){
@@ -194,7 +200,9 @@ function setup_keyboard_listeners() {
 			decrementDivision();
 		} else if (code === 'ArrowRight') {
 			incrementDivision();
-		} else if (code == 'Digit1' || code == 'Numpad1') {
+		} else if (code == 'KeyT') {
+			tap_controller.tap();
+		}else if (code == 'Digit1' || code == 'Numpad1') {
 			setBPM(60);
 		} else if (code == 'Digit2' || code == 'Numpad2') {
 			setBPM(75);
@@ -242,6 +250,31 @@ function setup_keyboard_listeners() {
 			}
 		}
 	});
+}
+
+function show_keyboard_shortcuts(){
+	dismissInfo();
+	var keyboard_shorcut_window = window.open("", "Keyboard shortcuts", "width=280,height=400");
+	keyboard_shorcut_window.document.write(
+		`<table style="width:100%; text-align: left;">
+			<tr><th>Key</th><th>Command</th></tr>
+			<tr><td>Space</td><td>Play / Stop</td></tr>
+			<tr><td>Up Arrow</td><td>Increment Tempo</td></tr>
+			<tr><td>Down Arrow</td><td>Decrement Tempo</td></tr>
+			<tr><td>Left Arrow</td><td>Decrement Subdivision</td></tr>
+			<tr><td>Right Arrow</td><td>Increment Subdivision</td></tr>
+			<tr><td>Letter T</td><td>Tap Tempo</td></tr>
+			<tr><td>Digit 1</td><td>60 BPM</td></tr>
+			<tr><td>Digit 2</td><td>75 BPM</td></tr>
+			<tr><td>Digit 3</td><td>90 BPM</td></tr>
+			<tr><td>Digit 4</td><td>105 BPM</td></tr>
+			<tr><td>Digit 5</td><td>120 BPM</td></tr>
+			<tr><td>Digit 6</td><td>135 BPM</td></tr>
+			<tr><td>Digit 7</td><td>150 BPM</td></tr>
+			<tr><td>Digit 8</td><td>165 BPM</td></tr>
+			<tr><td>Digit 9</td><td>180 BPM</td></tr>
+			<tr><td>Digit 0</td><td>195 BPM</td></tr>
+		</table>`);
 }
 
 function reloadActivePlayer(){

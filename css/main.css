@@ -35,6 +35,23 @@ html, body {
     display: none;
 }
 
+
+@media screen and (orientation: landscape) {
+    html.is-mobile-device {
+        /* Rotate the content container */
+        transform: rotate(-90deg);
+        transform-origin: left top;
+        /* Set content width to viewport height */
+        width: 100vh;
+        /* Set content height to viewport width */
+        height: 100vw;
+        overflow-x: hidden;
+        position: absolute;
+        top: 100%;
+        left: 0;
+    }
+}
+
 @media (min-width: 650px) { /*desktop*/
     .mobile-only {
         display: none;
@@ -370,7 +387,18 @@ button:hover {
 }
 
 #google_translate_element{
-    height:var(--row-height);
+    height: 33px;
+    position: relative;
+    top: 6px;
+    right: 33px;
+    float:right;
+}
+
+#language_text {
+    position: relative;
+    top: 8px;
+    margin-left: 15px;
+    color: var(--primary-font-color);
 }
 
 

@@ -26,8 +26,8 @@
 			<ul>
 				<!-- google translate -->
 				<li>
-					<div class="nav-toggle-item">
-						<span>Language</span>
+					<div>
+						<span id="language_text">Language</span>
 						<div id="google_translate_element"></div>
 						<script>
 							function googleTranslateElementInit() {
@@ -53,12 +53,16 @@
 			</ul>
 			<br/>
 			<h3>Information</h3>
+			<button onclick="show_keyboard_shortcuts()">Keyboard Shortcuts</button>
+			<br/><br/>
 			<p>Thank you for using this website. If you wish to submit feedback, comment or report an error click <a href="mailto:jason_fleischer@hotmail.ca?Subject=Metronome%20Website%20Feedback">here</a>.
 			</p>
 			<p>
 			<br/>
 			Information about the developer can be found <a href="https://jasonfleischer.github.io/website/" target="_blank">here</a>.</p><br/>
-			<button id="dismiss_alert_button" onclick="dismissInfo()">OK</button>
+			
+			
+			<button id="dismiss_alert_button" onclick="dismissInfo()">Close</button>
 		</div>
 	</div>
 	<div id="header">
