@@ -1,3 +1,6 @@
 ## Metronome
 
-[Metronome Webpage](https://jasonfleischer.github.io/metronome/.)
+A metronome website 
+[https://jasonfleischer.github.io/metronome/](https://jasonfleischer.github.io/metronome/)
+
+Special thanks to Surikov for their [WebAudioFont](https://surikov.github.io/webaudiofont/) library
