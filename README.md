@@ -1,6 +1,6 @@
 ## Metronome Webpage
 
-A metronome website 
+A metronome website:
 
 [https://jasonfleischer.github.io/metronome/](https://jasonfleischer.github.io/metronome/)
 
