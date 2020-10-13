@@ -1,21 +1,24 @@
 
 //todo 
 
-// higher bpm msg
+
 // dont restart on active changes
-// mobile
+// mobile - language keyboard shorcuts broken, wavs broken, landscape
+// time view cut off
 // other browsers
 // 	 safari - no issues
 //   firefox - no issues
 //	 edge - no issues
-// shortcut pdf
-// talking volume too loud
 // drums sounds
+// talking volume too loud
+// higher bpm msg
 
 function init() {
 	load_cookies();
+	//midi_controller.init();
+	drum_controller.init();
 	setup_darkmode_switch();
-	setup_portrait_for_mobile();
+	//setup_portrait_for_mobile();
 	setup_up_mode_select();
 	setup_time_signature_select();
 	setup_beat_division_select();
@@ -37,8 +40,10 @@ function load_cookies(){
 }
 
 function setup_portrait_for_mobile(){
-	if(isMobile())
+	if(isMobile()){
+		alert("mobile dectected test")
 		document.documentElement.classList.add("is-mobile-device");
+	}
 }
 
 function show_hidden_views(){
@@ -275,6 +280,7 @@ function show_keyboard_shortcuts(){
 			<tr><td>Digit 9</td><td>180 BPM</td></tr>
 			<tr><td>Digit 0</td><td>195 BPM</td></tr>
 		</table>
+		<br/>
 		<div id="google_translate_element"></div>
 		<script>
 			function googleTranslateElementInit() {
@@ -298,6 +304,16 @@ function forcePlay(){
 	update_UI_stopped();
 	audio_controller.play();
 	update_UI_playing();
+}
+
+function forceStop(){
+	var was_playing = false;
+	if(audio_controller.playing) {
+		audio_controller.playPause()
+		update_UI_stopped();
+		was_playing = true;
+	}	
+	return was_playing;
 }
 
 function playPause(){
@@ -328,6 +344,25 @@ function info(){
 
 function dismissInfo(){
 	$("info_alert_container").style.display = "none"; // hide
+}
+
+function bpm_prompt(){
+	var was_playing = forceStop();
+	var BPM = parseInt(prompt("Enter a BPM value:", model.BPM));
+	if(BPM >= MIN_BPM && BPM <= MAX_BPM){
+		log("on BPM prompt change: " + BPM);
+		model.BPM = BPM;
+		range_control.load(range_control.on_range_control_changed, "", MIN_BPM , MAX_BPM, 1, model.BPM, false, 0);
+		cookies.set_BPM(model.BPM);
+		update_UI_BPM(model.BPM);
+		reloadActivePlayer();
+
+		if(was_playing){
+			playPause();
+		} 
+	}else {
+		log("Invalid BPM value" + BPM);
+	}
 }
 
 function update_UI_BPM(value) {

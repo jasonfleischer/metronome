@@ -69,17 +69,17 @@
 	<div id="header">
 		<p id="page_name" onclick="info()">Metronome</p>
 		<button id="kofi_button" onclick="kofi()">
-			<span>
+			
 				<img src="img/kofi_mobile.png" alt="Buy Me a Coffee at ko-fi.com" />
-				<p class="desktop-only">Buy me a coffee</p>
-			</span>
+				<span class="desktop-only">Buy me a coffee</span>
+			
 		</button>
 		<button id="info_button" onclick="info()" ><img id="info_button_svg" src="img/gear_black.svg" alt="Settings"/></button>
 	</div>
 	<div id="nav-side-menu" >
 		<div id="page_contents">
 			<div id="canvas_wrapper">
-				<p id="bpm_text">&nbsp;</p>
+				<p id="bpm_text" onclick="bpm_prompt()">&nbsp;</p>
 				<p id="tempo_marking">&nbsp;</p>
 				<canvas id="dial_canvas"></canvas>
 			</div>
@@ -105,7 +105,7 @@
 						<span>Mode</span>
 						<select id="mode_select">
 							<option value="0" selected="selected">Click</option>
-							<!--<option value="1">Drum</option>-->
+							<option value="1">Drum</option>
 							<option value="2">Talking</option>
 							<!--<option value="3">Syllables</option>-->
 						</select>
@@ -162,6 +162,7 @@
 	<!--<script src="https://surikov.github.io/webaudiofont/npm/dist/WebAudioFontPlayer.js"></script>-->
 	<script src="js/midi/webAudioFontPlayer.js"></script>
 	<script src="js/midi/midi_controller.js"></script>
+	<script src="js/midi/drum_midi_controller.js"></script>
 	<script src="js/model.js"></script>
 	<script src="js/prototypes.js"></script>
 	<script src="js/cookies.js"></script>

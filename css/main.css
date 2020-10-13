@@ -1,7 +1,7 @@
 
 :root{
     --row-height: 45px;
-    --left-column-width: 300px;
+    --left-column-width: 320px;
     --header-height: 50px;
 
     --highlight-color:#f7f7f7;
@@ -401,7 +401,6 @@ button:hover {
     color: var(--primary-font-color);
 }
 
-
 #time_view_container {
     width: 70%; 
     height: 0px; 
@@ -422,10 +421,6 @@ button:hover {
     font-size: 0px;
     text-align: center;
     line-height: 0px;
-}
-
-.page_contents{
-    /*padding: 15px;*/
 }
 
 #info_button {
@@ -451,10 +446,9 @@ button:hover {
     right:54px;
     cursor: pointer;
     margin-right: 5px;
-
 }
 
-#kofi_button p{
+#kofi_button span{
     float: right;
     padding-left: 3px;
     padding-right: 7px;
@@ -467,6 +461,7 @@ button:hover {
 }
 
 #kofi_button img {
+    float: left;
     padding-top: 2px;
     border:0px;
     height:32px;
@@ -509,6 +504,7 @@ button:hover {
     color: var(--primary-font-color);
     text-align: center;
     font-size: 65px;
+    cursor: pointer;
 }
 #tempo_marking{
     position: absolute;
