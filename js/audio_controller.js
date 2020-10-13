@@ -85,7 +85,7 @@ audio_controller.play = function(){
 		beat_array = [];
 		beat_text_array = [];
 
-		var bass_and_crash_audio = document.createElement("AUDIO");
+		/*var bass_and_crash_audio = document.createElement("AUDIO");
 		bass_and_crash_audio.setAttribute("src","audio/drum/bass_and_crash.wav");
 
 		var bass_audio = document.createElement("AUDIO");
@@ -95,7 +95,12 @@ audio_controller.play = function(){
 		snare_audio.setAttribute("src","audio/drum/snare.wav");
 
 		var highhat_audio = document.createElement("AUDIO");
-		highhat_audio.setAttribute("src","audio/drum/highhat.wav");
+		highhat_audio.setAttribute("src","audio/drum/highhat.wav");*/
+
+		var bass_and_crash_audio = new DrumSound("bass_and_crash");
+		var snare_audio = new DrumSound("snare");
+		var bass_audio = new DrumSound("bass");
+		var highhat_audio = new DrumSound("highhat");
 
 		var first_audio = model.accent_first_beat ? bass_and_crash_audio : bass_audio;
 		audio_array = [first_audio, snare_audio, bass_audio, snare_audio, bass_audio, snare_audio, bass_audio, snare_audio, bass_audio];

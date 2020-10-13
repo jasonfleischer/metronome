@@ -1,12 +1,18 @@
 // https://surikov.github.io/webaudiofont/
 // https://surikov.github.io/webaudiofont/examples/midikey.html 1218 woodblock
 
+//var AudioContextFunc = window.AudioContext || window.webkitAudioContext;
+//var audioContext = new AudioContextFunc();
+//
+//var player = new WebAudioFontPlayer();
+
 class WoodblockSound {
 	constructor(type) {
 		this.type = type;
+		midi_controller.init();
 	}
 	play(){
-		midi_controller.init();
+		
 		if (this.type == "normal")
 			midi_controller.playNormalClick();
 		else if (this.type == "soft")
@@ -75,9 +81,12 @@ midi_controller.getFluidTone = function() {
 	return _tone_1150_FluidR3_GM_sf2_file;
 }
 
+
 midi_controller.init = function() {
 
 	if(!self.initialized){
+
+		console.log("midi_controller.init")
 
 		this.isFirefox = isFirefox();
 		this.tone= this.isFirefox ? this.getFluidTone() : this.tone=this.getAspirinTone();
@@ -86,8 +95,11 @@ midi_controller.init = function() {
 		this.player=new WebAudioFontPlayer();
 		this.player.adjustPreset(this.audioContext, this.tone);
 		self.initialized = true;
+
+		//drum_controller.initialized = false;
 	}
 }
+//midi_controller.init();
 
 midi_controller.playLoudClick = function(){	
 	this.playPitch(this.isFirefox ? 65 : 77);
