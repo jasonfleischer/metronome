@@ -16,7 +16,7 @@
 function init() {
 	load_cookies();
 	//midi_controller.init();
-	drum_controller.init();
+	//drum_controller.init();
 	setup_darkmode_switch();
 	//setup_portrait_for_mobile();
 	setup_up_mode_select();
