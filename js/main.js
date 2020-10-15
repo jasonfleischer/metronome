@@ -18,7 +18,6 @@ function init() {
 	//midi_controller.init();
 	//drum_controller.init();
 	setup_darkmode_switch();
-	//setup_portrait_for_mobile();
 	setup_up_mode_select();
 	setup_time_signature_select();
 	setup_beat_division_select();
@@ -39,21 +38,24 @@ function load_cookies(){
 	model.darkmode = cookies.get_darkmode(false);
 }
 
-function setup_portrait_for_mobile(){
-	if(isMobile()){
-		alert("mobile dectected test")
-		document.documentElement.classList.add("is-mobile-device");
-	}
-}
-
 function show_hidden_views(){
 	$("header").style.display = "block";
-	$("nav-side-menu").style.display = "block";
+	if(!screen_width_is_mobile())
+		$("nav-side-menu").style.display = "block";
 	$("content_view").style.display = "block";
 }
 
 function window_resized_end(){
 	log("window resized end event");
+
+	if(screen_width_is_mobile()) {
+		hide_settings();
+	} else {
+		$("nav-side-menu").style.display = "block";
+		$("kofi_button").style.display = "block";
+		$("info_button").style.display = "block";
+	}
+
 	time_view.resize();
 	time_view.draw_background();
 	if(audio_controller.playing){
@@ -66,6 +68,9 @@ function window_resized_end(){
 		bpm_text_object.style.display = "block"; // show
 		bpm_text_object.style.left = Math.round((canvas.offsetWidth - bpm_text_object.offsetWidth) / 2) + "px";
 	}
+
+	dismissInfo();
+
 }
 
 var resized_timer;
@@ -167,20 +172,27 @@ function setup_accent_first_beat_switch() {
 }
 
 function setup_darkmode_switch() {
-	$("darkmode").addEventListener("click", function(e){
-		$("darkmode_checkbox").click();
-	});
-	$("darkmode_checkbox_switch").addEventListener('keyup', function(event){
-		if (event.code === 'Space'|| event.code === 'Enter') $("darkmode_checkbox").click();
-	});
-	$("darkmode_checkbox").addEventListener("change", function(e){
-		var value = this.checked;
-		log("on darkmode change: " + value);
-		model.darkmode = value;
-		cookies.set_darkmode(value);
-		update_UI_darkmode();
-	});
-	$("darkmode_checkbox").checked = model.darkmode;
+
+
+	setup_darkmode($("darkmode"), $("darkmode_checkbox_switch"), $("darkmode_checkbox"));
+	setup_darkmode($("mobile_darkmode"), $("mobile_darkmode_checkbox_switch"), $("mobile_darkmode_checkbox"));
+	function setup_darkmode(background_obj, switch_obj, checkbox_obj ){
+
+		background_obj.addEventListener("click", function(e){
+			checkbox_obj.click();
+		});
+		switch_obj.addEventListener('keyup', function(event){
+			if (event.code === 'Space'|| event.code === 'Enter') $("darkmode_checkbox").click();
+		});
+		checkbox_obj.addEventListener("change", function(e){
+			var value = this.checked;
+			log("on darkmode change: " + value);
+			model.darkmode = value;
+			cookies.set_darkmode(value);
+			update_UI_darkmode();
+		});
+		checkbox_obj.checked = model.darkmode;
+	}
 	update_UI_darkmode();
 }
 
@@ -192,7 +204,7 @@ function setup_keyboard_listeners() {
 		var code = event.code;
 		if (code === 'Space') {
 			// double call with focus on play
-			var play_button = $('play_pause_button');
+			var play_button = screen_width_is_mobile() ? $("mobile_play_pause_button"): $('play_pause_button');
 			if(document.activeElement !== play_button) {
 				playPause();
 				play_button.focus();
@@ -259,7 +271,7 @@ function setup_keyboard_listeners() {
 
 function show_keyboard_shortcuts(){
 	dismissInfo();
-	var keyboard_shorcut_window = window.open("", "Keyboard shortcuts", "width=280,height=430");
+	var keyboard_shorcut_window = window.open("", "Keyboard shortcuts", "width=280,height=440");
 	keyboard_shorcut_window.document.write(
 		`<table style="width:100%; text-align: left;">
 			<tr><th>Key</th><th>Command</th></tr>
@@ -346,6 +358,32 @@ function dismissInfo(){
 	$("info_alert_container").style.display = "none"; // hide
 }
 
+function toggle_settings(){
+	if($("nav-side-menu").style.display !== "block"){
+		show_settings();
+	} else {
+		hide_settings();
+	}
+}
+function show_settings() {
+	$("nav-side-menu").style.display = "block";
+	$("kofi_button").style.display = "none";
+	$("info_button").style.display = "none";
+	if(model.darkmode)
+		$("setting_button_svg").src = "img/close_white.svg";
+	else
+		$("setting_button_svg").src = "img/close_black.svg";
+}
+function hide_settings(){
+	$("nav-side-menu").style.display = "none";
+	$("kofi_button").style.display = "block";
+	$("info_button").style.display = "block";
+	if(model.darkmode)
+		$("setting_button_svg").src = "img/gear_white.svg";
+	else
+		$("setting_button_svg").src = "img/gear_black.svg";
+}
+
 function bpm_prompt(){
 	var was_playing = forceStop();
 	var BPM = parseInt(prompt("Enter a BPM value:", model.BPM));
@@ -427,12 +465,14 @@ function update_UI_mode(){
 
 function update_UI_playing(){
 	$("play_pause_button").innerHTML = "Stop"; 
+	$("mobile_play_pause_button").innerHTML = "Stop";
 	$("init_view").style.display = "none"; // hide
 	time_view.start(model.time_signature, model.BPM);
 }
 
 function update_UI_stopped(){
 	$("play_pause_button").innerHTML = "Play";
+	$("mobile_play_pause_button").innerHTML = "Play";
 	$("count_text").innerHTML = "\xa0";
 	$("init_view").style.display = "table"; // show
 	time_view.stop();
@@ -447,6 +487,10 @@ function update_UI_darkmode(){
 	range_control.reload_colors();
 	time_view.reload_colors();
 
+	$("darkmode_checkbox").checked = model.darkmode;
+	$("mobile_darkmode_checkbox").checked = model.darkmode;
+
+
 	function setDarkMode(){
 		var root = document.documentElement;
 		root.style.setProperty('--highlight-color', "#070707");
@@ -456,7 +500,11 @@ function update_UI_darkmode(){
 		root.style.setProperty('--tertiary-background-color', "#111");
 		root.style.setProperty('--primary-font-color', "#eee");
 
-		$("info_button_svg").src = "img/gear_white.svg";
+		$("info_button_svg").src = "img/info_white.svg";
+		if($("nav-side-menu").style.display !== "block")
+			$("setting_button_svg").src = "img/gear_white.svg";
+		else 
+			$("setting_button_svg").src = "img/close_white.svg";
 	}
 
 	function setLightMode(){
@@ -468,6 +516,10 @@ function update_UI_darkmode(){
 		root.style.setProperty('--tertiary-background-color', "#eee");
 		root.style.setProperty('--primary-font-color', "#111");
 
-		$("info_button_svg").src = "img/gear_black.svg";
+		$("info_button_svg").src = "img/info_black.svg";
+		if($("nav-side-menu").style.display !== "block")
+			$("setting_button_svg").src = "img/gear_black.svg";
+		else 
+			$("setting_button_svg").src = "img/close_black.svg";
 	}
 }

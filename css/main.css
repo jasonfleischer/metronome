@@ -35,23 +35,6 @@ html, body {
     display: none;
 }
 
-
-@media screen and (orientation: landscape) {
-    html.is-mobile-device {
-        /* Rotate the content container */
-        transform: rotate(-90deg);
-        transform-origin: left top;
-        /* Set content width to viewport height */
-        width: 100vh;
-        /* Set content height to viewport width */
-        height: 100vw;
-        overflow-x: hidden;
-        position: absolute;
-        top: 100%;
-        left: 0;
-    }
-}
-
 @media (min-width: 650px) { /*desktop*/
     .mobile-only {
         display: none;
@@ -69,7 +52,8 @@ html, body {
         width: var(--left-column-width);   
         height: 100%;
         overflow: hidden;
-        z-index: 1;
+       
+        display: block;
     }
     #content_view {
         overflow-x: hidden;
@@ -119,6 +103,7 @@ html, body {
 
     #kofi_button {
         width: 121px;
+        right: 54px;
     }
     
     #kofi_button img {
@@ -126,6 +111,10 @@ html, body {
         padding-left: 0px;
         padding-right: 0px;
         padding-bottom: 2px;
+    }
+
+    #info_button {
+        right:15px;
     }
 }
 
@@ -144,15 +133,17 @@ html, body {
         font-weight: 200;
         background-color: var(--secondary-background-color);
         position: fixed;
-        top: 310px;
+        top: 10px;
         width: 100%;   
+        z-index: 2;
         /*height: calc(100% - 300px);*/
         height: 100%;
         overflow: hidden;
+        display: none;
     }
     #content_view{
         padding-left: 0px;
-        height: 260px;
+        height: calc(100% - var(--header-height) * 2 - 10px);
         position: absolute;
         width: 100%;
     }
@@ -161,7 +152,7 @@ html, body {
         display: table;
         overflow: hidden;
         width: 100%;
-        height: 260px;  
+        height: calc(100% - var(--header-height));  
     }
     #init_view p {
         text-align: center;
@@ -185,9 +176,9 @@ html, body {
     }
 
     #ul_wrapper {
-        height: -moz-calc(100% - 363px);
-        height: -webkit-calc(100% - 363px);
-        height: calc(100% - 363px);
+        height: -moz-calc(100% - 60px);
+        height: -webkit-calc(100% - 60px);
+        height: calc(100% - 60px);
         display: block;
         overflow: auto;
     }
@@ -195,10 +186,15 @@ html, body {
     #kofi_button {
         width: 36px;
         border-radius: 18px;
+        right: 100px;
     }
 
     #kofi_button img {
         padding: 2px;
+    }
+
+    #info_button {
+        right:59px;
     }
 
     body {
@@ -349,12 +345,20 @@ button:hover {
     padding-right: 13px;
     padding-left: 13px;
 }
-#tap_button {
+#mobile_button_control_container {
+    width: calc(100% - 30px);
+    height: var(--row-height);
+    position: absolute;
+    bottom: 15px;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+#tap_button, #mobile_tap_button {
     float: left;
     width: 48%;
     height: 100%;
 }
-#play_pause_button {
+#play_pause_button, #mobile_play_pause_button {
     float: right;
     width: 48%;
     height: 100%;
@@ -365,7 +369,7 @@ button:hover {
     background: var(--secondary-background-color);
     height: var(--header-height);
     box-shadow: 1px 0px 5px var(--highlight-color-darker);
-    z-index: 2;
+    z-index: 3;
 }
 
 #page_name {
@@ -423,16 +427,19 @@ button:hover {
     line-height: 0px;
 }
 
-#info_button {
+#info_button, #setting_button {
     height: 36px;
     width: 36px;
     position: absolute;
     top: 7px;
-    right:15px;
     cursor: pointer;
     border-radius: 18px;
 }
-#info_button img {
+
+#setting_button {
+    right:15px;
+}
+#info_button img, #setting_button img {
     padding-top: 3px;
     padding-left: 0px;
     height: 16px;
@@ -443,7 +450,6 @@ button:hover {
     height: 36px;
     position: absolute;
     top: 7px;
-    right:54px;
     cursor: pointer;
     margin-right: 5px;
 }

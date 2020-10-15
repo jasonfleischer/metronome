@@ -22,8 +22,8 @@
 	<!-- alert -->
 	<div id="info_alert_container">
 		<div id="info_alert">
-			<h3>Settings</h3>
-			<ul>
+			<h3 class="desktop-only">Settings</h3>
+			<ul class="desktop-only">
 				<!-- google translate -->
 				<li>
 					<div>
@@ -50,10 +50,10 @@
 					</div>
 				</li>
 			</ul>
-			<br/>
+			<br class="desktop-only"/>
 			<h3>Information</h3>
-			<button onclick="show_keyboard_shortcuts()">Keyboard Shortcuts</button>
-			<br/><br/>
+			<button class="desktop-only" onclick="show_keyboard_shortcuts()">Keyboard Shortcuts</button>
+			<br class="desktop-only"/><br class="desktop-only" />
 			<p>Thank you for using this website. If you wish to submit feedback, comment or report an error click <a href="mailto:jason_fleischer@hotmail.ca?Subject=Metronome%20Website%20Feedback">here</a>.
 			</p>
 			<br/>
@@ -74,7 +74,8 @@
 				<span class="desktop-only">Buy me a coffee</span>
 			
 		</button>
-		<button id="info_button" onclick="info()" ><img id="info_button_svg" src="img/gear_black.svg" alt="Settings"/></button>
+		<button id="info_button" onclick="info()" ><img id="info_button_svg" src="img/info_black.svg" alt="Info"/></button>
+		<button id="setting_button" class="mobile-only" onclick="toggle_settings()" ><img id="setting_button_svg" src="img/gear_black.svg" alt="Settings"/></button>
 	</div>
 	<div id="nav-side-menu" >
 		<div id="page_contents">
@@ -85,8 +86,8 @@
 			</div>
 		</div>
 		<div id="button_control_container">
-			<button id="tap_button" onclick="tap_controller.tap()">Tap</button>
-			<button id="play_pause_button" onclick="playPause()">Play</button>
+			<button id="tap_button" class="desktop-only" onclick="tap_controller.tap()">Tap</button>
+			<button id="play_pause_button" class="desktop-only" onclick="playPause()">Play</button>
 		</div>
 		<br/>
 		<div id="ul_wrapper">
@@ -146,6 +147,15 @@
 						</label>
 					</div>
 				</li>
+				<li id="mobile_darkmode" class="mobile-only">
+					<div class="nav-toggle-item">
+						<span>Dark Mode</span>
+						<label id="mobile_darkmode_checkbox_switch" class="switch">
+							<input id="mobile_darkmode_checkbox" type="checkbox" checked="checked"/>
+							<span class="switch_track round" tabindex="0"></span>
+						</label>
+					</div>
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -158,7 +168,13 @@
 			<canvas id="time_view_canvas" ></canvas>		
 			<p id="count_text">&nbsp;</p>
 		</div>
+
+		
 	</div>
+	<div id="mobile_button_control_container" class="mobile-only">
+			<button id="mobile_tap_button" onclick="tap_controller.tap()">Tap</button>
+			<button id="mobile_play_pause_button" onclick="playPause()">Play</button>
+		</div>
 	<!--<script src="https://surikov.github.io/webaudiofont/npm/dist/WebAudioFontPlayer.js"></script>-->
 	<script src="js/midi/webAudioFontPlayer.js"></script>
 	<script src="js/midi/midi_controller.js"></script>
