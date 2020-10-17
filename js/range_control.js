@@ -3,7 +3,8 @@ var range_control = {
 	color_track: '#077bff',
 	color_background_track: getComputedStyle(document.documentElement).getPropertyValue("--tertiary-background-color"),
 	color_font: getComputedStyle(document.documentElement).getPropertyValue("--primary-font-color"),
-	color_button: getComputedStyle(document.documentElement).getPropertyValue("--secondary-background-color")
+	color_button: getComputedStyle(document.documentElement).getPropertyValue("--secondary-background-color"),
+	color_stroke: getComputedStyle(document.documentElement).getPropertyValue("--primary-background-color")
 }
 
 range_control.percent_value = 0;
@@ -286,6 +287,7 @@ range_control.reload_colors = function(){
 	range_control.color_background_track = getComputedStyle(document.documentElement).getPropertyValue("--tertiary-background-color");
 	range_control.color_font = getComputedStyle(document.documentElement).getPropertyValue("--primary-font-color");
 	range_control.color_button = getComputedStyle(document.documentElement).getPropertyValue("--secondary-background-color");
+	range_control.color_stroke = getComputedStyle(document.documentElement).getPropertyValue("--primary-background-color");
 	range_control.draw(range_control.percent_value);
 }
 
@@ -343,7 +345,7 @@ range_control.draw = function(percent_value){
 
 		ctx.beginPath();
 		ctx.fillStyle = range_control.color_button;
-		ctx.strokeStyle = '#ddd';
+		ctx.strokeStyle = range_control.color_stroke;
 		ctx.lineWidth = 2;
 		ctx.arc(range_control.getXofCircle(range_control.radius - range_control.track_width/2, range_control.WIDTH/2.0, range_control.controlAngleInRadians), 
 			range_control.getYofCircle(range_control.radius- range_control.track_width/2, range_control.HEIGHT/2.0, range_control.controlAngleInRadians), 
@@ -354,7 +356,7 @@ range_control.draw = function(percent_value){
 
 		ctx.beginPath();
 		ctx.fillStyle = range_control.color_button;
-		ctx.strokeStyle = '#ddd';
+		ctx.strokeStyle = range_control.color_stroke;
 		ctx.lineWidth = 1;
 		ctx.arc(range_control.minusX, range_control.minusY, range_control.track_width/2, 0, TWO_PI);
 		ctx.fill();
@@ -372,7 +374,7 @@ range_control.draw = function(percent_value){
 
 		ctx.beginPath();
 		//ctx.fillStyle = "#2d2d2d";
-		ctx.strokeStyle = '#ddd';
+		ctx.strokeStyle = range_control.color_stroke;
 		ctx.lineWidth = 1;
 		ctx.arc(range_control.plusX, range_control.plusY, range_control.track_width/2, 0, TWO_PI);
 		ctx.fill();

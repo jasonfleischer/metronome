@@ -9,6 +9,8 @@
 class WoodblockSound {
 	constructor(type) {
 		this.type = type;
+
+
 		midi_controller.init();
 	}
 	play(){
@@ -84,22 +86,20 @@ midi_controller.getFluidTone = function() {
 
 midi_controller.init = function() {
 
-	if(!self.initialized){
+	if(!midi_controller.initialized){
 
 		console.log("midi_controller.init")
 
-		this.isFirefox = isFirefox();
-		this.tone= this.isFirefox ? this.getFluidTone() : this.tone=this.getAspirinTone();
+		midi_controller.isFirefox = isFirefox();
+		midi_controller.tone= midi_controller.isFirefox ? midi_controller.getFluidTone() : midi_controller.tone=midi_controller.getAspirinTone();
 		var AudioContextFunc = window.AudioContext || window.webkitAudioContext;
-		this.audioContext = new AudioContextFunc();
-		this.player=new WebAudioFontPlayer();
-		this.player.adjustPreset(this.audioContext, this.tone);
-		self.initialized = true;
 
-		//drum_controller.initialized = false;
+		midi_controller.audioContext = new AudioContextFunc();
+		midi_controller.player=new WebAudioFontPlayer();
+		midi_controller.player.adjustPreset(midi_controller.audioContext, midi_controller.tone);
+		self.initialized = true;
 	}
 }
-//midi_controller.init();
 
 midi_controller.playLoudClick = function(){	
 	this.playPitch(this.isFirefox ? 65 : 77);
@@ -112,6 +112,7 @@ midi_controller.playSoftClick = function(){
 }
 
 midi_controller.playPitch = function(pitch) {
+	//midi_controller.player.adjustPreset(midi_controller.audioContext, midi_controller.tone);
 	this.player.queueWaveTable(this.audioContext, this.audioContext.destination, this.tone, this.audioContext.currentTime, pitch, this.duration_in_sec);
 }
 

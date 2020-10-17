@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
+	<script src="js/midi/webAudioFontPlayer.js"></script>
 	<!-- (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-170120616-1"></script>
 	<script>
@@ -9,6 +10,7 @@
 		gtag('js', new Date());
 		gtag('config', 'UA-170120616-1');
 	</script>
+
 	<!-- end of - Google Analytics -->
 	<title>Metronome</title>
 	<meta charset="utf-8">
@@ -22,7 +24,12 @@
 	<!-- alert -->
 	<div id="info_alert_container">
 		<div id="info_alert">
-			<h3 class="desktop-only">Settings</h3>
+			<div id="info_alert_header">
+
+				<h3>Information</h3>
+				<button id="dismiss_alert_button" onclick="dismissInfo()" ><img id="dismiss_close_button_svg" src="img/close_black.svg" alt="Dismiss info"/></button>
+			</div>
+			<div>
 			<ul class="desktop-only">
 				<!-- google translate -->
 				<li>
@@ -32,8 +39,7 @@
 						<script>
 							function googleTranslateElementInit() {
 								new google.translate.TranslateElement({
-									pageLanguage: 'en',
-									layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+									pageLanguage: 'en'/*, layout: google.translate.TranslateElement.InlineLayout.SIMPLE*/
 								}, 'google_translate_element');
 							}
 						</script>
@@ -50,20 +56,19 @@
 					</div>
 				</li>
 			</ul>
-			<br class="desktop-only"/>
-			<h3>Information</h3>
-			<button class="desktop-only" onclick="show_keyboard_shortcuts()">Keyboard Shortcuts</button>
-			<br class="desktop-only"/><br class="desktop-only" />
+		</div>
+			
+			
+			<br class="desktop-only" />
 			<p>Thank you for using this website. If you wish to submit feedback, comment or report an error click <a href="mailto:jason_fleischer@hotmail.ca?Subject=Metronome%20Website%20Feedback">here</a>.
 			</p>
 			<br/>
 			<p>Special thanks to Surikov for their <a href="https://surikov.github.io/webaudiofont/" target="_blank">WebAudioFont</a> library.</p>
 			<br/>
 			<p>Information about the developer can be found <a href="https://jasonfleischer.github.io/website/" target="_blank">here</a>.</p>
-			<br/>
-			
-			
-			<button id="dismiss_alert_button" onclick="dismissInfo()">Close</button>
+			<br class="desktop-only"/>
+			<button class="desktop-only" onclick="show_keyboard_shortcuts()">Keyboard Shortcuts</button>
+
 		</div>
 	</div>
 	<div id="header">
@@ -89,7 +94,7 @@
 			<button id="tap_button" class="desktop-only" onclick="tap_controller.tap()">Tap</button>
 			<button id="play_pause_button" class="desktop-only" onclick="playPause()">Play</button>
 		</div>
-		<br/>
+
 		<div id="ul_wrapper">
 			<ul>	
 				<li class="menu_item_divider desktop-only"></li>
@@ -106,7 +111,7 @@
 						<span>Mode</span>
 						<select id="mode_select">
 							<option value="0" selected="selected">Click</option>
-							<!--<option value="1">Drum</option>-->
+							<option value="1">Drum</option>
 							<option value="2">Talking</option>
 							<!--<option value="3">Syllables</option>-->
 						</select>
@@ -156,6 +161,21 @@
 						</label>
 					</div>
 				</li>
+				<!-- google translate -->
+				<li class="mobile-only">
+					<div class="nav-toggle-item">
+						<span id="mobile_language_text">Language</span>
+						<div id="mobile_google_translate_element"></div>
+						<script>
+							function mobileGoogleTranslateElementInit() {
+								new google.translate.TranslateElement({
+									pageLanguage: 'en'/*, layout: google.translate.TranslateElement.InlineLayout.SIMPLE*/
+								}, 'mobile_google_translate_element');
+							}
+						</script>
+						<script src="//translate.google.com/translate_a/element.js?cb=mobileGoogleTranslateElementInit"></script>
+					</div>
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -176,7 +196,7 @@
 			<button id="mobile_play_pause_button" onclick="playPause()">Play</button>
 		</div>
 	<!--<script src="https://surikov.github.io/webaudiofont/npm/dist/WebAudioFontPlayer.js"></script>-->
-	<script src="js/midi/webAudioFontPlayer.js"></script>
+	
 	<script src="js/midi/midi_controller.js"></script>
 	<script src="js/midi/drum_midi_controller.js"></script>
 	<script src="js/model.js"></script>

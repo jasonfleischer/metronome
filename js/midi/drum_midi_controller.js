@@ -7,7 +7,7 @@
 class DrumSound {
 	constructor(type) {
 		this.type = type;
-		//drum_controller.init();
+		drum_controller.init();
 	}
 	play(){
 		
@@ -133,50 +133,61 @@ drum_controller.getCrashTone = function() {
 
 drum_controller.init = function() {
 
-	if(!self.initialized){
+	if(!drum_controller.initialized){
 
 		console.log("drum_controller.init")
+
+		var audioCtx = new AudioContext();
+
+		var gainNode = audioCtx.createGain()
+gainNode.gain.value = 0.1 // 10 %
+gainNode.connect(audioCtx.destination)
+// now instead of connecting to aCtx.destination, connect to the gainNode
+//source.connect(gainNode)
+
+
 		var AudioContextFunc = window.AudioContext || window.webkitAudioContext;
-		this.audioContext = new AudioContextFunc();
+		drum_controller.audioContext = new AudioContextFunc();
 		//midi_controller.audioContextFunc.stop();
 
 
-		this.snare_player = new WebAudioFontPlayer();
-		this.snare_tone = this.getSnareTone();
-		this.snare_player.adjustPreset(this.audioContext, this.snare_tone);
+		drum_controller.snare_player = new WebAudioFontPlayer();
+		drum_controller.snare_player.limitVolume(0.5);
+		drum_controller.snare_tone = drum_controller.getSnareTone();
+		drum_controller.snare_player.adjustPreset(drum_controller.audioContext, drum_controller.snare_tone);
 
-		this.bass_player = new WebAudioFontPlayer();
-		this.bass_tone = this.getBassTone();
-		this.bass_player.adjustPreset(this.audioContext, this.bass_tone);
+		drum_controller.bass_player = new WebAudioFontPlayer();
+		drum_controller.bass_tone = drum_controller.getBassTone();
+		drum_controller.bass_player.adjustPreset(drum_controller.audioContext, drum_controller.bass_tone);
 		
-		this.highhat_player = new WebAudioFontPlayer();
-		this.highhat_tone = this.getHighhatTone();
-		this.highhat_player.adjustPreset(this.audioContext, this.highhat_tone);
+		drum_controller.highhat_player = new WebAudioFontPlayer();
 
-		this.crash_player = new WebAudioFontPlayer();
-		this.crash_tone = this.getCrashTone();
-		this.crash_player.adjustPreset(this.audioContext, this.crash_tone);
+		drum_controller.highhat_tone = drum_controller.getHighhatTone();
+		drum_controller.highhat_player.adjustPreset(drum_controller.audioContext, drum_controller.highhat_tone);
+		drum_controller.highhat_player.limitVolume(0.1);
+
+		drum_controller.crash_player = new WebAudioFontPlayer();
+		drum_controller.crash_tone = drum_controller.getCrashTone();
+		drum_controller.crash_player.adjustPreset(drum_controller.audioContext, drum_controller.crash_tone);
 
 
-		self.initialized = true;
+		drum_controller.initialized = true;
 	}
 }
-//drum_controller.init();
 
 drum_controller.playSnare = function(){	
-	this.snare_player.queueWaveTable(this.audioContext, this.audioContext.destination, this.snare_tone, this.audioContext.currentTime, 40, this.duration_in_sec);
+	this.snare_player.queueWaveTable(this.audioContext, this.audioContext.destination, this.snare_tone, this.audioContext.currentTime, 40, this.duration_in_sec, 0.3);
+	this.playHighhat();
 }
 drum_controller.playBass = function(){
-
-logE(this.bass_player)
-
-	this.bass_player.queueWaveTable(this.audioContext, this.audioContext.destination, this.bass_tone, this.audioContext.currentTime, 35, this.duration_in_sec);
+	this.bass_player.queueWaveTable(this.audioContext, this.audioContext.destination, this.bass_tone, this.audioContext.currentTime, 35, this.duration_in_sec, 0.4);
+	this.playHighhat();
 }
 drum_controller.playHighhat = function(){
-	this.highhat_player.queueWaveTable(this.audioContext, this.audioContext.destination, this.highhat_tone, this.audioContext.currentTime, 42, this.duration_in_sec);
+	this.highhat_player.queueWaveTable(this.audioContext, this.audioContext.destination, this.highhat_tone, this.audioContext.currentTime, 42, this.duration_in_sec, 0.1);
 }
 drum_controller.playCrash = function(){
-	this.crash_player.queueWaveTable(this.audioContext, this.audioContext.destination, this.crash_tone, this.audioContext.currentTime, 49, this.duration_in_sec);
+	this.crash_player.queueWaveTable(this.audioContext, this.audioContext.destination, this.crash_tone, this.audioContext.currentTime, 49, 0.6, 0.1);
 }
 drum_controller.playBassAndCrash = function(){
 	this.playBass();

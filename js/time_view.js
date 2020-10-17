@@ -5,8 +5,8 @@ var time_view = {
 	radius: 0,
 	start_time: 0,
 
-	color_primary: getComputedStyle(document.documentElement).getPropertyValue("--tertiary-background-color"),
-	color_secondary: getComputedStyle(document.documentElement).getPropertyValue("--primary-font-color")
+	color_primary: {},
+	color_secondary: {}
 }
 
 var animation_request_id;
@@ -176,8 +176,8 @@ time_view.reload_colors = function(){
 		ctx.clearRect(0, 0, time_view.WIDTH, time_view.HEIGHT);
 	}
 	clear_background();
-	time_view.color_primary = getComputedStyle(document.documentElement).getPropertyValue("--tertiary-background-color");
-	time_view.color_secondary = getComputedStyle(document.documentElement).getPropertyValue("--primary-font-color");
+	time_view.color_primary = getComputedStyle(document.documentElement).getPropertyValue("--primary-font-color");
+	time_view.color_secondary = getComputedStyle(document.documentElement).getPropertyValue("--primary-background-color");
 	time_view.draw_background();
 	time_view.draw();
 }
@@ -247,7 +247,7 @@ time_view.draw_background = function(){
 	}
 
 	var outer_polygon = new Polygon(array_of_outer_points);
-	outer_polygon.draw(ctx, time_view.color_primary);
+	outer_polygon.draw(ctx, time_view.color_secondary);
 
 	var inner_polygon = new Polygon(array_of_inner_points);
 	inner_polygon.draw(ctx, 'clear');
@@ -266,7 +266,7 @@ time_view.draw = function(){
 	var angle = (TWO_PI*percentage) - (TWO_PI /4);
 	var pt = new Point(time_view.getXofCircle(time_view.radius - point_size, centerPt.x, angle), 
 								time_view.getYofCircle(time_view.radius - point_size, centerPt.y, angle));
-	pt.draw(ctx, point_size - 3, number_of_beats == 2 ? time_view.color_secondary : time_view.color_primary);
+	pt.draw(ctx, point_size - 3, time_view.color_secondary);
 
 	if(number_of_beats > 2){
 		
@@ -274,7 +274,7 @@ time_view.draw = function(){
 		var beat = parseInt ( (delta / (time_division_milli_seconds / number_of_beats) ) % number_of_beats );
 		var line = array_of_lines[beat];
 		var pt2 = reference_line.getIntersectionPtBetweenTwoLines(line);
-		if (pt2.isValid) pt2.draw(ctx, point_size -3, time_view.color_secondary);
+		if (pt2.isValid) pt2.draw(ctx, point_size -3, time_view.color_primary);
 	}
   	animation_request_id = requestAnimationFrame(time_view.draw);
 }

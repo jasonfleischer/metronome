@@ -31,5 +31,5 @@ function isFirefox(){
 }
 
 function screen_width_is_mobile(){
-	return window.innerWidth <= 650;
+	return window.innerWidth <= 800 || window.innerHeight <= 500; // match with css
 }

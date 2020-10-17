@@ -29,7 +29,8 @@ cookies.set_subdivision = function(value){
 
 cookies.ACCENT_FIRST_BEAT_KEY = "ACCENT_FIRST_BEAT_KEY";
 cookies.get_accent_first_beat = function(default_value){
-	return Boolean(cookies.getCookie(cookies.ACCENT_FIRST_BEAT_KEY, default_value) === "true");
+	var value = cookies.getCookie(cookies.ACCENT_FIRST_BEAT_KEY, default_value);
+	return Boolean(value === "true" || value === true);
 };
 cookies.set_accent_first_beat = function(value){
 	document.cookie = cookies.ACCENT_FIRST_BEAT_KEY + "=" + value;
@@ -45,7 +46,8 @@ cookies.set_mode = function(value){
 
 cookies.DARKMODE_KEY = "DARKMODE_KEY";
 cookies.get_darkmode = function(default_value){
-	return Boolean(cookies.getCookie(cookies.DARKMODE_KEY, default_value) === "true");
+	var value = cookies.getCookie(cookies.DARKMODE_KEY, default_value);
+	return Boolean(value === "true" || value === true);
 };
 cookies.set_darkmode = function(value){
 	document.cookie = cookies.DARKMODE_KEY + "=" + value;

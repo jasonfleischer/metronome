@@ -8,14 +8,12 @@
 // other browsers
 // 	 safari - no issues
 //   firefox - no issues
-//	 edge - no issues
-// drums sounds
-// talking volume too loud
-// higher bpm msg
+//	 edge - no issue
+// update kofi
 
 function init() {
 	load_cookies();
-	//midi_controller.init();
+	
 	//drum_controller.init();
 	setup_darkmode_switch();
 	setup_up_mode_select();
@@ -68,9 +66,6 @@ function window_resized_end(){
 		bpm_text_object.style.display = "block"; // show
 		bpm_text_object.style.left = Math.round((canvas.offsetWidth - bpm_text_object.offsetWidth) / 2) + "px";
 	}
-
-	dismissInfo();
-
 }
 
 var resized_timer;
@@ -79,6 +74,7 @@ window.onresize = function(){
 	resized_timer = setTimeout(window_resized_end, 200);
 	$("bpm_text").style.display = "none"; // hide
 	$("time_view_container").style.display = "none"; // hide
+	dismissInfo();
 };
 
 function setup_bpm_controls() {
@@ -219,7 +215,13 @@ function setup_keyboard_listeners() {
 			incrementDivision();
 		} else if (code == 'KeyT') {
 			tap_controller.tap();
-		}else if (code == 'Digit1' || code == 'Numpad1') {
+		} else if (code == 'KeyD') {
+			var new_BPM = model.BPM*2;
+			if(new_BPM <= MAX_BPM && new_BPM >= MIN_BPM) setBPM(new_BPM);
+		} else if (code == 'KeyH') {
+			var new_BPM = Math.round(model.BPM/2); 
+			if(new_BPM <= MAX_BPM && new_BPM >= MIN_BPM) setBPM(new_BPM);
+		} else if (code == 'Digit1' || code == 'Numpad1') {
 			setBPM(60);
 		} else if (code == 'Digit2' || code == 'Numpad2') {
 			setBPM(75);
@@ -271,7 +273,8 @@ function setup_keyboard_listeners() {
 
 function show_keyboard_shortcuts(){
 	dismissInfo();
-	var keyboard_shorcut_window = window.open("", "Keyboard shortcuts", "width=280,height=440");
+	var keyboard_shorcut_window = window.open("Keyboard Shortcuts", "_blank", "width=280,height=470,titlebar=no,toolbar=no,status=no,location=no,menubar=no", true);
+	keyboard_shorcut_window.document.title = "Keyboard Shortcuts";
 	keyboard_shorcut_window.document.write(
 		`<table style="width:100%; text-align: left;">
 			<tr><th>Key</th><th>Command</th></tr>
@@ -281,6 +284,8 @@ function show_keyboard_shortcuts(){
 			<tr><td>Left Arrow</td><td>Decrement Subdivision</td></tr>
 			<tr><td>Right Arrow</td><td>Increment Subdivision</td></tr>
 			<tr><td>Letter T</td><td>Tap Tempo</td></tr>
+			<tr><td>Letter D</td><td>Double Tempo</td></tr>
+			<tr><td>Letter H</td><td>Half Tempo</td></tr>
 			<tr><td>Digit 1</td><td>60 BPM</td></tr>
 			<tr><td>Digit 2</td><td>75 BPM</td></tr>
 			<tr><td>Digit 3</td><td>90 BPM</td></tr>
@@ -297,10 +302,10 @@ function show_keyboard_shortcuts(){
 		<script>
 			function googleTranslateElementInit() {
 				new google.translate.TranslateElement({
-					pageLanguage: 'en',
-					layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+					pageLanguage: 'en'
 				}, 'google_translate_element');
 			}
+			document.title = "Keyboard Shortcuts";
 		</script>
 		<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>`);
 }
@@ -461,6 +466,10 @@ function update_UI_BPM(value) {
 
 function update_UI_mode(){
 	$("accent_first_beat").style.display = (model.mode == MODE.NORMAL || model.mode == MODE.DRUM) ? "block" : "none";
+	
+		$("status_msg").innerHTML = model.mode == MODE.TALKING ? "Configure / press 'Play' to begin. Talking mode works best at lower BPMs." : "Configure / press 'Play' to begin";
+	
+
 }
 
 function update_UI_playing(){
@@ -493,12 +502,11 @@ function update_UI_darkmode(){
 
 	function setDarkMode(){
 		var root = document.documentElement;
-		root.style.setProperty('--highlight-color', "#070707");
-		root.style.setProperty('--highlight-color-darker', "#333");
-		root.style.setProperty('--primary-background-color', "#030405");
-		root.style.setProperty('--secondary-background-color', "#000");
-		root.style.setProperty('--tertiary-background-color', "#111");
-		root.style.setProperty('--primary-font-color', "#eee");
+		root.style.setProperty('--highlight-color', "#444");
+		root.style.setProperty('--primary-background-color', "#252525"); // 3
+		root.style.setProperty('--secondary-background-color', "#000"); // 1
+		root.style.setProperty('--tertiary-background-color', "#070707"); // 2
+		root.style.setProperty('--primary-font-color', "#fff"); // inverse of 1
 
 		$("info_button_svg").src = "img/info_white.svg";
 		if($("nav-side-menu").style.display !== "block")
@@ -509,12 +517,11 @@ function update_UI_darkmode(){
 
 	function setLightMode(){
 		var root = document.documentElement;
-		root.style.setProperty('--highlight-color', "#f7f7f7");
-		root.style.setProperty('--highlight-color-darker', "#999");
-		root.style.setProperty('--primary-background-color', "#f3f4f5");
-		root.style.setProperty('--secondary-background-color', "#fff");
-		root.style.setProperty('--tertiary-background-color', "#eee");
-		root.style.setProperty('--primary-font-color', "#111");
+		root.style.setProperty('--highlight-color', "#ddd");
+		root.style.setProperty('--primary-background-color', "#f1f1f1"); // 3
+		root.style.setProperty('--secondary-background-color', "#fff"); // 1
+		root.style.setProperty('--tertiary-background-color', "#f7f7f7"); // 2
+		root.style.setProperty('--primary-font-color', "#111"); // inverse of 1
 
 		$("info_button_svg").src = "img/info_black.svg";
 		if($("nav-side-menu").style.display !== "block")

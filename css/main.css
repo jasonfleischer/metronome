@@ -5,7 +5,6 @@
     --header-height: 50px;
 
     --highlight-color:#f7f7f7;
-    --highlight-color-darker: #999;
 
     --primary-background-color: #f3f4f5;
     --secondary-background-color: #fff;
@@ -35,7 +34,7 @@ html, body {
     display: none;
 }
 
-@media (min-width: 650px) { /*desktop*/
+@media (min-width: 800px), (min-height: 500px) { /*desktop*/
     .mobile-only {
         display: none;
     }
@@ -71,9 +70,10 @@ html, body {
         text-align: center;
         padding-left: 20px;
         padding-right: 20px;
-        color: var(--highlight-color-darker);
+        color: var(--primary-font-color);
         display: table-cell;
         vertical-align: middle;
+        opacity: 0.3;
     }
 
     #page_contents{
@@ -96,11 +96,6 @@ html, body {
         overflow: auto;
     }
 
-    body {
-        background: var(--primary-background-color);
-        background-image: linear-gradient(to bottom, var(--secondary-background-color), var(--primary-background-color));
-    }
-
     #kofi_button {
         width: 121px;
         right: 54px;
@@ -118,7 +113,7 @@ html, body {
     }
 }
 
-@media (max-width: 650px) { /*mobile mode*/
+@media (max-width: 800px), (max-height: 500px) { /*mobile mode*/
 
     .mobile-only {
         display: block;
@@ -158,9 +153,10 @@ html, body {
         text-align: center;
         padding-left: 20px;
         padding-right: 20px;
-        color: var(--highlight-color-darker);
+        color: var(--primary-font-color);
         display: table-cell; 
         vertical-align: middle;
+        opacity: 0.3;
     }
 
     #page_contents{
@@ -196,15 +192,6 @@ html, body {
     #info_button {
         right:59px;
     }
-
-    body {
-        background: var(--secondary-background-color);
-    }
-}
-
-
-
-@media (max-width: 590px) {
 }
 
 body{
@@ -218,6 +205,9 @@ body{
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none;
+
+    background: var(--primary-background-color);
+    background-image: linear-gradient(to bottom, var(--secondary-background-color), var(--primary-background-color));
 }
 
 p {
@@ -244,12 +234,12 @@ li {
 
 li:not(.nav-side-menu-item-divider):not(.menu_item_divider):not(#info_button_li):not(.nav-side-menu-item-sub-divider) {
     height: var(--row-height);
-    border-bottom: 1px var(--highlight-color) solid;
+    border-bottom: 1px var(--tertiary-background-color) solid;
 }
 
 ::-webkit-scrollbar-track
 {
-  background-color: var(--highlight-color);
+  background-color: var(--tertiary-background-color);
 }
 
 ::-webkit-scrollbar
@@ -259,7 +249,8 @@ li:not(.nav-side-menu-item-divider):not(.menu_item_divider):not(#info_button_li)
 
 ::-webkit-scrollbar-thumb
 {
-  background: var(--tertiary-background-color);
+  background: var(--secondary-background-color);
+  border: 1px solid var(--primary-background-color);
 }
 
 .nav-side-menu-item {
@@ -309,9 +300,9 @@ li:not(.nav-side-menu-item-divider):not(.menu_item_divider):not(#info_button_li)
 }
 
 .menu_item_divider {
-    background-color: var(--highlight-color);
+    background-color: var(--tertiary-background-color);
     cursor: pointer;
-    height: 2px;
+    height: 1px;
     margin-bottom: 5px;
 }
 
@@ -331,10 +322,10 @@ button {
 }
 button:focus {
     outline: 0;
-    border: 1px solid var(--highlight-color-darker);
+    border: 1px solid var(--highlight-color);
 }
 button:hover {
-    background-color: var(--highlight-color);
+    background-color: var(--tertiary-background-color);
 
     cursor: pointer;
 }
@@ -344,6 +335,7 @@ button:hover {
     height: 40px;
     padding-right: 13px;
     padding-left: 13px;
+    margin-bottom: 12px;
 }
 #mobile_button_control_container {
     width: calc(100% - 30px);
@@ -368,7 +360,7 @@ button:hover {
     position: relative;
     background: var(--secondary-background-color);
     height: var(--header-height);
-    box-shadow: 1px 0px 5px var(--highlight-color-darker);
+    box-shadow: 1px 0px 5px var(--primary-background-color);
     z-index: 3;
 }
 
@@ -390,7 +382,7 @@ button:hover {
     width:100%;
 }
 
-#google_translate_element{
+#google_translate_element, #mobile_google_translate_element{
     height: 33px;
     position: relative;
     top: 6px;
@@ -427,7 +419,15 @@ button:hover {
     line-height: 0px;
 }
 
-#info_button, #setting_button {
+#info_alert h3 {
+    float: left;
+}
+#info_alert_header {
+    height: 43px
+
+}
+
+#info_button, #setting_button, #dismiss_alert_button {
     height: 36px;
     width: 36px;
     position: absolute;
@@ -436,10 +436,15 @@ button:hover {
     border-radius: 18px;
 }
 
+#dismiss_alert_button  {
+    position: relative;
+    float: right;
+    top: -3px;
+}
 #setting_button {
     right:15px;
 }
-#info_button img, #setting_button img {
+#info_button img, #setting_button img, #dismiss_alert_button img {
     padding-top: 3px;
     padding-left: 0px;
     height: 16px;
@@ -479,7 +484,7 @@ button:hover {
     height: 100%;
     width: 100%;
     background-color: #00000099; /*transparent*/
-    z-index: 3;
+    z-index: 4;
 
 }
 #info_alert{
@@ -487,10 +492,10 @@ button:hover {
     margin-top: 65px;
     margin-right: auto;
     margin-left: auto;
-    padding-right: 14px;
-    padding-left: 14px;
-    padding-top: 13px;
-    padding-bottom: 10px;
+    padding-right: 17px;
+    padding-left: 17px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     max-width: 411px;
     border: 1px solid var(--tertiary-background-color);
 }
@@ -544,10 +549,10 @@ button:hover {
     box-shadow:  0px 0px var(--secondary-background-color);
 }
 .switch span:focus {
-    box-shadow: 0px 0px var(--secondary-background-color);
+    box-shadow: 0px 0px var(--highlight-color);
 }
 .switch input:focus {
-    box-shadow: 0px 0px var(--secondary-background-color);
+    box-shadow: 0px 0px var(--highlight-color);
 }
 .switch input {
     display:none;
@@ -567,7 +572,7 @@ button:hover {
 .switch_track:focus {
     
     outline: 0;
-    border: 1px solid var(--highlight-color-darker);
+    border: 1px solid var(--highlight-color);
 
 }
 .switch_track:before {
@@ -586,7 +591,7 @@ input:checked + .switch_track {
 }
 input:focus + .switch_track {
     outline: 0;
-    border: 1px solid var(--highlight-color-darker);
+    border: 1px solid var(--highlight-color);
 }
 input:checked + .switch_track:before {
     -webkit-transform: translateX(20px);
@@ -628,7 +633,7 @@ select {
 }
 select:focus {
     outline: 0;
-    border: 1px solid var(--highlight-color-darker);
+    border: 1px solid var(--highlight-color);
 }
 
 select:after {
@@ -636,7 +641,7 @@ select:after {
     height: 0; 
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    border-top: 6px solid var(--highlight-color-darker);
+    border-top: 6px solid var(--highlight-color);
     position: absolute;
     top: 40%;
     right: 5px;

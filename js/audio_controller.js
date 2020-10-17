@@ -40,10 +40,13 @@ audio_controller.play = function(){
 		beat_text_array = [];
 		audio_array = ["audio/talking/one.wav", "audio/talking/two.wav", "audio/talking/three.wav", "audio/talking/four.wav", "audio/talking/five.wav", "audio/talking/six.wav", "audio/talking/seven.wav", "audio/talking/eight.wav", "audio/talking/nine.wav"];
 
+		var volume = 0.4;
+
 		var i;
 		for(i=0; i<model.time_signature; i++){
 			var audio = document.createElement("AUDIO");
 			audio.setAttribute("src", audio_array[i]);
+			audio.volume = volume;
 			beat_array[i] = audio;
 			beat_text_array[i] = (i+1).toString();
 		}
@@ -51,16 +54,18 @@ audio_controller.play = function(){
 		if (model.beat_division === 2){
 			var and_audio = document.createElement("AUDIO");
 			and_audio.setAttribute("src","audio/talking/and.wav");
-
+			and_audio.volume = volume;
 			division_array = [and_audio];
 			division_text_array = ["&"];
 		} else if (model.beat_division === 3){
 
 			var trip_audio = document.createElement("AUDIO");
 			trip_audio.setAttribute("src","audio/talking/trip.wav");
+			trip_audio.volume = volume;
 
 			var let_audio = document.createElement("AUDIO");
 			let_audio.setAttribute("src","audio/talking/let.wav");
+			let_audio.volume = volume;
 
 			division_array = [trip_audio, let_audio];
 			division_text_array = ["trip", "let"];
@@ -69,12 +74,15 @@ audio_controller.play = function(){
 
 			var e_audio = document.createElement("AUDIO");
 			e_audio.setAttribute("src","audio/talking/e.wav");
+			e_audio.volume = volume;
 
 			var and_audio = document.createElement("AUDIO");
 			and_audio.setAttribute("src","audio/talking/and.wav");
+			and_audio.volume = volume;
 
 			var a_audio = document.createElement("AUDIO");
 			a_audio.setAttribute("src","audio/talking/ah.wav");
+			a_audio.volume = volume;
 
 			division_array = [e_audio, and_audio, a_audio];
 			division_text_array = ["e", "&", "a"];
@@ -85,25 +93,14 @@ audio_controller.play = function(){
 		beat_array = [];
 		beat_text_array = [];
 
-		/*var bass_and_crash_audio = document.createElement("AUDIO");
-		bass_and_crash_audio.setAttribute("src","audio/drum/bass_and_crash.wav");
-
-		var bass_audio = document.createElement("AUDIO");
-		bass_audio.setAttribute("src","audio/drum/bass.wav");
-		
-		var snare_audio = document.createElement("AUDIO");
-		snare_audio.setAttribute("src","audio/drum/snare.wav");
-
-		var highhat_audio = document.createElement("AUDIO");
-		highhat_audio.setAttribute("src","audio/drum/highhat.wav");*/
-
 		var bass_and_crash_audio = new DrumSound("bass_and_crash");
 		var snare_audio = new DrumSound("snare");
 		var bass_audio = new DrumSound("bass");
 		var highhat_audio = new DrumSound("highhat");
 
 		var first_audio = model.accent_first_beat ? bass_and_crash_audio : bass_audio;
-		audio_array = [first_audio, snare_audio, bass_audio, snare_audio, bass_audio, snare_audio, bass_audio, snare_audio, bass_audio];
+		audio_array = (model.time_signature % 2) ? [first_audio, snare_audio, snare_audio, bass_audio, snare_audio, bass_audio, snare_audio, bass_audio, snare_audio] :
+													[first_audio, snare_audio, bass_audio, snare_audio, bass_audio, snare_audio, bass_audio, snare_audio, bass_audio];											 ;
 
 		var i;
 		for(i=0; i<model.time_signature; i++){
