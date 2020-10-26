@@ -1,0 +1,52 @@
+select {
+    height: 36px !important; 
+    border: none; 
+    background-color: var(--secondary-background-color); 
+    color: var(--primary-font-color);
+    background:  var(--secondary-background-color) url('../img/down_arrow.png') no-repeat right .75rem center; 
+    background-size: 8px 10px;
+    -webkit-appearance: none;
+    display: inline-block;
+    width: 44%;
+    height: calc(2.25rem + 2px);
+    padding: .375rem 1.75rem .375rem .75rem;
+    line-height: 1.5;
+    vertical-align: middle;
+    background-size: 8px 10px;
+    border: 1px solid var(--tertiary-background-color);
+    border-radius: .25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    float: right;
+    margin-top: 4px;
+    margin-right: 14px;
+    font-family : inherit;
+}
+select:focus {
+    outline: 0;
+    border: 1px solid var(--highlight-color);
+}
+
+select:after {
+    width: 0; 
+    height: 0; 
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid var(--highlight-color);
+    position: absolute;
+    top: 40%;
+    right: 5px;
+    content: "";
+    z-index: 98;
+}
+
+select:disabled {
+    cursor: not-allowed;
+    color: graytext;
+}
+
+select::-ms-expand {
+    display: none;
+}

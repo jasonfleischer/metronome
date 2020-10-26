@@ -1,3 +1,13 @@
+function load_cookies(){
+	model.BPM = cookies.get_BPM(120);
+	model.time_signature = cookies.get_time_signature(TIME_SIGNATURE.TS_4_4);
+	model.beat_division = cookies.get_subdivision(1);
+	model.accent_first_beat = cookies.get_accent_first_beat(true);
+	model.mode = cookies.get_mode(MODE.NORMAL);
+	model.darkmode = cookies.get_darkmode(false);
+	translations.current_language = cookies.get_language(LANGUAGE.ENGLISH);
+}
+
 var cookies = {};
 
 cookies.BPM_KEY = "BPM_KEY";
@@ -51,6 +61,15 @@ cookies.get_darkmode = function(default_value){
 };
 cookies.set_darkmode = function(value){
 	document.cookie = cookies.DARKMODE_KEY + "=" + value;
+};
+
+cookies.LANGUAGE_KEY = "LANGUAGE_KEY";
+cookies.get_language = function(default_value){
+	var value = cookies.getCookie(cookies.LANGUAGE_KEY, default_value);
+	return value;
+};
+cookies.set_language = function(value){
+	document.cookie = cookies.LANGUAGE_KEY + "=" + value;
 };
 
 cookies.setCookie = function(cname, cvalue, exdays) {

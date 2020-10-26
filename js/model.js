@@ -3,8 +3,7 @@
 const MODE = Object.freeze({
 	NORMAL: 0,
 	DRUM: 1,
-	TALKING: 2,
-	SYLLABLES: 3
+	TALKING: 2
 });
 
 const TIME_SIGNATURE = Object.freeze({
@@ -29,4 +28,9 @@ var model = {
 	accent_first_beat: true,
 	beat_division: 1,
 	darkmode: false
+}
+
+function modelHasChanged(other_model){
+	return other_model.mode != model.mode || other_model.BPM != model.BPM || other_model.time_signature != model.time_signature || 
+			other_model.accent_first_beat != model.accent_first_beat || other_model.beat_division != model.beat_division; 
 }

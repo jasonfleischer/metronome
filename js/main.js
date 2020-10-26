@@ -1,52 +1,82 @@
 
 //todo 
 
-
 // dont restart on active changes
-// mobile - language keyboard shorcuts broken, wavs broken, landscape
+// animate nav menu
 // time view cut off
+// other languages
+// mobile 
 // other browsers
 // 	 safari - no issues
 //   firefox - no issues
 //	 edge - no issue
-// update kofi
+
+// python -m SimpleHTTPServer 8000
+// http://localhost:8000/
+
 
 function init() {
 	load_cookies();
+	translations.load();
 	
-	//drum_controller.init();
-	setup_darkmode_switch();
-	setup_up_mode_select();
-	setup_time_signature_select();
-	setup_beat_division_select();
-	setup_accent_first_beat_switch();
+	setup_audio()
+	function setup_audio(){
+		audio_controller.init_sounds();
+		click_controller.init();
+		drum_controller.init();
+	}
+
+	setup_controls();
+	function setup_controls(){
+		setup_language_select();
+		setup_darkmode_switch();
+		setup_mode_select();
+		setup_time_signature_select();
+		setup_beat_division_select();
+		setup_accent_first_beat_switch();
+		setup_bpm_controls();
+	}
+
 	setup_keyboard_listeners();
 	setup_info_alert();
+
 	show_hidden_views();
 	time_view.init();
-	setup_bpm_controls();
-}
-
-function load_cookies(){
-	model.BPM = cookies.get_BPM(120);
-	model.time_signature = cookies.get_time_signature(TIME_SIGNATURE.TS_4_4);
-	model.beat_division = cookies.get_subdivision(1);
-	model.accent_first_beat = cookies.get_accent_first_beat(true);
-	model.mode = cookies.get_mode(MODE.NORMAL);
-	model.darkmode = cookies.get_darkmode(false);
 }
 
 function show_hidden_views(){
 	$("header").style.display = "block";
-	if(!screen_width_is_mobile())
+	if(!is_compact_window())
 		$("nav-side-menu").style.display = "block";
 	$("content_view").style.display = "block";
 }
 
-function window_resized_end(){
-	log("window resized end event");
+// window resize
 
-	if(screen_width_is_mobile()) {
+var window_resize_start_event_occured = false;
+var resized_timer;
+window.onresize = function(){
+	clearTimeout(resized_timer);
+	resized_timer = setTimeout(window_resized_end, 200);
+	if(!window_resize_start_event_occured) {
+		window_resized_start();
+		window_resize_start_event_occured = true;
+	}
+};
+
+function window_resized_start(){
+	$("bpm_text").style.display = "none"; // hide
+	$("time_view_container").style.display = "none"; // hide
+	$("status_msg").style.display = "none"; // hide
+	$("nav-side-menu").style.display = "none"; // hide
+	dismissInfo();	
+}
+
+function window_resized_end(){
+
+	window_resize_start_event_occured = false;
+
+	if(is_compact_window()) {
 		hide_settings();
 	} else {
 		$("nav-side-menu").style.display = "block";
@@ -54,28 +84,70 @@ function window_resized_end(){
 		$("info_button").style.display = "block";
 	}
 
-	time_view.resize();
-	time_view.draw_background();
 	if(audio_controller.playing){
 		$("time_view_container").style.display = "block"; // show
+	} else {
+		$("status_msg").style.display = "table-cell"; // show
 	}
-
-	{
-		var canvas = document.getElementById("dial_canvas");
-		var bpm_text_object = $("bpm_text");
-		bpm_text_object.style.display = "block"; // show
-		bpm_text_object.style.left = Math.round((canvas.offsetWidth - bpm_text_object.offsetWidth) / 2) + "px";
-	}
+	time_view.resize();
+	time_view.draw_background();
+	
+	$("bpm_text").style.display = "block"; // show
+	range_control.resize_bpm_text();
 }
 
-var resized_timer;
-window.onresize = function(){
-	clearTimeout(resized_timer);
-	resized_timer = setTimeout(window_resized_end, 200);
-	$("bpm_text").style.display = "none"; // hide
-	$("time_view_container").style.display = "none"; // hide
-	dismissInfo();
-};
+// on click
+
+function kofi(){
+	window.open("https://ko-fi.com/jasonfleischer", "_blank");
+}
+
+function setup_info_alert(){
+	$("info_alert_container").addEventListener("click", function(event){
+		dismissInfo();
+	});
+	$("info_alert").addEventListener("click", function(event){
+		event.stopPropagation();
+		return false;
+	});
+}
+function info(){
+	$("info_alert_container").style.display = "block"; // show
+}
+function dismissInfo(){
+	$("info_alert_container").style.display = "none"; // hide
+}
+
+function toggle_settings(){
+	if($("nav-side-menu").style.display !== "block")
+		show_settings();
+	else
+		hide_settings();
+}
+function show_settings() {
+	$("nav-side-menu").style.display = "block";
+	$("kofi_button").style.display = "none";
+	$("info_button").style.display = "none";
+	$("setting_button_svg").src = (model.darkmode) ? "img/close_white.svg" : "img/close_black.svg";
+}
+function hide_settings(){
+	$("nav-side-menu").style.display = "none";
+	$("kofi_button").style.display = "block";
+	$("info_button").style.display = "block";
+	$("setting_button_svg").src = (model.darkmode) ? "img/gear_white.svg" : "img/gear_black.svg";
+}
+
+function openURL(url){
+	window.open(url, '_blank');
+}
+
+function openMailToDeveloper(){
+	var subject = TR("Metronome Website Feedback");
+	subject = subject.replaceAll(" ", "%20");
+	openURL("mailto:jason_fleischer@hotmail.ca?Subject=" + subject);
+}
+
+// setup controls
 
 function setup_bpm_controls() {
 
@@ -84,7 +156,8 @@ function setup_bpm_controls() {
 	var step = 1;
 	setup_bpm_dial(min, max, step);
 	setup_bpm_range(min, max, step);
-
+	setup_bpm_prompt();
+	$("bpm_row_text").innerHTML = "BPM: " + model.BPM;
 
 	function setup_bpm_dial(min, max, step){
 		var on_range_control_changed = function(BPM_value){
@@ -113,9 +186,31 @@ function setup_bpm_controls() {
 			reloadActivePlayer();
 		});
 	}
+
+	function setup_bpm_prompt(){
+		$("bpm_text").addEventListener("click", function(e){
+			bpm_prompt();
+		});
+
+		function bpm_prompt(){
+			var was_playing = forceStop();
+			var BPM = parseInt(prompt("Enter a BPM value:", model.BPM));
+			if(BPM >= MIN_BPM && BPM <= MAX_BPM){
+				log("on BPM prompt change: " + BPM);
+				model.BPM = BPM;
+				range_control.load(range_control.on_range_control_changed, "", MIN_BPM , MAX_BPM, 1, model.BPM, false, 0);
+				cookies.set_BPM(model.BPM);
+				update_UI_BPM(model.BPM);
+				reloadActivePlayer();
+				if(was_playing) playPause(); 
+			}else {
+				log("Invalid BPM value" + BPM);
+			}
+		}
+	}
 }
 
-function setup_up_mode_select() {
+function setup_mode_select() {
 	$("mode_select").addEventListener("change", function(e){
 		var value = parseInt(this.value);
 		log("on mode_select: " + value);
@@ -169,7 +264,6 @@ function setup_accent_first_beat_switch() {
 
 function setup_darkmode_switch() {
 
-
 	setup_darkmode($("darkmode"), $("darkmode_checkbox_switch"), $("darkmode_checkbox"));
 	setup_darkmode($("mobile_darkmode"), $("mobile_darkmode_checkbox_switch"), $("mobile_darkmode_checkbox"));
 	function setup_darkmode(background_obj, switch_obj, checkbox_obj ){
@@ -192,234 +286,14 @@ function setup_darkmode_switch() {
 	update_UI_darkmode();
 }
 
-function setup_keyboard_listeners() {
-
-	document.addEventListener('keyup', function(event){
-
-		//logE(event.code)
-		var code = event.code;
-		if (code === 'Space') {
-			// double call with focus on play
-			var play_button = screen_width_is_mobile() ? $("mobile_play_pause_button"): $('play_pause_button');
-			if(document.activeElement !== play_button) {
-				playPause();
-				play_button.focus();
-			}
-		} else if (code === 'ArrowUp' || code === 'NumpadAdd' || code === 'Equal') {
-			range_control.plus_pressed();
-		} else if (code === 'ArrowDown' || code === 'NumpadSubtract' || code === 'Minus') {
-			range_control.minus_pressed();
-		} else if (code === 'ArrowLeft') {
-			decrementDivision();
-		} else if (code === 'ArrowRight') {
-			incrementDivision();
-		} else if (code == 'KeyT') {
-			tap_controller.tap();
-		} else if (code == 'KeyD') {
-			var new_BPM = model.BPM*2;
-			if(new_BPM <= MAX_BPM && new_BPM >= MIN_BPM) setBPM(new_BPM);
-		} else if (code == 'KeyH') {
-			var new_BPM = Math.round(model.BPM/2); 
-			if(new_BPM <= MAX_BPM && new_BPM >= MIN_BPM) setBPM(new_BPM);
-		} else if (code == 'Digit1' || code == 'Numpad1') {
-			setBPM(60);
-		} else if (code == 'Digit2' || code == 'Numpad2') {
-			setBPM(75);
-		} else if (code == 'Digit3' || code == 'Numpad3') {
-			setBPM(90);
-		} else if (code == 'Digit4' || code == 'Numpad4') {
-			setBPM(105);
-		} else if (code == 'Digit5' || code == 'Numpad5') {
-			setBPM(120);
-		} else if (code == 'Digit6' || code == 'Numpad6') {
-			setBPM(135);
-		} else if (code == 'Digit7' || code == 'Numpad7') {
-			setBPM(150);
-		} else if (code == 'Digit8' || code == 'Numpad8') {
-			setBPM(165);
-		} else if (code == 'Digit9' || code == 'Numpad9') {
-			setBPM(180);
-		} else if (code == 'Digit0' || code == 'Numpad0') {
-			setBPM(195);
-		}
-
-		function setBPM(bpm){
-			model.BPM = bpm;
-			log("on BPM change: " + model.BPM);
-			range_control.load(range_control.on_range_control_changed, "", MIN_BPM , MAX_BPM, 1, model.BPM, false, 0);
-			cookies.set_BPM(model.BPM);
-			update_UI_BPM(model.BPM);
-			reloadActivePlayer();
-		}
-
-		function decrementDivision(){
-			var new_beat_division = Math.max(model.beat_division - 1, 1);
-			if(new_beat_division != model.beat_division){
-				model.beat_division = new_beat_division;
-				$("division_select").value = model.beat_division;
-				reloadActivePlayer();
-			}
-		}
-		function incrementDivision(){
-			var new_beat_division = Math.min(model.beat_division + 1, 4);
-			if(new_beat_division != model.beat_division){
-				model.beat_division = new_beat_division;
-				$("division_select").value = model.beat_division;
-				reloadActivePlayer();
-			}
-		}
-	});
-}
-
-function show_keyboard_shortcuts(){
-	dismissInfo();
-	var keyboard_shorcut_window = window.open("Keyboard Shortcuts", "_blank", "width=280,height=470,titlebar=no,toolbar=no,status=no,location=no,menubar=no", true);
-	keyboard_shorcut_window.document.title = "Keyboard Shortcuts";
-	keyboard_shorcut_window.document.write(
-		`<table style="width:100%; text-align: left;">
-			<tr><th>Key</th><th>Command</th></tr>
-			<tr><td>Space</td><td>Play / Stop</td></tr>
-			<tr><td>Up Arrow</td><td>Increment Tempo</td></tr>
-			<tr><td>Down Arrow</td><td>Decrement Tempo</td></tr>
-			<tr><td>Left Arrow</td><td>Decrement Subdivision</td></tr>
-			<tr><td>Right Arrow</td><td>Increment Subdivision</td></tr>
-			<tr><td>Letter T</td><td>Tap Tempo</td></tr>
-			<tr><td>Letter D</td><td>Double Tempo</td></tr>
-			<tr><td>Letter H</td><td>Half Tempo</td></tr>
-			<tr><td>Digit 1</td><td>60 BPM</td></tr>
-			<tr><td>Digit 2</td><td>75 BPM</td></tr>
-			<tr><td>Digit 3</td><td>90 BPM</td></tr>
-			<tr><td>Digit 4</td><td>105 BPM</td></tr>
-			<tr><td>Digit 5</td><td>120 BPM</td></tr>
-			<tr><td>Digit 6</td><td>135 BPM</td></tr>
-			<tr><td>Digit 7</td><td>150 BPM</td></tr>
-			<tr><td>Digit 8</td><td>165 BPM</td></tr>
-			<tr><td>Digit 9</td><td>180 BPM</td></tr>
-			<tr><td>Digit 0</td><td>195 BPM</td></tr>
-		</table>
-		<br/>
-		<div id="google_translate_element"></div>
-		<script>
-			function googleTranslateElementInit() {
-				new google.translate.TranslateElement({
-					pageLanguage: 'en'
-				}, 'google_translate_element');
-			}
-			document.title = "Keyboard Shortcuts";
-		</script>
-		<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>`);
-}
-
-function reloadActivePlayer(){
-	if(audio_controller.playing){
-		forcePlay();
-	}
-}
-
-function forcePlay(){
-	audio_controller.pause();
-	update_UI_stopped();
-	audio_controller.play();
-	update_UI_playing();
-}
-
-function forceStop(){
-	var was_playing = false;
-	if(audio_controller.playing) {
-		audio_controller.playPause()
-		update_UI_stopped();
-		was_playing = true;
-	}	
-	return was_playing;
-}
-
-function playPause(){
-	var audio_is_playing = audio_controller.playPause();
-	if(audio_is_playing) 
-		update_UI_playing();
-	else 
-		update_UI_stopped();
-}
-
-function kofi(){
-	window.open("https://ko-fi.com/jasonfleischer", "_blank");
-}
-
-function setup_info_alert(){
-	$("info_alert_container").addEventListener("click", function(event){
-		dismissInfo();
-	});
-	$("info_alert").addEventListener("click", function(event){
-		event.stopPropagation();
-		return false;
-	});
-}
-
-function info(){
-	$("info_alert_container").style.display = "block"; // show
-}
-
-function dismissInfo(){
-	$("info_alert_container").style.display = "none"; // hide
-}
-
-function toggle_settings(){
-	if($("nav-side-menu").style.display !== "block"){
-		show_settings();
-	} else {
-		hide_settings();
-	}
-}
-function show_settings() {
-	$("nav-side-menu").style.display = "block";
-	$("kofi_button").style.display = "none";
-	$("info_button").style.display = "none";
-	if(model.darkmode)
-		$("setting_button_svg").src = "img/close_white.svg";
-	else
-		$("setting_button_svg").src = "img/close_black.svg";
-}
-function hide_settings(){
-	$("nav-side-menu").style.display = "none";
-	$("kofi_button").style.display = "block";
-	$("info_button").style.display = "block";
-	if(model.darkmode)
-		$("setting_button_svg").src = "img/gear_white.svg";
-	else
-		$("setting_button_svg").src = "img/gear_black.svg";
-}
-
-function bpm_prompt(){
-	var was_playing = forceStop();
-	var BPM = parseInt(prompt("Enter a BPM value:", model.BPM));
-	if(BPM >= MIN_BPM && BPM <= MAX_BPM){
-		log("on BPM prompt change: " + BPM);
-		model.BPM = BPM;
-		range_control.load(range_control.on_range_control_changed, "", MIN_BPM , MAX_BPM, 1, model.BPM, false, 0);
-		cookies.set_BPM(model.BPM);
-		update_UI_BPM(model.BPM);
-		reloadActivePlayer();
-
-		if(was_playing){
-			playPause();
-		} 
-	}else {
-		log("Invalid BPM value" + BPM);
-	}
-}
+// update_UI
 
 function update_UI_BPM(value) {
 	var range = $("bpm_range");
 	range.value = value;
 
 	update_UI_tempo_marking(value);
-
-	var canvas = document.getElementById("dial_canvas");
-	var bpm_text_object = $("bpm_text");
-	bpm_text_object.innerHTML = value;
-	
-	bpm_text_object.style.left = Math.round((canvas.offsetWidth - bpm_text_object.offsetWidth) / 2) + "px";
-
+	range_control.resize_bpm_text();
 
 	$("bpm_row_text").innerHTML = "BPM: " + value
 
@@ -466,22 +340,19 @@ function update_UI_BPM(value) {
 
 function update_UI_mode(){
 	$("accent_first_beat").style.display = (model.mode == MODE.NORMAL || model.mode == MODE.DRUM) ? "block" : "none";
-	
-		$("status_msg").innerHTML = model.mode == MODE.TALKING ? "Configure / press 'Play' to begin. Talking mode works best at lower BPMs." : "Configure / press 'Play' to begin";
-	
-
+	$("status_msg").innerHTML = model.mode == MODE.TALKING ? TR("Configure / press 'Play' to begin. Talking mode works best at lower BPMs.") : TR("Configure / press 'Play' to begin");
 }
 
 function update_UI_playing(){
-	$("play_pause_button").innerHTML = "Stop"; 
-	$("mobile_play_pause_button").innerHTML = "Stop";
+	$("play_pause_button").innerHTML = TR("Stop"); 
+	$("mobile_play_pause_button").innerHTML = TR("Stop");
 	$("init_view").style.display = "none"; // hide
 	time_view.start(model.time_signature, model.BPM);
 }
 
 function update_UI_stopped(){
-	$("play_pause_button").innerHTML = "Play";
-	$("mobile_play_pause_button").innerHTML = "Play";
+	$("play_pause_button").innerHTML = TR("Play");
+	$("mobile_play_pause_button").innerHTML = TR("Play");
 	$("count_text").innerHTML = "\xa0";
 	$("init_view").style.display = "table"; // show
 	time_view.stop();
@@ -498,7 +369,6 @@ function update_UI_darkmode(){
 
 	$("darkmode_checkbox").checked = model.darkmode;
 	$("mobile_darkmode_checkbox").checked = model.darkmode;
-
 
 	function setDarkMode(){
 		var root = document.documentElement;
@@ -518,9 +388,9 @@ function update_UI_darkmode(){
 	function setLightMode(){
 		var root = document.documentElement;
 		root.style.setProperty('--highlight-color', "#ddd");
-		root.style.setProperty('--primary-background-color', "#f1f1f1"); // 3
+		root.style.setProperty('--primary-background-color', "#efefef"); // 3
 		root.style.setProperty('--secondary-background-color', "#fff"); // 1
-		root.style.setProperty('--tertiary-background-color', "#f7f7f7"); // 2
+		root.style.setProperty('--tertiary-background-color', "#f5f5f5"); // 2
 		root.style.setProperty('--primary-font-color', "#111"); // inverse of 1
 
 		$("info_button_svg").src = "img/info_black.svg";

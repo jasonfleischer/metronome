@@ -61,7 +61,7 @@ tap_controller.calculateBPMValue = function() {
 
 tap_controller.updateUI = function() {
 	if (tap_controller.current_state == tap_controller.state.KEEP_TAPPING){
-		$("status_msg").innerHTML = "Keep Tapping";
+		$("status_msg").innerHTML = TR("Keep Tapping");
 	} else { // IDLE or HAS_VALUE
 		if (tap_controller.current_state == tap_controller.state.HAS_VALUE){
 			setBPM(tap_controller.calculatedBPM);
@@ -74,7 +74,7 @@ tap_controller.updateUI = function() {
 				forcePlay();
   			}
 		}
-		$("status_msg").innerHTML = "Configure / press 'Play' to begin";
+		$("status_msg").innerHTML =  TR("Configure / press 'Play' to begin");
 	} 
 }
 

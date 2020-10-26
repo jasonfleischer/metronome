@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<script src="js/midi/webAudioFontPlayer.js"></script>
+
 	<!-- (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-170120616-1"></script>
 	<script>
@@ -10,7 +10,6 @@
 		gtag('js', new Date());
 		gtag('config', 'UA-170120616-1');
 	</script>
-
 	<!-- end of - Google Analytics -->
 	<title>Metronome</title>
 	<meta charset="utf-8">
@@ -19,6 +18,8 @@
 	<link rel="icon" type="image/png" sizes="32x32" href="img/favicon.png">
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="css/slider.css">
+	<link rel="stylesheet" href="css/switch.css">
+	<link rel="stylesheet" href="css/select.css">
 </head>
 <body onload="init()">
 	<!-- alert -->
@@ -31,19 +32,21 @@
 			</div>
 			<div>
 			<ul class="desktop-only">
-				<!-- google translate -->
 				<li>
-					<div>
-						<span id="language_text">Language</span>
-						<div id="google_translate_element"></div>
-						<script>
-							function googleTranslateElementInit() {
-								new google.translate.TranslateElement({
-									pageLanguage: 'en'/*, layout: google.translate.TranslateElement.InlineLayout.SIMPLE*/
-								}, 'google_translate_element');
-							}
-						</script>
-						<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+					<div class="nav-side-menu-item">
+						<span>Language</span>
+						<select id="language_select">
+							<option value="en" selected="selected">English</option>
+							<option value="fr">French</option>
+							<option value="es">Spanish</option>
+							<option value="de">German</option>
+							<option value="it">Italian</option>
+							<option value="pt">Portuguese</option>
+							<option value="ru">Russian</option>
+							<option value="ja">Japan</option>
+							<option value="ko">Korean</option>
+							<option value="zh">Chinese</option>
+						</select>
 					</div>
 				</li>
 				<li id="darkmode">
@@ -57,27 +60,21 @@
 				</li>
 			</ul>
 		</div>
-			
-			
 			<br class="desktop-only" />
-			<p>Thank you for using this website. If you wish to submit feedback, comment or report an error click <a href="mailto:jason_fleischer@hotmail.ca?Subject=Metronome%20Website%20Feedback">here</a>.
-			</p>
+			<p onclick="openMailToDeveloper()">Thank you for using this website. If you wish to submit feedback, comment or report an error click <strong>here</strong>.</p>
 			<br/>
-			<p>Special thanks to Surikov for their <a href="https://surikov.github.io/webaudiofont/" target="_blank">WebAudioFont</a> library.</p>
+			<p onclick="openURL('https://surikov.github.io/webaudiofont/')">Special thanks to Surikov for their <strong>WebAudioFont</strong> library.</p>
 			<br/>
-			<p>Information about the developer can be found <a href="https://jasonfleischer.github.io/website/" target="_blank">here</a>.</p>
+			<p onclick="openURL('https://jasonfleischer.github.io/website/');">Information about the developer can be found <strong>here</strong>.</p>
 			<br class="desktop-only"/>
 			<button class="desktop-only" onclick="show_keyboard_shortcuts()">Keyboard Shortcuts</button>
-
 		</div>
 	</div>
 	<div id="header">
 		<p id="page_name" onclick="info()">Metronome</p>
 		<button id="kofi_button" onclick="kofi()">
-			
-				<img src="img/kofi_mobile.png" alt="Buy Me a Coffee at ko-fi.com" />
-				<span class="desktop-only">Buy me a coffee</span>
-			
+			<img src="img/kofi_mobile.png" alt="Buy Me a Coffee at ko-fi.com" />
+			<span class="desktop-only">Buy me a coffee</span>
 		</button>
 		<button id="info_button" onclick="info()" ><img id="info_button_svg" src="img/info_black.svg" alt="Info"/></button>
 		<button id="setting_button" class="mobile-only" onclick="toggle_settings()" ><img id="setting_button_svg" src="img/gear_black.svg" alt="Settings"/></button>
@@ -85,7 +82,7 @@
 	<div id="nav-side-menu" >
 		<div id="page_contents">
 			<div id="canvas_wrapper">
-				<p id="bpm_text" onclick="bpm_prompt()">&nbsp;</p>
+				<p id="bpm_text">&nbsp;</p>
 				<p id="tempo_marking">&nbsp;</p>
 				<canvas id="dial_canvas"></canvas>
 			</div>
@@ -94,13 +91,12 @@
 			<button id="tap_button" class="desktop-only" onclick="tap_controller.tap()">Tap</button>
 			<button id="play_pause_button" class="desktop-only" onclick="playPause()">Play</button>
 		</div>
-
 		<div id="ul_wrapper">
 			<ul>	
 				<li class="menu_item_divider desktop-only"></li>
 				<li id="bpm_control" >
 					<div class="nav-side-menu-item">
-						<span id="bpm_row_text">BPM: 120</span>
+						<span id="bpm_row_text"></span>
 						<div class="range">
 							<input id="bpm_range" type="range" min="40" max="208" step="1" value="120">
 						</div>
@@ -113,7 +109,6 @@
 							<option value="0" selected="selected">Click</option>
 							<option value="1">Drum</option>
 							<option value="2">Talking</option>
-							<!--<option value="3">Syllables</option>-->
 						</select>
 					</div>
 				</li>
@@ -152,6 +147,23 @@
 						</label>
 					</div>
 				</li>
+				<li class="mobile-only">
+					<div class="nav-side-menu-item">
+						<span>Language</span>
+						<select id="mobile_language_select">
+							<option value="en" selected="selected">English</option>
+							<option value="fr">French</option>
+							<option value="es">Spanish</option>
+							<option value="de">German</option>
+							<option value="it">Italian</option>
+							<option value="pt">Portuguese</option>
+							<option value="ru">Russian</option>
+							<option value="ja">Japan</option>
+							<option value="ko">Korean</option>
+							<option value="zh">Chinese</option>
+						</select>
+					</div>
+				</li>
 				<li id="mobile_darkmode" class="mobile-only">
 					<div class="nav-toggle-item">
 						<span>Dark Mode</span>
@@ -159,21 +171,6 @@
 							<input id="mobile_darkmode_checkbox" type="checkbox" checked="checked"/>
 							<span class="switch_track round" tabindex="0"></span>
 						</label>
-					</div>
-				</li>
-				<!-- google translate -->
-				<li class="mobile-only">
-					<div class="nav-toggle-item">
-						<span id="mobile_language_text">Language</span>
-						<div id="mobile_google_translate_element"></div>
-						<script>
-							function mobileGoogleTranslateElementInit() {
-								new google.translate.TranslateElement({
-									pageLanguage: 'en'/*, layout: google.translate.TranslateElement.InlineLayout.SIMPLE*/
-								}, 'mobile_google_translate_element');
-							}
-						</script>
-						<script src="//translate.google.com/translate_a/element.js?cb=mobileGoogleTranslateElementInit"></script>
 					</div>
 				</li>
 			</ul>
@@ -188,25 +185,28 @@
 			<canvas id="time_view_canvas" ></canvas>		
 			<p id="count_text">&nbsp;</p>
 		</div>
-
-		
 	</div>
 	<div id="mobile_button_control_container" class="mobile-only">
-			<button id="mobile_tap_button" onclick="tap_controller.tap()">Tap</button>
-			<button id="mobile_play_pause_button" onclick="playPause()">Play</button>
-		</div>
+		<button id="mobile_tap_button" onclick="tap_controller.tap()">Tap</button>
+		<button id="mobile_play_pause_button" onclick="playPause()">Play</button>
+	</div>
 	<!--<script src="https://surikov.github.io/webaudiofont/npm/dist/WebAudioFontPlayer.js"></script>-->
-	
-	<script src="js/midi/midi_controller.js"></script>
+	<script src="js/midi/webAudioFontPlayer.js"></script>
+	<script src="js/log.js"></script>
+	<script src="js/midi/midi_sounds.js"></script>
+	<script src="js/midi/click_midi_controller.js"></script>
 	<script src="js/midi/drum_midi_controller.js"></script>
 	<script src="js/model.js"></script>
+	<script src="js/translations/generated.js"></script>
+	<script src="js/translations/translations.js"></script>
 	<script src="js/prototypes.js"></script>
 	<script src="js/cookies.js"></script>
-	<script src="js/log.js"></script>
+	
 	<script src="js/range_control.js"></script>
 	<script src="js/time_view.js"></script>
 	<script src="js/audio_controller.js"></script>
 	<script src="js/tap_controller.js"></script>
+	<script src="js/keyboard_shortcuts.js"></script>
 	<script src="js/main.js"></script>
 
 </body>

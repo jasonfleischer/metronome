@@ -402,9 +402,14 @@ range_control.draw = function(percent_value){
 
 		var bpm_text_object = $("bpm_text");
 		bpm_text_object.innerHTML = text_value;
-		bpm_text_object.style.left = Math.round((canvas.offsetWidth - bpm_text_object.offsetWidth) / 2) + "px";
-		
+		range_control.resize_bpm_text();
 	}
+}
+
+range_control.resize_bpm_text = function(){
+	var canvas = document.getElementById("dial_canvas");
+	var bpm_text_object = $("bpm_text");
+	bpm_text_object.style.left = Math.round((canvas.offsetWidth - bpm_text_object.offsetWidth) / 2) + "px";
 }
 
 range_control.getDistance = function(x1, y1, x2, y2){

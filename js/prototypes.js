@@ -30,6 +30,6 @@ function isFirefox(){
 	return checkBrowser() === "Firefox";
 }
 
-function screen_width_is_mobile(){
+function is_compact_window(){
 	return window.innerWidth <= 800 || window.innerHeight <= 500; // match with css
 }
