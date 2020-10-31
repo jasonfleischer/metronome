@@ -4,10 +4,13 @@
 // dont restart on active changes
 // animate nav menu
 // time view cut off
-// other languages
+// font size
+// python script for translation parse
+// mobile zoom disable - need to test fixes
+// mode to tone
 // mobile 
 // other browsers
-// 	 safari - no issues
+// 	 safari - broken audio, broken arrow img - need to test fixes
 //   firefox - no issues
 //	 edge - no issue
 
@@ -30,10 +33,11 @@ function init() {
 	function setup_controls(){
 		setup_language_select();
 		setup_darkmode_switch();
-		setup_mode_select();
+		setup_tone_select();
 		setup_time_signature_select();
 		setup_beat_division_select();
 		setup_accent_first_beat_switch();
+		setup_flash_screen_switch();
 		setup_bpm_controls();
 	}
 
@@ -94,6 +98,25 @@ function window_resized_end(){
 	
 	$("bpm_text").style.display = "block"; // show
 	range_control.resize_bpm_text();
+}
+
+var flash_timer;
+function flash_screen_animation(){
+	var element = $("flash_screen");
+	element.style.display = 'block';
+	clearInterval(flash_timer);
+
+	var op = 1;  // initial opacity
+    flash_timer = setInterval(function () {
+        if (op <= 0.1){
+            clearInterval(flash_timer);
+            element.style.display = 'none';
+            element.style.opacity = 0;
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op -= op * 0.15;
+    }, 50);
 }
 
 // on click
@@ -210,17 +233,17 @@ function setup_bpm_controls() {
 	}
 }
 
-function setup_mode_select() {
-	$("mode_select").addEventListener("change", function(e){
+function setup_tone_select() {
+	$("tone_select").addEventListener("change", function(e){
 		var value = parseInt(this.value);
-		log("on mode_select: " + value);
-		model.mode = value;
-		cookies.set_mode(value);
-		update_UI_mode();
+		log("on tone_select: " + value);
+		model.tone = value;
+		cookies.set_tone(value);
+		update_UI_tone();
 		reloadActivePlayer();
 	});
-	$("mode_select").value = model.mode;
-	update_UI_mode();
+	$("tone_select").value = model.tone;
+	update_UI_tone();
 }
 
 function setup_time_signature_select() {
@@ -260,6 +283,23 @@ function setup_accent_first_beat_switch() {
 		reloadActivePlayer();
 	});
 	$("accent_first_beat_checkbox").checked = model.accent_first_beat;
+}
+
+function setup_flash_screen_switch() {
+	$("screen_flash").addEventListener("click", function(e){
+		$("screen_flash_checkbox").click();
+	});
+	$("screen_flash_checkbox_switch").addEventListener('keyup', function(e) {
+		if (event.code === 'Space' || event.code === 'Enter') $("screen_flash_checkbox").click();
+	});
+	$("screen_flash_checkbox").addEventListener("change", function(e){
+		var value = this.checked;
+		log("on screen flash change: " + value);
+		model.flash_screen = value;
+		cookies.set_flash_screen(value);
+		reloadActivePlayer();
+	});
+	$("screen_flash_checkbox").checked = model.flash_screen;
 }
 
 function setup_darkmode_switch() {
@@ -338,9 +378,9 @@ function update_UI_BPM(value) {
 	}
 }
 
-function update_UI_mode(){
-	$("accent_first_beat").style.display = (model.mode == MODE.NORMAL || model.mode == MODE.DRUM) ? "block" : "none";
-	$("status_msg").innerHTML = model.mode == MODE.TALKING ? TR("Configure / press 'Play' to begin. Talking mode works best at lower BPMs.") : TR("Configure / press 'Play' to begin");
+function update_UI_tone(){
+	$("accent_first_beat").style.display = (model.tone == TONE.NORMAL || model.tone == TONE.DRUM) ? "block" : "none";
+	$("status_msg").innerHTML = model.tone == TONE.TALKING ? TR("Configure then press 'Play' to begin. Talking setting works best at lower BPMs.") : TR("Configure then press 'Play' to begin");
 }
 
 function update_UI_playing(){

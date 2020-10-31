@@ -83,30 +83,26 @@ function show_keyboard_shortcuts(){
 	keyboard_shorcut_window.document.title = "Keyboard Shortcuts";
 
 	var contents = "<table style='width:100%; text-align: left;'>"+
-		TR("<tr><th>Key</th><th>Command</th></tr><tr><td>Space</td><td>Play / Stop</td></tr><tr><td>Up Arrow</td><td>Increment Tempo</td></tr><tr><td>Down Arrow</td><td>Decrement Tempo</td></tr><tr><td>Left Arrow</td><td>Decrement Subdivision</td></tr><tr><td>Right Arrow</td><td>Increment Subdivision</td></tr><tr><td>Letter T</td><td>Tap Tempo</td></tr><tr><td>Letter D</td><td>Double Tempo</td></tr><tr><td>Letter H</td><td>Half Tempo</td></tr><tr><td>Digit 1</td><td>60 BPM</td></tr><tr><td>Digit 2</td><td>75 BPM</td></tr><tr><td>Digit 3</td><td>90 BPM</td></tr><tr><td>Digit 4</td><td>105 BPM</td></tr><tr><td>Digit 5</td><td>120 BPM</td></tr><tr><td>Digit 6</td><td>135 BPM</td></tr><tr><td>Digit 7</td><td>150 BPM</td></tr><tr><td>Digit 8</td><td>165 BPM</td></tr><tr><td>Digit 9</td><td>180 BPM</td></tr><tr><td>Digit 0</td><td>195 BPM</td></tr>").replace("< tr>", "<tr>") +
+			"<tr><th>"+TR("Key")+"</th><th>"+TR("Command")+"</th></tr>"+
+			"<tr><td>"+TR("Space")+"</td><td>"+TR("Play or stop")+"</td></tr>"+
+			"<tr><td>"+TR("Up arrow")+"</td><td>"+TR("Increment tempo")+"</td></tr>"+
+			"<tr><td>"+TR("Down arrow")+"</td><td>"+TR("Decrement tempo")+"</td></tr>"+
+			"<tr><td>"+TR("Left arrow")+"</td><td>"+TR("Decrement subdivision")+"</td></tr>"+
+			"<tr><td>"+TR("Right arrow")+"</td><td>"+TR("Increment subdivision")+"</td></tr>"+
+			"<tr><td>"+TR("Letter")+" T</td><td>"+TR("Tap tempo")+"</td></tr>"+
+			"<tr><td>"+TR("Letter")+" D</td><td>"+TR("Double tempo")+"</td></tr>"+
+			"<tr><td>"+TR("Letter")+" H</td><td>"+TR("Half tempo")+"</td></tr>"+
+			"<tr><td>"+TR("Digit")+" 1</td><td>60 BPM</td></tr>"+
+			"<tr><td>"+TR("Digit")+" 2</td><td>75 BPM</td></tr>"+
+			"<tr><td>"+TR("Digit")+" 3</td><td>90 BPM</td></tr>"+
+			"<tr><td>"+TR("Digit")+" 4</td><td>105 BPM</td></tr>"+
+			"<tr><td>"+TR("Digit")+" 5</td><td>120 BPM</td></tr>"+
+			"<tr><td>"+TR("Digit")+" 6</td><td>135 BPM</td></tr>"+
+			"<tr><td>"+TR("Digit")+" 7</td><td>150 BPM</td></tr>"+
+			"<tr><td>"+TR("Digit")+" 8</td><td>165 BPM</td></tr>"+
+			"<tr><td>"+TR("Digit")+" 9</td><td>180 BPM</td></tr>"+
+			"<tr><td>"+TR("Digit")+" 0</td><td>195 BPM</td></tr>" +
 		"</table>";
 	contents = contents.replaceAll("< tr>", "<tr>");
 	keyboard_shorcut_window.document.write(contents);
-
-		/*`<table style="width:100%; text-align: left;">
-			<tr><th>Key</th><th>Command</th></tr>
-			<tr><td>Space</td><td>Play / Stop</td></tr>
-			<tr><td>Up Arrow</td><td>Increment Tempo</td></tr>
-			<tr><td>Down Arrow</td><td>Decrement Tempo</td></tr>
-			<tr><td>Left Arrow</td><td>Decrement Subdivision</td></tr>
-			<tr><td>Right Arrow</td><td>Increment Subdivision</td></tr>
-			<tr><td>Letter T</td><td>Tap Tempo</td></tr>
-			<tr><td>Letter D</td><td>Double Tempo</td></tr>
-			<tr><td>Letter H</td><td>Half Tempo</td></tr>
-			<tr><td>Digit 1</td><td>60 BPM</td></tr>
-			<tr><td>Digit 2</td><td>75 BPM</td></tr>
-			<tr><td>Digit 3</td><td>90 BPM</td></tr>
-			<tr><td>Digit 4</td><td>105 BPM</td></tr>
-			<tr><td>Digit 5</td><td>120 BPM</td></tr>
-			<tr><td>Digit 6</td><td>135 BPM</td></tr>
-			<tr><td>Digit 7</td><td>150 BPM</td></tr>
-			<tr><td>Digit 8</td><td>165 BPM</td></tr>
-			<tr><td>Digit 9</td><td>180 BPM</td></tr>
-			<tr><td>Digit 0</td><td>195 BPM</td></tr>
-		</table>`);*/
 }

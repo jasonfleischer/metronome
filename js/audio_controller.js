@@ -127,7 +127,7 @@ audio_controller.play = function(){
 	var division_array = [];
 	var division_text_array = [];
 
-	if(model.mode === MODE.TALKING){
+	if(model.tone === TONE.TALKING){
 
 		beat_array = [];
 		beat_text_array = [];
@@ -150,7 +150,7 @@ audio_controller.play = function(){
 			division_text_array = ["e", "&", "a"];
 		}	
 		
-	} else if(model.mode === MODE.DRUM){
+	} else if(model.tone === TONE.DRUM){
 
 		beat_array = [];
 		beat_text_array = [];
@@ -176,7 +176,7 @@ audio_controller.play = function(){
 			division_text_array = ["e", "&", "a"];
 		}
 
-	} else { // MODE.NORMAL
+	} else { // TONE.NORMAL
 
 		beat_array = [model.accent_first_beat ? this.click_accent_audio : this.click_audio];
 		beat_text_array = ["1"];
@@ -242,10 +242,32 @@ audio_controller.play = function(){
 }
 
 audio_controller.executeAudioTimer = function(index, audio_queue, text_queue) {
-	audio_queue[index].play();
+	
+	var promise =  audio_queue[index].play();
+	$("count_text").innerHTML = text_queue[index];
+	if(index == 0){ // resync on one beat
+		time_view.start(model.time_signature, model.BPM);
+
+		if(model.flash_screen){
+			flash_screen_animation();
+		}
+	}
+
+	if (promise !== undefined) {
+	    promise.catch(error => {
+	        // Auto-play was prevented
+	        // Show a UI element to let the user manually start playback
+	        logE("Play Error: needed for Safari ");
+	        forceStop();
+	    }).then(() => {
+	        // Auto-play started
+	    });
+	}
+
+	/*audio_queue[index].play();
   	$("count_text").innerHTML = text_queue[index];
   	if(index == 0){ // resync on one beat
   		time_view.start(model.time_signature, model.BPM);
-  	}
+  	}*/
 }
 

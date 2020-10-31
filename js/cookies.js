@@ -3,7 +3,8 @@ function load_cookies(){
 	model.time_signature = cookies.get_time_signature(TIME_SIGNATURE.TS_4_4);
 	model.beat_division = cookies.get_subdivision(1);
 	model.accent_first_beat = cookies.get_accent_first_beat(true);
-	model.mode = cookies.get_mode(MODE.NORMAL);
+	model.flash_screen = cookies.get_flash_screen(false);
+	model.tone = cookies.get_tone(TONE.NORMAL);
 	model.darkmode = cookies.get_darkmode(false);
 	translations.current_language = cookies.get_language(LANGUAGE.ENGLISH);
 }
@@ -46,12 +47,21 @@ cookies.set_accent_first_beat = function(value){
 	document.cookie = cookies.ACCENT_FIRST_BEAT_KEY + "=" + value;
 };
 
-cookies.MODE_KEY = "MODE_KEY";
-cookies.get_mode = function(default_value){
-	return parseInt(cookies.getCookie(cookies.MODE_KEY, default_value));
+cookies.FLASH_SCREEN_KEY = "FLASH_SCREEN_KEY";
+cookies.get_flash_screen = function(default_value){
+	var value = cookies.getCookie(cookies.FLASH_SCREEN_KEY, default_value);
+	return Boolean(value === "true" || value === true);
 };
-cookies.set_mode = function(value){
-	document.cookie = cookies.MODE_KEY + "=" + value;
+cookies.set_flash_screen = function(value){
+	document.cookie = cookies.FLASH_SCREEN_KEY + "=" + value;
+};
+
+cookies.TONE_KEY = "TONE_KEY";
+cookies.get_tone = function(default_value){
+	return parseInt(cookies.getCookie(cookies.TONE_KEY, default_value));
+};
+cookies.set_tone = function(value){
+	document.cookie = cookies.TONE_KEY + "=" + value;
 };
 
 cookies.DARKMODE_KEY = "DARKMODE_KEY";

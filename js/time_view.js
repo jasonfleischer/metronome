@@ -191,11 +191,13 @@ time_view.draw_background = function(){
 
 
 	if (number_of_beats == 2) { // draw arc
+		
 		ctx.beginPath();
-		ctx.strokeStyle = time_view.color_primary;
+		ctx.strokeStyle = time_view.color_secondary;
 		ctx.lineWidth = track_width;
 		ctx.arc(centerPt.x, centerPt.y, time_view.radius - track_width/2, 0, TWO_PI);
 		ctx.stroke();
+
 		return;
 	}
 	
@@ -266,15 +268,17 @@ time_view.draw = function(){
 	var angle = (TWO_PI*percentage) - (TWO_PI /4);
 	var pt = new Point(time_view.getXofCircle(time_view.radius - point_size, centerPt.x, angle), 
 								time_view.getYofCircle(time_view.radius - point_size, centerPt.y, angle));
-	pt.draw(ctx, point_size - 3, time_view.color_secondary);
+	
 
 	if(number_of_beats > 2){
-		
+		pt.draw(ctx, point_size - 3, time_view.color_secondary);
 		var reference_line = new Line(centerPt, pt);
 		var beat = parseInt ( (delta / (time_division_milli_seconds / number_of_beats) ) % number_of_beats );
 		var line = array_of_lines[beat];
 		var pt2 = reference_line.getIntersectionPtBetweenTwoLines(line);
 		if (pt2.isValid) pt2.draw(ctx, point_size -3, time_view.color_primary);
+	} else {
+		pt.draw(ctx, point_size - 3, time_view.color_primary);
 	}
   	animation_request_id = requestAnimationFrame(time_view.draw);
 }

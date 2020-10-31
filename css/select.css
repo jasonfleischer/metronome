@@ -3,7 +3,7 @@ select {
     border: none; 
     background-color: var(--secondary-background-color); 
     color: var(--primary-font-color);
-    background:  var(--secondary-background-color) url('../img/down_arrow.png') no-repeat right .75rem center; 
+    background: url('../img/down_arrow.png') right .75rem center no-repeat; 
     background-size: 8px 10px;
     -webkit-appearance: none;
     display: inline-block;
@@ -23,6 +23,7 @@ select {
     margin-top: 4px;
     margin-right: 14px;
     font-family : inherit;
+    font-size: 14px;
 }
 select:focus {
     outline: 0;

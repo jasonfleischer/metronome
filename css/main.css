@@ -25,6 +25,7 @@ html, body {
     overflow: hidden;
     margin: 0;
     min-width: 320px;
+    font-size: 15px;
 }
 
 #nav-side-menu, #content_view, #header{
@@ -41,7 +42,7 @@ html, body {
     }
     #nav-side-menu {
         overflow: auto; 
-        font-size: 12px;
+        font-size: 15px;
         font-weight: 200;
         background-color: var(--secondary-background-color);
         position: fixed;
@@ -215,6 +216,7 @@ p {
 
 h3 {
     color: var(--primary-font-color);
+    font-size: 19px;
 }
 
 ul {
@@ -510,6 +512,16 @@ button:hover {
     padding-right: 3px;
     padding-left: 3px;
     font-size: 15px;
+}
+
+#flash_screen{
+    background-color: #FFF;
+    width: 100%;
+    height: 100%;
+    z-index: 6;
+    position: absolute;
+    display: none;
+    pointer-events: none
 }
 
 #bpm_text {

@@ -5,10 +5,10 @@ const LANGUAGE = Object.freeze({
 	GERMAN: "de",
 	ITALIAN: "it",
 	PORTUGUESE: "pt",
+	RUSSIAN: "ru",
 	JAPANESE: "ja", 
 	KOREAN: "ko",
-	SIMPLIFIED_CHINESE: "zh",
-	RUSSIAN: "ru"
+	SIMPLIFIED_CHINESE: "zh"
 });
 
 function TR(text){
@@ -28,14 +28,14 @@ function TR(text){
 		translation = it[index];
 	} else if(translations.current_language === LANGUAGE.PORTUGUESE){
 		translation = pt[index];
+	} else if(translations.current_language === LANGUAGE.RUSSIAN){
+		translation = ru[index];
 	} else if(translations.current_language === LANGUAGE.JAPANESE){
 		translation = ja[index];
 	} else if(translations.current_language === LANGUAGE.KOREAN){
 		translation = ko[index];
 	} else if(translations.current_language === LANGUAGE.SIMPLIFIED_CHINESE){
 		translation = zh[index];
-	} else if(translations.current_language === LANGUAGE.RUSSIAN){
-		translation = ru[index];
 	} else {
 		logE("Language not supported");
 		return
@@ -72,6 +72,12 @@ var translations = {
 translations.load = function(){
 	if(this.current_language != LANGUAGE.ENGLISH)
 		this.translate(this.current_language);
+	
+	if(translations.current_language === LANGUAGE.JAPANESE || translations.current_language === LANGUAGE.SIMPLIFIED_CHINESE){
+		$("info_alert_header").style.fontSize = "14px";
+	}
+
+	
 } 
 
 translations.translate = function(language){
@@ -115,15 +121,11 @@ translations.generate = function(){
 			}
 		});
 	}
-
-	var js_text = [	"<tr><th>Key</th><th>Command</th></tr><tr><td>Space</td><td>Play / Stop</td></tr><tr><td>Up Arrow</td><td>Increment Tempo</td></tr><tr><td>Down Arrow</td><td>Decrement Tempo</td></tr><tr><td>Left Arrow</td><td>Decrement Subdivision</td></tr><tr><td>Right Arrow</td><td>Increment Subdivision</td></tr><tr><td>Letter T</td><td>Tap Tempo</td></tr><tr><td>Letter D</td><td>Double Tempo</td></tr><tr><td>Letter H</td><td>Half Tempo</td></tr><tr><td>Digit 1</td><td>60 BPM</td></tr><tr><td>Digit 2</td><td>75 BPM</td></tr><tr><td>Digit 3</td><td>90 BPM</td></tr><tr><td>Digit 4</td><td>105 BPM</td></tr><tr><td>Digit 5</td><td>120 BPM</td></tr><tr><td>Digit 6</td><td>135 BPM</td></tr><tr><td>Digit 7</td><td>150 BPM</td></tr><tr><td>Digit 8</td><td>165 BPM</td></tr><tr><td>Digit 9</td><td>180 BPM</td></tr><tr><td>Digit 0</td><td>195 BPM</td></tr>",
-					"Keep Tapping", 
-					"Configure / press 'Play' to begin. Talking mode works best at lower BPMs.", 
-					"Stop",
-					"Metronome Website Feedback"];
 	var j;
-	for(j=0; j<js_text.length; j++){
-		generated_translate_string += '"' + js_text[j] + '"' + ((j==js_text.length-1)? "];" : ",\n");
+	for(j=0; j<js_translations.length; j++){
+		var text = js_translations[j];
+		if(!processed_texts.includes(text))
+			generated_translate_string += '"' + text + '"' + ((j==js_translations.length-1)? "];" : ",\n");
 	}
 	console.log(generated_translate_string);
 }

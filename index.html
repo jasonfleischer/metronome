@@ -14,7 +14,7 @@
 	<title>Metronome</title>
 	<meta charset="utf-8">
 	<meta name="author" content="Jason Fleischer">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
 	<link rel="icon" type="image/png" sizes="32x32" href="img/favicon.png">
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="css/slider.css">
@@ -22,6 +22,9 @@
 	<link rel="stylesheet" href="css/select.css">
 </head>
 <body onload="init()">
+	<div id="flash_screen">
+		
+	</div>
 	<!-- alert -->
 	<div id="info_alert_container">
 		<div id="info_alert">
@@ -104,8 +107,8 @@
 				</li>
 				<li>
 					<div class="nav-side-menu-item">
-						<span>Mode</span>
-						<select id="mode_select">
+						<span>Tone</span>
+						<select id="tone_select">
 							<option value="0" selected="selected">Click</option>
 							<option value="1">Drum</option>
 							<option value="2">Talking</option>
@@ -147,6 +150,15 @@
 						</label>
 					</div>
 				</li>
+				<li id="screen_flash">
+					<div class="nav-toggle-item">
+						<span>Flash Screen</span>
+						<label id="screen_flash_checkbox_switch" class="switch">
+							<input id="screen_flash_checkbox" type="checkbox" checked="checked"/>
+							<span class="switch_track round" tabindex="0"></span>
+						</label>
+					</div>
+				</li>
 				<li class="mobile-only">
 					<div class="nav-side-menu-item">
 						<span>Language</span>
@@ -178,7 +190,7 @@
 	</div>
 	<div id="content_view">
 		<div id="init_view">
-			<p id="status_msg">Configure / press 'Play' to begin</p>
+			<p id="status_msg">Configure then press 'Play' to begin</p>
 		</div>
 		<div id="time_view_container">
 			<canvas id="time_view_background_canvas" ></canvas>
@@ -190,6 +202,7 @@
 		<button id="mobile_tap_button" onclick="tap_controller.tap()">Tap</button>
 		<button id="mobile_play_pause_button" onclick="playPause()">Play</button>
 	</div>
+	
 	<!--<script src="https://surikov.github.io/webaudiofont/npm/dist/WebAudioFontPlayer.js"></script>-->
 	<script src="js/midi/webAudioFontPlayer.js"></script>
 	<script src="js/log.js"></script>

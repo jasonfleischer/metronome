@@ -74,7 +74,7 @@ tap_controller.updateUI = function() {
 				forcePlay();
   			}
 		}
-		$("status_msg").innerHTML =  TR("Configure / press 'Play' to begin");
+		$("status_msg").innerHTML =  TR("Configure then press 'Play' to begin");
 	} 
 }
 
