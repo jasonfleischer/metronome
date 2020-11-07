@@ -240,7 +240,10 @@ function setup_tone_select() {
 		model.tone = value;
 		cookies.set_tone(value);
 		update_UI_tone();
-		reloadActivePlayer();
+		
+		audio_controller.reloadSounds();
+
+		//reloadActivePlayer();
 	});
 	$("tone_select").value = model.tone;
 	update_UI_tone();
@@ -261,9 +264,8 @@ function setup_beat_division_select() {
 	$("division_select").addEventListener("change", function(e){
 		var value = parseInt(this.value);
 		log("on division_select: " + value);
-		model.beat_division = value;
 		cookies.set_subdivision(value);
-		reloadActivePlayer();
+		reloadDivisions(value);
 	});
 	$("division_select").value = model.beat_division;
 }
@@ -280,7 +282,6 @@ function setup_accent_first_beat_switch() {
 		log("on accent beat change: " + value);
 		model.accent_first_beat = value;
 		cookies.set_accent_first_beat(value);
-		reloadActivePlayer();
 	});
 	$("accent_first_beat_checkbox").checked = model.accent_first_beat;
 }
@@ -297,7 +298,6 @@ function setup_flash_screen_switch() {
 		log("on screen flash change: " + value);
 		model.flash_screen = value;
 		cookies.set_flash_screen(value);
-		reloadActivePlayer();
 	});
 	$("screen_flash_checkbox").checked = model.flash_screen;
 }
@@ -415,10 +415,11 @@ function update_UI_darkmode(){
 		root.style.setProperty('--highlight-color', "#444");
 		root.style.setProperty('--primary-background-color', "#252525"); // 3
 		root.style.setProperty('--secondary-background-color', "#000"); // 1
-		root.style.setProperty('--tertiary-background-color', "#070707"); // 2
+		root.style.setProperty('--tertiary-background-color', "#494949"); // 2
 		root.style.setProperty('--primary-font-color', "#fff"); // inverse of 1
 
 		$("info_button_svg").src = "img/info_white.svg";
+		$("dismiss_close_button_svg").src = "img/close_white.svg";
 		if($("nav-side-menu").style.display !== "block")
 			$("setting_button_svg").src = "img/gear_white.svg";
 		else 
@@ -434,6 +435,7 @@ function update_UI_darkmode(){
 		root.style.setProperty('--primary-font-color', "#111"); // inverse of 1
 
 		$("info_button_svg").src = "img/info_black.svg";
+		$("dismiss_close_button_svg").src = "img/close_black.svg";
 		if($("nav-side-menu").style.display !== "block")
 			$("setting_button_svg").src = "img/gear_black.svg";
 		else 

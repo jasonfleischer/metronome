@@ -74,10 +74,10 @@ translations.load = function(){
 		this.translate(this.current_language);
 	
 	if(translations.current_language === LANGUAGE.JAPANESE || translations.current_language === LANGUAGE.SIMPLIFIED_CHINESE){
-		$("info_alert_header").style.fontSize = "14px";
+		Array.prototype.forEach.call(document.getElementsByTagName("h3"), function (element) {	
+			element.style.fontSize = "14px";
+		});
 	}
-
-	
 } 
 
 translations.translate = function(language){

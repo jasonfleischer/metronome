@@ -8,6 +8,18 @@ function reloadActivePlayer(){
 	}
 }
 
+var new_beat_division;
+function reloadDivisions(value){
+	if(audio_controller.playing){
+		
+		audio_controller.divisions_changed = true;
+		new_beat_division = value;
+
+	} else {
+		model.beat_division = value;
+	}
+}
+
 function forcePlay(){
 	audio_controller.pause();
 	update_UI_stopped();
@@ -39,7 +51,11 @@ var audio_controller = {
 	audio_queue: [],
 	text_queue: [],
 
-	model_changed: false,
+	accent_audio: {},
+
+	model_changed: false, /// rename time_signature_change
+
+	divisions_changed: false,
 
 	click_accent_audio: {},
 	click_audio: {},
@@ -118,10 +134,7 @@ audio_controller.pause = function(){
 }
 
 
-audio_controller.play = function(){
-
-	this.playing = true;
-
+audio_controller.reloadSounds= function(){
 	var beat_array = [];
 	var beat_text_array =[];
 	var division_array = [];
@@ -131,6 +144,8 @@ audio_controller.play = function(){
 
 		beat_array = [];
 		beat_text_array = [];
+
+		this.accent_audio = this.talking_audio_array[0];
 
 		var i;
 		for(i=0; i<model.time_signature; i++){
@@ -155,9 +170,9 @@ audio_controller.play = function(){
 		beat_array = [];
 		beat_text_array = [];
 		
-		var first_audio = model.accent_first_beat ? this.bass_and_crash_audio : this.bass_audio;
-		audio_array = (model.time_signature % 2) ? [first_audio, this.snare_audio, this.snare_audio, this.bass_audio, this.snare_audio, this.bass_audio, this.snare_audio, this.bass_audio, this.snare_audio] :
-													[first_audio, this.snare_audio, this.bass_audio, this.snare_audio, this.bass_audio, this.snare_audio, this.bass_audio, this.snare_audio, this.bass_audio];
+		this.accent_audio = this.bass_and_crash_audio;
+		audio_array = (model.time_signature % 2) ? [this.bass_audio, this.snare_audio, this.snare_audio, this.bass_audio, this.snare_audio, this.bass_audio, this.snare_audio, this.bass_audio, this.snare_audio] :
+													[this.bass_audio, this.snare_audio, this.bass_audio, this.snare_audio, this.bass_audio, this.snare_audio, this.bass_audio, this.snare_audio, this.bass_audio];
 
 		var i;
 		for(i=0; i<model.time_signature; i++){
@@ -178,11 +193,13 @@ audio_controller.play = function(){
 
 	} else { // TONE.NORMAL
 
-		beat_array = [model.accent_first_beat ? this.click_accent_audio : this.click_audio];
-		beat_text_array = ["1"];
+		beat_array = [];
+		beat_text_array = [];
+
+		this.accent_audio = this.click_accent_audio;
 
 		var i;
-		for(i=1; i<model.time_signature; i++){
+		for(i=0; i<model.time_signature; i++){
 			beat_array[i] = this.click_audio;
 			beat_text_array[i] = (i+1).toString();
 		}
@@ -212,16 +229,27 @@ audio_controller.play = function(){
 			j = j + 1;
 		}
 	}	
+}
+
+audio_controller.play = function(){
+
+	this.playing = true;
+
+	this.reloadSounds();
+
 
 	var audio_queue_index = 0;
+
+
 	function BPMtoMilliSeconds(BPM) { return 1000 / (BPM / 60); }
 	var time_division_milli_seconds = BPMtoMilliSeconds(model.BPM) / model.beat_division;
-
-	audio_controller.executeAudioTimer(audio_queue_index, this.audio_queue, this.text_queue);
-	
+	audio_controller.executeAudioTimer(audio_queue_index, this.accent_audio, this.audio_queue, this.text_queue);
 	var interval = time_division_milli_seconds;
 	var expected = Date.now() + interval;
+
+
 	this.timer_id = setTimeout(step, interval);
+	
 	function step() {
 	    var drift = Date.now() - expected; 
 	    if (drift > interval) {
@@ -234,23 +262,49 @@ audio_controller.play = function(){
 			audio_controller.model_changed = false;
 			forcePlay();
 		} else {
-			audio_controller.executeAudioTimer(audio_queue_index, audio_controller.audio_queue, audio_controller.text_queue);
-		    expected += interval;
-		    audio_controller.timer_id = setTimeout(step, Math.max(0, interval - drift));
+
+			if(audio_queue_index%model.beat_division == 0 && audio_controller.divisions_changed){
+
+				audio_controller.divisions_changed = false;
+				audio_controller.executeAudioTimer(audio_queue_index, audio_controller.accent_audio, audio_controller.audio_queue, audio_controller.text_queue);
+
+				var old_length = audio_controller.audio_queue.length;
+				model.beat_division = new_beat_division;
+				audio_controller.reloadSounds();
+
+				var time_division_milli_seconds = BPMtoMilliSeconds(model.BPM) / new_beat_division;
+				interval = time_division_milli_seconds;
+				expected = Date.now() + interval;
+				audio_queue_index = (audio_queue_index / old_length) * audio_controller.audio_queue.length;
+				audio_controller.timer_id = setTimeout(step, interval);
+
+			} else {
+				audio_controller.executeAudioTimer(audio_queue_index, audio_controller.accent_audio, audio_controller.audio_queue, audio_controller.text_queue);
+		    	expected += interval;
+		    	audio_controller.timer_id = setTimeout(step, Math.max(0, interval - drift));
+			}
+			
 		}		
 	}
 }
 
-audio_controller.executeAudioTimer = function(index, audio_queue, text_queue) {
+audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, text_queue) {
 	
-	var promise =  audio_queue[index].play();
 	$("count_text").innerHTML = text_queue[index];
+
+	var promise;
 	if(index == 0){ // resync on one beat
 		time_view.start(model.time_signature, model.BPM);
 
 		if(model.flash_screen){
 			flash_screen_animation();
 		}
+		if(model.accent_first_beat)
+			promise = accent_audio.play();
+		else
+			promise = audio_queue[index].play();
+	}else {
+		promise = audio_queue[index].play();
 	}
 
 	if (promise !== undefined) {
@@ -263,11 +317,5 @@ audio_controller.executeAudioTimer = function(index, audio_queue, text_queue) {
 	        // Auto-play started
 	    });
 	}
-
-	/*audio_queue[index].play();
-  	$("count_text").innerHTML = text_queue[index];
-  	if(index == 0){ // resync on one beat
-  		time_view.start(model.time_signature, model.BPM);
-  	}*/
 }
 

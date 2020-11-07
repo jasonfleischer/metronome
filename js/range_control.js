@@ -284,7 +284,7 @@ range_control.plus_pressed = function(){
 }
 
 range_control.reload_colors = function(){
-	range_control.color_background_track = getComputedStyle(document.documentElement).getPropertyValue("--tertiary-background-color");
+	range_control.color_background_track = model.darkmode ? getComputedStyle(document.documentElement).getPropertyValue("--primary-background-color") : getComputedStyle(document.documentElement).getPropertyValue("--tertiary-background-color");
 	range_control.color_font = getComputedStyle(document.documentElement).getPropertyValue("--primary-font-color");
 	range_control.color_button = getComputedStyle(document.documentElement).getPropertyValue("--secondary-background-color");
 	range_control.color_stroke = getComputedStyle(document.documentElement).getPropertyValue("--primary-background-color");

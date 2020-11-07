@@ -61,17 +61,15 @@ function setup_keyboard_listeners() {
 		function decrementDivision(){
 			var new_beat_division = Math.max(model.beat_division - 1, 1);
 			if(new_beat_division != model.beat_division){
-				model.beat_division = new_beat_division;
-				$("division_select").value = model.beat_division;
-				reloadActivePlayer();
+				$("division_select").value = new_beat_division;
+				reloadDivisions(new_beat_division);
 			}
 		}
 		function incrementDivision(){
 			var new_beat_division = Math.min(model.beat_division + 1, 4);
 			if(new_beat_division != model.beat_division){
-				model.beat_division = new_beat_division;
-				$("division_select").value = model.beat_division;
-				reloadActivePlayer();
+				$("division_select").value = new_beat_division;
+				reloadDivisions(new_beat_division);
 			}
 		}
 	});
