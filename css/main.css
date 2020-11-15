@@ -24,6 +24,10 @@ html, body {
     height: 100vh;
     overflow: hidden;
     margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
     min-width: 320px;
     font-size: 15px;
 }
