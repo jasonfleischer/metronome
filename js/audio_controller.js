@@ -8,7 +8,7 @@ function reloadActivePlayer(){
 	}
 }
 
-var new_beat_division;
+var new_beat_division = 0;
 function reloadDivisions(value){
 	if(audio_controller.playing){
 		
@@ -18,6 +18,12 @@ function reloadDivisions(value){
 	} else {
 		model.beat_division = value;
 	}
+}
+
+function reloadBPM(value){
+	if(audio_controller.playing){
+		audio_controller.bpm_changed = true;
+	} 
 }
 
 function forcePlay(){
@@ -56,6 +62,7 @@ var audio_controller = {
 	model_changed: false, /// rename time_signature_change
 
 	divisions_changed: false,
+	bpm_changed: false,
 
 	click_accent_audio: {},
 	click_audio: {},
@@ -234,12 +241,9 @@ audio_controller.reloadSounds= function(){
 audio_controller.play = function(){
 
 	this.playing = true;
-
 	this.reloadSounds();
 
-
 	var audio_queue_index = 0;
-
 
 	function BPMtoMilliSeconds(BPM) { return 1000 / (BPM / 60); }
 	var time_division_milli_seconds = BPMtoMilliSeconds(model.BPM) / model.beat_division;
@@ -263,11 +267,22 @@ audio_controller.play = function(){
 			forcePlay();
 		} else {
 
-			if(audio_queue_index%model.beat_division == 0 && audio_controller.divisions_changed){
+			audio_controller.executeAudioTimer(audio_queue_index, audio_controller.accent_audio, audio_controller.audio_queue, audio_controller.text_queue);
+
+
+			if(audio_controller.bpm_changed){
+				audio_controller.bpm_changed = false;
+
+				var time_division_milli_seconds = BPMtoMilliSeconds(model.BPM) / model.beat_division;
+				interval = time_division_milli_seconds;
+				expected = Date.now() + interval;
+				audio_controller.timer_id = setTimeout(step, interval);
+				
+				time_view.reloadBPM(audio_queue_index);
+
+			} else if(audio_queue_index%model.beat_division == 0 && audio_controller.divisions_changed){
 
 				audio_controller.divisions_changed = false;
-				audio_controller.executeAudioTimer(audio_queue_index, audio_controller.accent_audio, audio_controller.audio_queue, audio_controller.text_queue);
-
 				var old_length = audio_controller.audio_queue.length;
 				model.beat_division = new_beat_division;
 				audio_controller.reloadSounds();
@@ -279,7 +294,6 @@ audio_controller.play = function(){
 				audio_controller.timer_id = setTimeout(step, interval);
 
 			} else {
-				audio_controller.executeAudioTimer(audio_queue_index, audio_controller.accent_audio, audio_controller.audio_queue, audio_controller.text_queue);
 		    	expected += interval;
 		    	audio_controller.timer_id = setTimeout(step, Math.max(0, interval - drift));
 			}
@@ -294,7 +308,7 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 
 	var promise;
 	if(index == 0){ // resync on one beat
-		time_view.start(model.time_signature, model.BPM);
+		//time_view.start(model.time_signature, model.BPM);
 
 		if(model.flash_screen){
 			flash_screen_animation();

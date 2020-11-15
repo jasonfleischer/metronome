@@ -55,22 +55,28 @@ function setup_keyboard_listeners() {
 			range_control.load(range_control.on_range_control_changed, "", MIN_BPM , MAX_BPM, 1, model.BPM, false, 0);
 			cookies.set_BPM(model.BPM);
 			update_UI_BPM(model.BPM);
-			reloadActivePlayer();
+			reloadBPM();
 		}
 
 		function decrementDivision(){
-			var new_beat_division = Math.max(model.beat_division - 1, 1);
-			if(new_beat_division != model.beat_division){
-				$("division_select").value = new_beat_division;
-				reloadDivisions(new_beat_division);
+			var new_division;
+			if(new_beat_division == 0){
+				new_division = Math.max(model.beat_division - 1, 1);	
+			}else{
+				new_division = Math.max(new_beat_division - 1, 1);
 			}
+			$("division_select").value = new_division;
+			reloadDivisions(new_division);
 		}
 		function incrementDivision(){
-			var new_beat_division = Math.min(model.beat_division + 1, 4);
-			if(new_beat_division != model.beat_division){
-				$("division_select").value = new_beat_division;
-				reloadDivisions(new_beat_division);
+			var new_division;
+			if(new_beat_division == 0){
+				new_division = Math.min(model.beat_division + 1, 4);	
+			}else{
+				new_division = Math.min(new_beat_division + 1, 4);
 			}
+			$("division_select").value = new_division;
+			reloadDivisions(new_division);
 		}
 	});
 }

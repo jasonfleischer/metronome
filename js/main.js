@@ -5,9 +5,7 @@
 // animate nav menu
 // time view cut off
 // font size
-// python script for translation parse
 // mobile zoom disable - need to test fixes
-// mode to tone
 // mobile 
 // other browsers
 // 	 safari - broken audio, broken arrow img - need to test fixes
@@ -46,6 +44,8 @@ function init() {
 
 	show_hidden_views();
 	time_view.init();
+
+
 }
 
 function show_hidden_views(){
@@ -188,7 +188,7 @@ function setup_bpm_controls() {
 			model.BPM = BPM_value;
 			cookies.set_BPM(model.BPM);
 			update_UI_BPM(model.BPM);
-			reloadActivePlayer();
+			reloadBPM();
 		};
 		range_control.load(on_range_control_changed, "", min , max, step, model.BPM, false, 0);
 	}
@@ -206,7 +206,7 @@ function setup_bpm_controls() {
 			range_control.load(range_control.on_range_control_changed, "", min , max, step, model.BPM, false, 0);
 			cookies.set_BPM(model.BPM);
 			update_UI_BPM(model.BPM);
-			reloadActivePlayer();
+			reloadBPM();
 		});
 	}
 
@@ -224,7 +224,7 @@ function setup_bpm_controls() {
 				range_control.load(range_control.on_range_control_changed, "", MIN_BPM , MAX_BPM, 1, model.BPM, false, 0);
 				cookies.set_BPM(model.BPM);
 				update_UI_BPM(model.BPM);
-				reloadActivePlayer();
+				reloadBPM();
 				if(was_playing) playPause(); 
 			}else {
 				log("Invalid BPM value" + BPM);

@@ -11,6 +11,8 @@ var time_view = {
 
 var animation_request_id;
 
+var buffer = 0;
+
 var point_size;
 var array_of_lines = [];
 const TWO_PI = 2 * Math.PI;
@@ -64,8 +66,20 @@ time_view.start =  function(time_signature, BPM){
 
 	time_division_milli_seconds = BPMtoMilliSeconds(model.BPM) * number_of_beats;
 	
+	buffer = 0;
 
 	time_view.draw_background();
+	time_view.draw();
+}
+
+time_view.reloadBPM = function(index){
+
+	function BPMtoMilliSeconds(BPM) { return 1000 / (BPM / 60); }
+	time_division_milli_seconds = BPMtoMilliSeconds(model.BPM) * number_of_beats;
+	var percent = index/ (number_of_beats * model.beat_division);
+	buffer = percent;
+
+	time_view.start_time = Date.now();
 	time_view.draw();
 }
 
@@ -84,6 +98,19 @@ time_view.stop = function(){
 	ctx.clearRect(0, 0, time_view.WIDTH, time_view.HEIGHT);
 
 	cancelAnimationFrame(animation_request_id);
+}
+
+time_view.reload_colors = function(){
+
+	function clear_background (){
+		var canvas = document.getElementById("time_view_background_canvas");
+		var ctx = canvas.getContext("2d");
+		ctx.clearRect(0, 0, time_view.WIDTH, time_view.HEIGHT);
+	}
+	clear_background();
+	time_view.color_primary = getComputedStyle(document.documentElement).getPropertyValue("--primary-font-color");
+	time_view.color_secondary = getComputedStyle(document.documentElement).getPropertyValue("--primary-background-color");
+	time_view.draw_background();
 }
 
 class Point{
@@ -168,19 +195,7 @@ class Polygon {
 	}
 }
 
-time_view.reload_colors = function(){
 
-	function clear_background (){
-		var canvas = document.getElementById("time_view_background_canvas");
-		var ctx = canvas.getContext("2d");
-		ctx.clearRect(0, 0, time_view.WIDTH, time_view.HEIGHT);
-	}
-	clear_background();
-	time_view.color_primary = getComputedStyle(document.documentElement).getPropertyValue("--primary-font-color");
-	time_view.color_secondary = getComputedStyle(document.documentElement).getPropertyValue("--primary-background-color");
-	time_view.draw_background();
-	time_view.draw();
-}
 
 time_view.draw_background = function(){
 
@@ -262,18 +277,18 @@ time_view.draw = function(){
 	ctx.clearRect(0, 0, time_view.WIDTH, time_view.HEIGHT);
 	var centerPt = new Point(time_view.WIDTH/2.0, time_view.HEIGHT/2.0);
 
-	var delta = Date.now() - time_view.start_time;
+	var delta = Date.now() - time_view.start_time;	
+	percentage = ((delta%time_division_milli_seconds))/time_division_milli_seconds;
+	percentage = (percentage + buffer) % 1.000;
 
-	var percentage = (delta%time_division_milli_seconds)/time_division_milli_seconds;
 	var angle = (TWO_PI*percentage) - (TWO_PI /4);
-	var pt = new Point(time_view.getXofCircle(time_view.radius - point_size, centerPt.x, angle), 
-								time_view.getYofCircle(time_view.radius - point_size, centerPt.y, angle));
-	
+	var	pt = new Point(time_view.getXofCircle(time_view.radius - point_size, centerPt.x, angle), 
+									time_view.getYofCircle(time_view.radius - point_size, centerPt.y, angle));
 
 	if(number_of_beats > 2){
 		pt.draw(ctx, point_size - 3, time_view.color_secondary);
 		var reference_line = new Line(centerPt, pt);
-		var beat = parseInt ( (delta / (time_division_milli_seconds / number_of_beats) ) % number_of_beats );
+		var beat = parseInt(percentage*number_of_beats)
 		var line = array_of_lines[beat];
 		var pt2 = reference_line.getIntersectionPtBetweenTwoLines(line);
 		if (pt2.isValid) pt2.draw(ctx, point_size -3, time_view.color_primary);
