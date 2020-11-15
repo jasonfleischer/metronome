@@ -49,7 +49,7 @@ time_view.resize = function(){
 
 	var count_text = document.getElementById("count_text");
 	count_text.style.lineHeight = DIMENSION + "px";
-	count_text.style.fontSize = (DIMENSION * 0.42) + "px"; 
+	count_text.style.fontSize = (DIMENSION * 0.40) + "px"; 
 }
 
 var number_of_beats = 0;

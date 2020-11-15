@@ -1,11 +1,10 @@
 
 //todo 
 
-// dont restart on active changes
-// animate nav menu
+// dont restart on active changes - cleanup
 // time view cut off
 // font size
-// mobile zoom disable - need to test fixes
+// mobile zoom disable 
 // mobile 
 // other browsers
 // 	 safari - broken audio, broken arrow img - need to test fixes
@@ -41,6 +40,7 @@ function init() {
 
 	setup_keyboard_listeners();
 	setup_info_alert();
+	setup_settings_menu_on_click();
 
 	show_hidden_views();
 	time_view.init();
@@ -147,17 +147,47 @@ function toggle_settings(){
 	else
 		hide_settings();
 }
+
+var settings_animation_id;
 function show_settings() {
 	$("nav-side-menu").style.display = "block";
 	$("kofi_button").style.display = "none";
 	$("info_button").style.display = "none";
 	$("setting_button_svg").src = (model.darkmode) ? "img/close_white.svg" : "img/close_black.svg";
+
+	settings_slide_down_animation();
+	function settings_slide_down_animation(){
+		var elem = $("nav-side-menu");
+		var height = $("nav-menu-ul").offsetHeight;
+		var pos = -1*height;
+		settings_animation_id = setInterval(frame, 10);
+		elem.style.top = pos + 'px';
+		function frame() {
+			if (pos == 0) {
+				clearInterval(settings_animation_id);
+			} else {
+				pos = Math.min(pos + 15, 0);
+				elem.style.top = pos + 'px';
+			}
+		}
+	}
 }
 function hide_settings(){
+	clearInterval(settings_animation_id);
 	$("nav-side-menu").style.display = "none";
 	$("kofi_button").style.display = "block";
 	$("info_button").style.display = "block";
 	$("setting_button_svg").src = (model.darkmode) ? "img/gear_white.svg" : "img/gear_black.svg";
+}
+function setup_settings_menu_on_click(){
+	$("ul_wrapper").addEventListener("click", function(event){
+		if(is_compact_window())
+			hide_settings();
+	});
+	$("nav-menu-ul").addEventListener("click", function(event){
+		event.stopPropagation();
+		return false;
+	});
 }
 
 function openURL(url){

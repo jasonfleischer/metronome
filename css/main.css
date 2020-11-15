@@ -125,7 +125,7 @@ html, body {
         overflow: auto; 
         font-size: 12px;
         font-weight: 200;
-        background-color: var(--secondary-background-color);
+        background-color: transparent;
         position: fixed;
         top: 10px;
         width: 100vw;   
@@ -133,6 +133,9 @@ html, body {
         height: 100vh;
         overflow: hidden;
         display: none;
+    }
+    #nav-menu-ul{
+        background-color: var(--secondary-background-color);
     }
     #content_view{
         padding-left: 0px;
@@ -145,7 +148,7 @@ html, body {
         display: table;
         overflow: hidden;
         width: 100vw;
-        height: calc(100vh - var(--header-height));  
+        height: calc(100vh - var(--header-height) - var(--row-height) - 15px);  
     }
     #init_view p {
         text-align: center;
