@@ -91,7 +91,7 @@ function window_resized_end(){
 	if(audio_controller.playing){
 		$("time_view_container").style.display = "block"; // show
 	} else {
-		$("status_msg").style.display = "table-cell"; // show
+		$("status_msg").style.display = "block"; // show
 	}
 	time_view.resize();
 	time_view.draw_background();
@@ -424,7 +424,7 @@ function update_UI_stopped(){
 	$("play_pause_button").innerHTML = TR("Play");
 	$("mobile_play_pause_button").innerHTML = TR("Play");
 	$("count_text").innerHTML = "\xa0";
-	$("init_view").style.display = "table"; // show
+	$("init_view").style.display = "block"; // show
 	time_view.stop();
 }
 

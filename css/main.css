@@ -23,8 +23,8 @@ html, body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -64,7 +64,7 @@ html, body {
     }
     #init_view{
         position: absolute;
-        display: table;
+
         overflow: hidden;
         width: calc(100vw - var(--left-column-width));
         height: calc(100vh - var(--header-height));  
@@ -74,7 +74,7 @@ html, body {
         padding-left: 20px;
         padding-right: 20px;
         color: var(--primary-font-color);
-        display: table-cell;
+
         vertical-align: middle;
         opacity: 0.3;
     }
@@ -149,7 +149,7 @@ html, body {
     }
     #init_view{
         position: absolute;
-        display: table;
+
         overflow: hidden;
         width: 100vw;
         height: calc(100vh - var(--header-height) - var(--row-height) - 15px);  
@@ -159,7 +159,7 @@ html, body {
         padding-left: 20px;
         padding-right: 20px;
         color: var(--primary-font-color);
-        display: table-cell; 
+
         vertical-align: middle;
         opacity: 0.3;
     }
