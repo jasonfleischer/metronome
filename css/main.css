@@ -30,6 +30,7 @@ html, body {
     bottom: 0;
     min-width: 320px;
     font-size: 15px;
+    -webkit-text-size-adjust:none;
 }
 
 #nav-side-menu, #content_view, #header{
