@@ -363,8 +363,9 @@ button:hover {
 #mobile_button_control_container {
     width: calc(100% - 30px);
     height: var(--row-height);
-    position: fixed;
-    top: calc(100vh - var(--row-height) - 15px);
+    position: -webkit-sticky; /* Safari */
+  position: sticky;
+    
     bottom: 0;
     left:0;
     margin-right: 15px;
