@@ -33,6 +33,16 @@ html, body {
     -webkit-text-size-adjust:none;
 }
 
+body {
+  min-height: 100vh;
+  /* mobile viewport bug fix */
+  min-height: -webkit-fill-available;
+}
+
+html {
+  height: -webkit-fill-available;
+}
+
 #nav-side-menu, #content_view, #header{
     min-width: 320px;
     display: none;
