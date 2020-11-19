@@ -363,7 +363,7 @@ button:hover {
     width: calc(100% - 30px);
     height: var(--row-height);
     position: fixed;
-    top: calc(100vh - var(--row-height));
+    top: calc(100vh - var(--row-height) - 15px);
     
     left:0;
     margin-right: 15px;
