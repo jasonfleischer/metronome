@@ -365,6 +365,8 @@ button:hover {
     height: var(--row-height);
     position: absolute;
     top: calc(100vh - var(--row-height) - 15px);
+    bottom: 0;
+    left:0;
     margin-right: 15px;
     margin-left: 15px;
 }
