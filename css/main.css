@@ -25,7 +25,6 @@ html, body {
     overflow: hidden;
     margin: 0px;
     padding: 0px;
-    position: absolute;
     top: 0;
     bottom: 0;
     min-width: 320px;
@@ -369,7 +368,7 @@ button:hover {
     left:0;
     margin-right: 15px;
     margin-left: 15px;
-    
+    margin-bottom: 15px;
 }
 #tap_button, #mobile_tap_button {
     float: left;
