@@ -31,6 +31,7 @@ html, body {
     min-width: 320px;
     font-size: 15px;
     -webkit-text-size-adjust:none;
+    background: green;
 }
 
 body {
