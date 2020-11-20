@@ -20,9 +20,9 @@
 }
 
 html, body {
-    width: 100vw;
-    height: 100vh;
-    min-height: 100vh;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
     overflow: hidden;
     margin: 0px;
     padding: 0px;
@@ -35,7 +35,7 @@ html, body {
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100%;
   /* mobile viewport bug fix */
   min-height: -webkit-fill-available;
 }
@@ -64,7 +64,7 @@ html {
         position: fixed;
         top: 60px;
         width: var(--left-column-width);   
-        height: 100vh;
+        height: 100%;
         overflow: hidden;
        
         display: block;
@@ -72,14 +72,14 @@ html {
     #content_view {
         overflow-x: hidden;
         padding-left: var(--left-column-width);
-        height: calc(100vh - var(--header-height));
+        height: calc(100% - var(--header-height));
     }
     #init_view{
         position: absolute;
 
         overflow: hidden;
-        width: calc(100vw - var(--left-column-width));
-        height: calc(100vh - var(--header-height));  
+        width: calc(100% - var(--left-column-width));
+        height: calc(100% - var(--header-height));  
     }
     #init_view p {
         text-align: center;
@@ -104,9 +104,9 @@ html {
     }
 
     #ul_wrapper {
-        height: -moz-calc(100vh - 435px);
-        height: -webkit-calc(100vh - 435px);
-        height: calc(100vh - 435px);
+        height: -moz-calc(100% - 435px);
+        height: -webkit-calc(100% - 435px);
+        height: calc(100% - 435px);
         display: block;
         overflow: auto;
     }
@@ -144,9 +144,9 @@ html {
         background-color: transparent;
         position: fixed;
         top: 10px;
-        width: 100vw;   
+        width: 100%;   
         z-index: 2;
-        height: 100vh;
+        height: 100%;
         overflow: hidden;
         display: none;
     }
@@ -155,16 +155,16 @@ html {
     }
     #content_view{
         padding-left: 0px;
-        height: calc(100vh - var(--header-height) * 2 - 10px);
+        height: calc(100% - var(--header-height) * 2 - 10px);
         position: absolute;
-        width: 100vw;
+        width: 100%;
     }
     #init_view{
         position: absolute;
 
         overflow: hidden;
-        width: 100vw;
-        height: calc(100vh - var(--header-height) - var(--row-height) - 15px);  
+        width: 100%;
+        height: calc(100% - var(--header-height) - var(--row-height) - 15px);  
     }
     #init_view p {
         text-align: center;
@@ -189,9 +189,9 @@ html {
     }
 
     #ul_wrapper {
-        height: -moz-calc(100vh - 60px);
-        height: -webkit-calc(100vh - 60px);
-        height: calc(100vh - 60px);
+        height: -moz-calc(100% - 60px);
+        height: -webkit-calc(100% - 60px);
+        height: calc(100% - 60px);
         display: block;
         overflow: auto;
     }
@@ -213,7 +213,7 @@ html {
 
 body{
     font-family: 'SF Display Thin', sans-serif;
-    height: 100vh;
+    height: 100%;
    
     overflow-x: hidden;
     padding: 0px;
@@ -365,7 +365,7 @@ button:hover {
     width: calc(100% - 30px);
     height: var(--row-height);
     position: fixed;
-    top: calc(100vh - var(--row-height) - 15px);
+    top: calc(100% - var(--row-height) - 15px);
     
     left:0;
     margin-right: 15px;
@@ -508,8 +508,8 @@ button:hover {
 #info_alert_container {
     display: none;
     position: absolute;
-     width: 100vw;
-    height: 100vh;
+     width: 100%;
+    height: 100%;
     background-color: #00000099; /*transparent*/
     z-index: 4;
 
@@ -537,8 +537,8 @@ button:hover {
 
 #flash_screen{
     background-color: #FFF;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     z-index: 6;
     position: absolute;
     display: none;
