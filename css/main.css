@@ -28,17 +28,8 @@ html, body {
     min-width: 320px;
     font-size: 15px;
     -webkit-text-size-adjust:none;
-    background: green;
-}
-
-body {
-  min-height: 100%;
-  /* mobile viewport bug fix */
-  min-height: -webkit-fill-available;
-}
-
-html {
-  height: -webkit-fill-available;
+    min-height: -webkit-fill-available;
+    height: -webkit-fill-available;
 }
 
 #nav-side-menu, #content_view, #header{
@@ -63,17 +54,15 @@ html {
         width: var(--left-column-width);   
         height: 100%;
         overflow: hidden;
-       
         display: block;
     }
     #content_view {
         overflow-x: hidden;
         padding-left: var(--left-column-width);
-        height: calc(100% - var(--header-height));
+        height: calc(100vh - var(--header-height) );
     }
     #init_view{
         position: absolute;
-
         overflow: hidden;
         width: calc(100% - var(--left-column-width));
         height: 100%;  
@@ -176,10 +165,9 @@ html {
         color: var(--primary-font-color);
         top: calc(50% - 9px);
         left:0;
-  right:0;
-
-  margin-left: auto;
-  margin-right: auto;
+        right:0;
+        margin-left: auto;
+        margin-right: auto;
         vertical-align: middle;
         opacity: 0.3;
     }
@@ -269,20 +257,17 @@ strong {
     color: #007bff;
 }
 
-::-webkit-scrollbar-track
-{
-  background-color: var(--tertiary-background-color);
+::-webkit-scrollbar-track {
+    background-color: var(--tertiary-background-color);
 }
 
-::-webkit-scrollbar
-{
-  width: 12px;  
+::-webkit-scrollbar {
+    width: 12px;  
 }
 
-::-webkit-scrollbar-thumb
-{
-  background: var(--secondary-background-color);
-  border: 1px solid var(--primary-background-color);
+::-webkit-scrollbar-thumb {
+    background: var(--secondary-background-color);
+    border: 1px solid var(--primary-background-color);
 }
 
 .nav-side-menu-item {
@@ -358,7 +343,6 @@ button:focus {
 }
 button:hover {
     background-color: var(--tertiary-background-color);
-
     cursor: pointer;
 }
 
@@ -374,7 +358,6 @@ button:hover {
     height: var(--row-height);
     position: fixed;
     top: calc(100% - var(--row-height) - 15px);
-    
     left:0;
     margin-right: 15px;
     margin-left: 15px;
@@ -459,7 +442,6 @@ button:hover {
 }
 #info_alert_header {
     height: 43px
-
 }
 
 #info_button, #setting_button, #dismiss_alert_button {

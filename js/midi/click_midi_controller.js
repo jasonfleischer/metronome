@@ -13,21 +13,17 @@ var click_controller = {
 
 click_controller.init = function() {
 
-	console.log("click_controller.init")
-
+	console.log("click_controller.init");
 	this.isFirefox = isFirefox();
 	this.tone= this.isFirefox ? this.firefoxTone : this.otherTone;
 	this.player = new WebAudioFontPlayer();
-
-	//click_controller.load();
 }
 
 var midi_initialized = false;
 var AudioContextFunc = window.AudioContext || window.webkitAudioContext;
 click_controller.load = function(){
 	if(!midi_initialized){
-		console.log("click_controller.load")
-		
+		console.log("click_controller.load");
 		click_controller.audioContext = new AudioContextFunc();
 		click_controller.player.adjustPreset(click_controller.audioContext, click_controller.tone);
 		midi_initialized = true;
@@ -43,7 +39,6 @@ click_controller.playNormalClick = function(){
 click_controller.playSoftClick = function(){
 	this.playPitch(this.isFirefox ? 84 : 96);
 }
-
 click_controller.playPitch = function(pitch) {
 	this.player.queueWaveTable(this.audioContext, this.audioContext.destination, this.tone, this.audioContext.currentTime, pitch, this.duration_in_sec);
 }

@@ -308,7 +308,7 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 
 	var promise;
 	if(index == 0){ // resync on one beat
-		//time_view.start(model.time_signature, model.BPM);
+		time_view.start(model.time_signature, model.BPM);
 
 		if(model.flash_screen){
 			flash_screen_animation();

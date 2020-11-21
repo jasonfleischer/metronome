@@ -14,8 +14,7 @@ var drum_controller = {
 
 drum_controller.init = function() {
 
-	console.log("drum_controller.init")
-
+	console.log("drum_controller.init");
 	this.snare_player = new WebAudioFontPlayer();
 	this.bass_player = new WebAudioFontPlayer();
 	this.highhat_player = new WebAudioFontPlayer();
@@ -26,15 +25,13 @@ var drum_initialized = false;
 drum_controller.load = function(){
 	if(!drum_initialized){
 
-		console.log("drum_controller.load")
+		console.log("drum_controller.load");
 		var AudioContextFunc = window.AudioContext || window.webkitAudioContext;
 		drum_controller.audioContext = new AudioContextFunc();
-
 		drum_controller.snare_player.adjustPreset(drum_controller.audioContext, drum_controller.snare_tone);
 		drum_controller.bass_player.adjustPreset(drum_controller.audioContext, drum_controller.bass_tone);
 		drum_controller.highhat_player.adjustPreset(drum_controller.audioContext, drum_controller.highhat_tone);
 		drum_controller.crash_player.adjustPreset(drum_controller.audioContext, drum_controller.crash_tone);
-
 		drum_initialized = true;
 	}
 }

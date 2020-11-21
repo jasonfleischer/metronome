@@ -6,4 +6,4 @@ A metronome website:
 
 Special thanks to Surikov for their [WebAudioFont](https://surikov.github.io/webaudiofont/) library
 
-![Screenshot 2](./screenshots/screen2.png "Sreenshot 2")
+![Screenshot 2](./screenshots/screen.png "Sreenshot")

@@ -4,34 +4,33 @@ var range_control = {
 	color_background_track: getComputedStyle(document.documentElement).getPropertyValue("--tertiary-background-color"),
 	color_font: getComputedStyle(document.documentElement).getPropertyValue("--primary-font-color"),
 	color_button: getComputedStyle(document.documentElement).getPropertyValue("--secondary-background-color"),
-	color_stroke: getComputedStyle(document.documentElement).getPropertyValue("--primary-background-color")
+	color_stroke: getComputedStyle(document.documentElement).getPropertyValue("--primary-background-color"),
+
+	percent_value: 0,
+	WIDTH: 0,
+	HEIGHT: 0,
+	radius: 0,
+	track_width: 0,
+
+	startAngleInRadians: 2 * Math.PI *.35,
+	endAngleInRadians: 2 * Math.PI *.15,
+	controlAngleInRadians: 0,
+
+	minusX: 0,
+	minusY: 0,
+	plusX: 0,
+	plusY: 0,
+
+	on_range_control_changed: {},
+	units: "",
+	min: 0,
+	max: 0,
+	step: 0,
+	value: 0, 
+	show_percent: false,
+	decimal_places: 1,
+	special_cased_values: []
 }
-
-range_control.percent_value = 0;
-range_control.WIDTH = 0;
-range_control.HEIGHT = 0;
-range_control.radius = 0;
-range_control.track_width = 0;
-
-range_control.startAngleInRadians = 2 * Math.PI *.35;
-range_control.endAngleInRadians = 2 * Math.PI *.15; 
-range_control.controlAngleInRadians = 0;
-
-range_control.minusX = 0;
-range_control.minusY = 0;
-range_control.plusX = 0;
-range_control.plusY = 0;
-
-range_control.on_range_control_changed = {}
-range_control.units = ""; 
-range_control.min = 0;
-range_control.max = 0;
-range_control.step = 0;
-range_control.value = 0; 
-range_control.show_percent = false;
-range_control.decimal_places = 1;
-range_control.special_cased_values = [];
-
 
 range_control.load = function(on_range_control_changed, units, min , max, step, value, show_percent, decimal_places, special_cased_values) {
 
@@ -45,19 +44,11 @@ range_control.load = function(on_range_control_changed, units, min , max, step, 
 	range_control.step = step;  
 	range_control.value = value;
 	range_control.units = units;
-
-	
 	
 	var canvas = document.getElementById("dial_canvas");
 	range_control.WIDTH = canvas.width > canvas.height ? canvas.width : canvas.height;
-	//canvas.setAttribute('height', range_control.WIDTH);
-	//canvas.setAttribute('width', range_control.WIDTH);
 	canvas.width=range_control.WIDTH;
 	canvas.height=range_control.WIDTH;
-	//canvas.style.width=range_control.WIDTH;
-	//canvas.style.height=range_control.WIDTH;
-	//canvas.clientWidth = canvas.width;
-	//canvas.clientHeight = canvas.height;
 
 	range_control.HEIGHT = range_control.WIDTH;
 	range_control.radius = range_control.WIDTH / 2.0;
@@ -458,8 +449,4 @@ range_control.emit_change = function(value){
 	range_control.percent_value = range_control.value.to_percent(range_control.min, range_control.max);
 	range_control.draw(range_control.percent_value);
 }
-
-
-
-
 

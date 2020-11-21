@@ -1,11 +1,8 @@
 
 //todo 
 
-// dont restart on active changes - cleanup
-// time view cut off
-// font size
-// mobile zoom disable 
-// mobile 
+ 
+// mobile browers broken audio and footer
 // other browsers
 // 	 safari - broken audio, broken arrow img - need to test fixes
 //   firefox - no issues
@@ -44,7 +41,6 @@ function init() {
 
 	show_hidden_views();
 	time_view.init();
-
 
 }
 
@@ -270,10 +266,7 @@ function setup_tone_select() {
 		model.tone = value;
 		cookies.set_tone(value);
 		update_UI_tone();
-		
 		audio_controller.reloadSounds();
-
-		//reloadActivePlayer();
 	});
 	$("tone_select").value = model.tone;
 	update_UI_tone();

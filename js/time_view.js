@@ -6,15 +6,14 @@ var time_view = {
 	start_time: 0,
 
 	color_primary: {},
-	color_secondary: {}
+	color_secondary: {},
+
+	animation_request_id: {},
+	percent_buffer: 0,
+	point_size: 0,
+	array_of_lines: []
 }
 
-var animation_request_id;
-
-var buffer = 0;
-
-var point_size;
-var array_of_lines = [];
 const TWO_PI = 2 * Math.PI;
 
 time_view.init = function(){
@@ -28,20 +27,16 @@ time_view.resize = function(){
 	time_view.WIDTH = DIMENSION;
 	time_view.HEIGHT = DIMENSION;
 	time_view.radius = DIMENSION / 2.0;
-	point_size = (DIMENSION * 0.025)
-	
-	
+	time_view.point_size = (DIMENSION * 0.025)
 
 	var container = document.getElementById("time_view_container");
 	container.style.width = DIMENSION + "px";
 	container.style.height = DIMENSION + "px";
 	container.style.marginTop = ((content_view.offsetHeight - DIMENSION ) * 0.5) + "px";
 
-
 	var canvas = document.getElementById("time_view_canvas");
 	canvas.width = DIMENSION;
-	canvas.height = DIMENSION;
-	
+	canvas.height = DIMENSION;	
 
 	var canvas_background = document.getElementById("time_view_background_canvas");
 	canvas_background.width = DIMENSION;
@@ -66,7 +61,7 @@ time_view.start =  function(time_signature, BPM){
 
 	time_division_milli_seconds = BPMtoMilliSeconds(model.BPM) * number_of_beats;
 	
-	buffer = 0;
+	time_view.percent_buffer = 0;
 
 	time_view.draw_background();
 	time_view.draw();
@@ -77,7 +72,7 @@ time_view.reloadBPM = function(index){
 	function BPMtoMilliSeconds(BPM) { return 1000 / (BPM / 60); }
 	time_division_milli_seconds = BPMtoMilliSeconds(model.BPM) * number_of_beats;
 	var percent = index/ (number_of_beats * model.beat_division);
-	buffer = percent;
+	time_view.percent_buffer = percent;
 
 	time_view.start_time = Date.now();
 	time_view.draw();
@@ -88,7 +83,6 @@ time_view.stop = function(){
 	var container = document.getElementById("time_view_container");
 	container.style.display = "none";
 
-
 	var canvas = document.getElementById("time_view_canvas");
 	var ctx = canvas.getContext("2d");
 	ctx.clearRect(0, 0, time_view.WIDTH, time_view.HEIGHT);
@@ -97,7 +91,7 @@ time_view.stop = function(){
 	ctx = canvas_background.getContext("2d");
 	ctx.clearRect(0, 0, time_view.WIDTH, time_view.HEIGHT);
 
-	cancelAnimationFrame(animation_request_id);
+	cancelAnimationFrame(time_view.animation_request_id);
 }
 
 time_view.reload_colors = function(){
@@ -195,14 +189,12 @@ class Polygon {
 	}
 }
 
-
-
 time_view.draw_background = function(){
 
 	var canvas = document.getElementById("time_view_background_canvas");
 	var ctx = canvas.getContext("2d");
 	var centerPt = new Point(time_view.WIDTH/2.0, time_view.HEIGHT/2.0);
-	var track_width = point_size * 2;
+	var track_width = time_view.point_size * 2;
 
 
 	if (number_of_beats == 2) { // draw arc
@@ -218,10 +210,10 @@ time_view.draw_background = function(){
 	
 	var angle = TWO_PI /4 *-1;
 	
-	array_of_lines = []; 
+	time_view.array_of_lines = []; 
 
-	var prev_pt = new Point(time_view.getXofCircle(time_view.radius - point_size,  centerPt.x, angle), 
-								time_view.getYofCircle(time_view.radius - point_size,  centerPt.y, angle));
+	var prev_pt = new Point(time_view.getXofCircle(time_view.radius - time_view.point_size,  centerPt.x, angle), 
+								time_view.getYofCircle(time_view.radius - time_view.point_size,  centerPt.y, angle));
 	var array_of_points = []; 
 	array_of_points.push(prev_pt);
 
@@ -231,8 +223,8 @@ time_view.draw_background = function(){
 	array_of_outer_points.push(prev_outer_pt);
 	
 
-	var prev_inner_pt = new Point(time_view.getXofCircle(time_view.radius - point_size * 2, centerPt.x, angle), 
-								time_view.getYofCircle(time_view.radius - point_size * 2, centerPt.y, angle));
+	var prev_inner_pt = new Point(time_view.getXofCircle(time_view.radius - time_view.point_size * 2, centerPt.x, angle), 
+								time_view.getYofCircle(time_view.radius - time_view.point_size * 2, centerPt.y, angle));
 	var array_of_inner_points = [];
 	array_of_inner_points.push(prev_inner_pt);
 
@@ -242,19 +234,19 @@ time_view.draw_background = function(){
        
 		var angle = angle + TWO_PI/number_of_beats;
 
-		var next_pt = new Point(time_view.getXofCircle(time_view.radius - point_size, centerPt.x, angle), 
-								time_view.getYofCircle(time_view.radius - point_size, centerPt.y, angle));
+		var next_pt = new Point(time_view.getXofCircle(time_view.radius - time_view.point_size, centerPt.x, angle), 
+								time_view.getYofCircle(time_view.radius - time_view.point_size, centerPt.y, angle));
 
 		var next_outer_pt = new Point(time_view.getXofCircle(time_view.radius, centerPt.x, angle), 
 								time_view.getYofCircle(time_view.radius, centerPt.y, angle));
 
-		var next_inner_pt = new Point(time_view.getXofCircle(time_view.radius - point_size * 2, centerPt.x, angle), 
-								time_view.getYofCircle(time_view.radius - point_size * 2, centerPt.y, angle));
+		var next_inner_pt = new Point(time_view.getXofCircle(time_view.radius - time_view.point_size * 2, centerPt.x, angle), 
+								time_view.getYofCircle(time_view.radius - time_view.point_size * 2, centerPt.y, angle));
 
 		var line = new Line(prev_pt, next_pt);
 		//line.draw(ctx);
 
-		array_of_lines.push(line);
+		time_view.array_of_lines.push(line);
 		array_of_points.push(next_pt);
 		array_of_outer_points.push(next_outer_pt);
 		array_of_inner_points.push(next_inner_pt);
@@ -279,23 +271,23 @@ time_view.draw = function(){
 
 	var delta = Date.now() - time_view.start_time;	
 	percentage = ((delta%time_division_milli_seconds))/time_division_milli_seconds;
-	percentage = (percentage + buffer) % 1.000;
+	percentage = (percentage + time_view.percent_buffer) % 1.000;
 
 	var angle = (TWO_PI*percentage) - (TWO_PI /4);
-	var	pt = new Point(time_view.getXofCircle(time_view.radius - point_size, centerPt.x, angle), 
-									time_view.getYofCircle(time_view.radius - point_size, centerPt.y, angle));
+	var	pt = new Point(time_view.getXofCircle(time_view.radius - time_view.point_size, centerPt.x, angle), 
+									time_view.getYofCircle(time_view.radius - time_view.point_size, centerPt.y, angle));
 
 	if(number_of_beats > 2){
-		pt.draw(ctx, point_size - 3, time_view.color_secondary);
+		pt.draw(ctx, time_view.point_size - 3, time_view.color_secondary);
 		var reference_line = new Line(centerPt, pt);
 		var beat = parseInt(percentage*number_of_beats)
-		var line = array_of_lines[beat];
+		var line = time_view.array_of_lines[beat];
 		var pt2 = reference_line.getIntersectionPtBetweenTwoLines(line);
-		if (pt2.isValid) pt2.draw(ctx, point_size -3, time_view.color_primary);
+		if (pt2.isValid) pt2.draw(ctx, time_view.point_size -3, time_view.color_primary);
 	} else {
-		pt.draw(ctx, point_size - 3, time_view.color_primary);
+		pt.draw(ctx, time_view.point_size - 3, time_view.color_primary);
 	}
-  	animation_request_id = requestAnimationFrame(time_view.draw);
+  	time_view.animation_request_id = requestAnimationFrame(time_view.draw);
 }
 
 time_view.getXofCircle = function(radius, centerX, angleInRadians){
