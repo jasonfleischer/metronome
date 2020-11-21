@@ -2,11 +2,13 @@
 //todo 
 
  
-// mobile browers broken audio and footer
+// mobile 
+//	safari - no midi sound
+//	chrome - no sound for midi, landscape portait (need to reload)
 // other browsers
-// 	 safari - broken audio, broken arrow img - need to test fixes
-//   firefox - no issues
-//	 edge - no issue
+//	safari - no issues
+//  firefox - no issues
+//	edge - no issue
 
 // python -m SimpleHTTPServer 8000
 // http://localhost:8000/
@@ -39,9 +41,19 @@ function init() {
 	setup_info_alert();
 	setup_settings_menu_on_click();
 
+	if(!window.mobileCheck){
+		setup_mobile();
+		logE("is mobile")
+	}
+
 	show_hidden_views();
 	time_view.init();
 
+}
+
+function setup_mobile(){
+	model.tone = TONE.NORMAL;
+	$("tone").style.display = "none";
 }
 
 function show_hidden_views(){

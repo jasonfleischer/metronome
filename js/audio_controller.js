@@ -86,43 +86,46 @@ audio_controller.init_sounds =function(){
 	this.click_audio = new WoodblockSound("normal");
 	this.click_division_audio = new WoodblockSound("soft");
 
-	this.bass_and_crash_audio = new DrumSound("bass_and_crash");
-	this.snare_audio = new DrumSound("snare");
-	this.bass_audio = new DrumSound("bass");
-	this.highhat_audio = new DrumSound("highhat");
+	if(window.mobileCheck){
 
-	init_talking_sounds(this);
-	function init_talking_sounds(self){
-		var volume = 0.4;
+		this.bass_and_crash_audio = new DrumSound("bass_and_crash");
+		this.snare_audio = new DrumSound("snare");
+		this.bass_audio = new DrumSound("bass");
+		this.highhat_audio = new DrumSound("highhat");
 
-		self.and_audio = document.createElement("AUDIO");
-		self.and_audio.setAttribute("src","audio/talking/and.wav");
-		self.and_audio.volume = volume;
+		init_talking_sounds(this);
+		function init_talking_sounds(self){
+			var volume = 0.4;
 
-		self.trip_audio = document.createElement("AUDIO");
-		self.trip_audio.setAttribute("src","audio/talking/trip.wav");
-		self.trip_audio.volume = volume;
+			self.and_audio = document.createElement("AUDIO");
+			self.and_audio.setAttribute("src","audio/talking/and.wav");
+			self.and_audio.volume = volume;
 
-		self.let_audio = document.createElement("AUDIO");
-		self.let_audio.setAttribute("src","audio/talking/let.wav");
-		self.let_audio.volume = volume;
+			self.trip_audio = document.createElement("AUDIO");
+			self.trip_audio.setAttribute("src","audio/talking/trip.wav");
+			self.trip_audio.volume = volume;
 
-		self.e_audio = document.createElement("AUDIO");
-		self.e_audio.setAttribute("src","audio/talking/e.wav");
-		self.e_audio.volume = volume;
+			self.let_audio = document.createElement("AUDIO");
+			self.let_audio.setAttribute("src","audio/talking/let.wav");
+			self.let_audio.volume = volume;
 
-		self.a_audio = document.createElement("AUDIO");
-		self.a_audio.setAttribute("src","audio/talking/ah.wav");
-		self.a_audio.volume = volume;
+			self.e_audio = document.createElement("AUDIO");
+			self.e_audio.setAttribute("src","audio/talking/e.wav");
+			self.e_audio.volume = volume;
 
-		self.talking_audio_array = [];
-		talking_wavs = ["audio/talking/one.wav", "audio/talking/two.wav", "audio/talking/three.wav", "audio/talking/four.wav", "audio/talking/five.wav", "audio/talking/six.wav", "audio/talking/seven.wav", "audio/talking/eight.wav", "audio/talking/nine.wav"];
-		var i;
-		for(i=0; i<talking_wavs.length; i++){
-			var audio = document.createElement("AUDIO");
-			audio.setAttribute("src", talking_wavs[i]);
-			audio.volume = volume;
-			self.talking_audio_array[i] = audio;
+			self.a_audio = document.createElement("AUDIO");
+			self.a_audio.setAttribute("src","audio/talking/ah.wav");
+			self.a_audio.volume = volume;
+
+			self.talking_audio_array = [];
+			talking_wavs = ["audio/talking/one.wav", "audio/talking/two.wav", "audio/talking/three.wav", "audio/talking/four.wav", "audio/talking/five.wav", "audio/talking/six.wav", "audio/talking/seven.wav", "audio/talking/eight.wav", "audio/talking/nine.wav"];
+			var i;
+			for(i=0; i<talking_wavs.length; i++){
+				var audio = document.createElement("AUDIO");
+				audio.setAttribute("src", talking_wavs[i]);
+				audio.volume = volume;
+				self.talking_audio_array[i] = audio;
+			}
 		}
 	}
 }
