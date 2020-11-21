@@ -3,13 +3,10 @@
     --row-height: 45px;
     --left-column-width: 320px;
     --header-height: 50px;
-
     --highlight-color:#f7f7f7;
-
     --primary-background-color: #f3f4f5;
     --secondary-background-color: #fff;
     --tertiary-background-color: #eee;
-
     --primary-font-color: #111;
 }
 
@@ -89,10 +86,9 @@ html {
         color: var(--primary-font-color);
         top: calc(50% - 9px);
         left:0;
-  right:0;
-
-  margin-left: auto;
-  margin-right: auto;
+        right:0;
+        margin-left: auto;
+        margin-right: auto;
         vertical-align: middle;
         opacity: 0.3;
     }
