@@ -87,7 +87,7 @@ html {
         padding-left: 20px;
         padding-right: 20px;
         color: var(--primary-font-color);
-        top: 50%;
+        top: calc(50% - 9px);
         left:0;
   right:0;
 
@@ -178,7 +178,7 @@ html {
         padding-left: 20px;
         padding-right: 20px;
         color: var(--primary-font-color);
-        top: 50%;
+        top: calc(50% - 9px);
         left:0;
   right:0;
 
