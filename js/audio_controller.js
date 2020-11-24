@@ -86,7 +86,7 @@ audio_controller.init_sounds =function(){
 	this.click_audio = new WoodblockSound("normal");
 	this.click_division_audio = new WoodblockSound("soft");
 
-	if(window.mobileCheck){
+	if(!window.mobileCheck()){
 
 		this.bass_and_crash_audio = new DrumSound("bass_and_crash");
 		this.snare_audio = new DrumSound("snare");

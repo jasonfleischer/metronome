@@ -41,7 +41,7 @@ function init() {
 	setup_info_alert();
 	setup_settings_menu_on_click();
 
-	if(!window.mobileCheck){
+	if(window.mobileCheck()){
 		setup_mobile();
 		logE("is mobile")
 	}
