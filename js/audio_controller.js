@@ -82,11 +82,12 @@ var audio_controller = {
 }
 
 audio_controller.init_sounds =function(){
-	this.click_accent_audio = new WoodblockSound("loud");
-	this.click_audio = new WoodblockSound("normal");
-	this.click_division_audio = new WoodblockSound("soft");
 
 	if(!window.mobileCheck()){
+
+		this.click_accent_audio = new WoodblockSound("loud");
+		this.click_audio = new WoodblockSound("normal");
+		this.click_division_audio = new WoodblockSound("soft");
 
 		this.bass_and_crash_audio = new DrumSound("bass_and_crash");
 		this.snare_audio = new DrumSound("snare");
@@ -127,6 +128,15 @@ audio_controller.init_sounds =function(){
 				self.talking_audio_array[i] = audio;
 			}
 		}
+	} else { // mobile
+
+		var audio = document.createElement("AUDIO");
+		audio.setAttribute("src", "audio/talking/trip.wav");
+		audio.volume = volume;
+
+		this.click_accent_audio = audio;
+		this.click_audio = audio;
+		this.click_division_audio = audio;
 	}
 }
 
