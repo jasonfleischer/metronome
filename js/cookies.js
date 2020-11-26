@@ -5,7 +5,7 @@ function load_cookies(){
 	model.accent_first_beat = cookies.get_accent_first_beat(true);
 	model.flash_screen = cookies.get_flash_screen(false);
 	model.tone = cookies.get_tone(TONE.NORMAL);
-	model.darkmode = cookies.get_darkmode(false);
+	model.darkmode = cookies.get_darkmode(true);
 	translations.current_language = cookies.get_language(LANGUAGE.ENGLISH);
 }
 
