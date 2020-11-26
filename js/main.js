@@ -45,7 +45,6 @@ function init() {
 
 	if(window.mobileCheck()){
 		setup_mobile();
-		logE("is mobile")
 	}
 
 	show_hidden_views();

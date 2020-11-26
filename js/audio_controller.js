@@ -130,7 +130,7 @@ audio_controller.init_sounds =function(){
 		}
 	} else { // mobile
 
-		var volume = 0.4;
+		/*var volume = 0.4;
 		var audio = document.createElement("AUDIO");
 		audio.setAttribute("src", "audio/talking/trip.wav");
 		audio.volume = volume;
@@ -138,7 +138,10 @@ audio_controller.init_sounds =function(){
 
 		this.click_accent_audio = audio;
 		this.click_audio = audio;
-		this.click_division_audio = audio;
+		this.click_division_audio = audio;*/
+		this.click_accent_audio = new WoodblockSound("loud");
+		this.click_audio = new WoodblockSound("normal");
+		this.click_division_audio = new WoodblockSound("soft");
 	}
 }
 
