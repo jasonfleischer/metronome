@@ -346,7 +346,7 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 	    promise.catch(error => {
 	        // Auto-play was prevented
 	        // Show a UI element to let the user manually start playback
-	        logE("Play Error: needed for Safari ");
+	        logE("Play Error: needed for Safari " + error);
 	        forceStop();
 	    }).then(() => {
 	        // Auto-play started
