@@ -357,7 +357,7 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 
 	        logE("then =>: needed for Safari " + error);
 	        audio_queue[index].setAttribute("src", "audio/woodblock.wav")
-			audio_queue[index].play(
+			audio_queue[index].play();
 	    });
 	}
 }
