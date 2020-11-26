@@ -130,9 +130,11 @@ audio_controller.init_sounds =function(){
 		}
 	} else { // mobile
 
+		var volume = 0.4;
 		var audio = document.createElement("AUDIO");
 		audio.setAttribute("src", "audio/talking/trip.wav");
 		audio.volume = volume;
+
 
 		this.click_accent_audio = audio;
 		this.click_audio = audio;
