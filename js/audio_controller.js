@@ -351,7 +351,7 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 	    promise.catch(error => {
 	        // Auto-play was prevented
 	        // Show a UI element to let the user manually start playback
-	        logE("Play Error: needed for Safari " + error);
+	        logE("Play Error:  " + error);
 
 			//audio_queue[index].src = 'path/to/file.mp3';
 			//audio_queue[index].setAttribute("src", "audio/woodblock.wav")
@@ -360,7 +360,7 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 	    }).then(() => {
 	        // Auto-play started
 
-	        logE("then =>: needed for Safari ");
+	        logE("then =>:  ");
 	        audio_queue[index].setAttribute("src", "audio/woodblock.wav")
 			audio_queue[index].play();
 	    });
