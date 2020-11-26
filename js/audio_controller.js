@@ -328,6 +328,11 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 	$("count_text").innerHTML = text_queue[index];
 
 	var promise;
+
+	if(window.mobileCheck()){
+		audio_queue[index].setAttribute("src", "audio/woodblock.wav")
+	}
+
 	if(index == 0){ // resync on one beat
 		time_view.start(model.time_signature, model.BPM);
 
