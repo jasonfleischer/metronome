@@ -347,6 +347,10 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 	        // Auto-play was prevented
 	        // Show a UI element to let the user manually start playback
 	        logE("Play Error: needed for Safari " + error);
+
+			//audio_queue[index].src = 'path/to/file.mp3';
+			audio_queue[index].setAttribute("src", "audio/woodblock.wav")
+			audio_queue[index].play();
 	        forceStop();
 	    }).then(() => {
 	        // Auto-play started
