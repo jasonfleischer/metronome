@@ -56,7 +56,6 @@ function init() {
 function setup_mobile(){
 	model.tone = TONE.NORMAL;
 	$("tone").style.display = "none";
-	screen.orientation.lock('portrait');
 }
 
 function show_hidden_views(){
