@@ -130,18 +130,21 @@ audio_controller.init_sounds =function(){
 		}
 	} else { // mobile
 
-		/*var volume = 0.4;
 		var audio = document.createElement("AUDIO");
-		audio.setAttribute("src", "audio/talking/trip.wav");
-		audio.volume = volume;
-
-
+		audio.setAttribute("src", "audio/woodblock.wav");
+		audio.volume = 1.0;
 		this.click_accent_audio = audio;
+		
+		var audio = document.createElement("AUDIO");
+		audio.setAttribute("src", "audio/woodblock.wav");
+		audio.volume = 0.6;
 		this.click_audio = audio;
-		this.click_division_audio = audio;*/
-		this.click_accent_audio = new WoodblockSound("loud");
-		this.click_audio = new WoodblockSound("normal");
-		this.click_division_audio = new WoodblockSound("soft");
+
+		var audio = document.createElement("AUDIO");
+		audio.setAttribute("src", "audio/woodblock.wav");
+		audio.volume = 0.2;
+		this.click_division_audio = audio;
+
 	}
 }
 
