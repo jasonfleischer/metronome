@@ -361,7 +361,8 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 	        // Auto-play started
 
 	        logE("then =>:  ");
-	        audio_queue[index].setAttribute("src", "audio/woodblock.wav")
+	        audio_queue[index].src = 'audio/woodblock.wav';
+	        //audio_queue[index].setAttribute("src", "audio/woodblock.wav")
 			audio_queue[index].play();
 	    });
 	}
