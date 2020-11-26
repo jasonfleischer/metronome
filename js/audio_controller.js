@@ -354,6 +354,9 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 	        //forceStop();
 	    }).then(() => {
 	        // Auto-play started
+
+	        logE("then =>: needed for Safari " + error);
+
 	    });
 	}
 }
