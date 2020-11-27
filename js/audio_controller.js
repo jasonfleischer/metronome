@@ -340,6 +340,7 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 		audio.volume = 1.0;
 
 		audio.play();*/
+		$('audio').muted = false;
 		$('audio').play();
 		return;
 	}
