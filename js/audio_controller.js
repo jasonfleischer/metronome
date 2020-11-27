@@ -132,7 +132,7 @@ audio_controller.init_sounds =function(){
 
 
 		
-		$('flash_screen').insertAdjacentHTML('beforeend', '<audio id="audio" controls="controls" src="audio/woodblock.wav" type="audio/wav" autoplay muted>');
+		$('flash_screen').insertAdjacentHTML('beforeend', '<audio id="audio" controls="controls" src="audio/woodblock.wav" type="audio/wav" autoplay>');
 
 		/*var audio = document.createElement("AUDIO");
 		audio.setAttribute("src", "audio/woodblock.wav");
@@ -340,7 +340,7 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 		audio.volume = 1.0;
 
 		audio.play();*/
-		$('audio').muted = false;
+		//$('audio').muted = false;
 		$('audio').play();
 		return;
 	}
