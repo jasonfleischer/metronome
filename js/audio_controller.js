@@ -51,7 +51,8 @@ function playPause(){
 		update_UI_stopped();
 
 	if(window.mobileCheck()){
-		$('audio').play();
+		if(audio_is_playing) 
+			$('audio').play();
 	}
 }
 
@@ -338,23 +339,15 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 	var promise;
 
 	if(window.mobileCheck()){
-		//audio_queue[index].setAttribute("src", "audio/woodblock.wav")
-		/*var audio = document.createElement("AUDIO");
-		audio.setAttribute("src", "audio/woodblock.wav");
-		audio.volume = 1.0;
-
-		audio.play();*/
-		//$('audio').muted = false;
 		if(index == 0){ // resync on one beat
 			time_view.start(model.time_signature, model.BPM);
-
 			if(model.flash_screen){
 				flash_screen_animation();
 			}
 		}
-
-		//$('audio').src = 'audio/woodblock.wav';
-		$('audio').play();
+		var audio_elem = $('audio');
+		audio_elem.src = 'audio/woodblock.wav';
+		audio_elem.play();
 		return;
 	}
 
@@ -375,20 +368,9 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 	if (promise !== undefined) {
 	    promise.catch(error => {
 	        // Auto-play was prevented
-	        // Show a UI element to let the user manually start playback
 	        logE("Play Error:  " + error);
-
-			//audio_queue[index].src = 'path/to/file.mp3';
-			//audio_queue[index].setAttribute("src", "audio/woodblock.wav")
-			//audio_queue[index].play();
-	        //forceStop();
 	    }).then(() => {
 	        // Auto-play started
-
-	        logE("then =>:  ");
-	        //audio_queue[index].src = 'audio/woodblock.wav';
-	        //audio_queue[index].setAttribute("src", "audio/woodblock.wav")
-			//audio_queue[index].play();
 	    });
 	}
 }
