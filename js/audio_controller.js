@@ -49,6 +49,10 @@ function playPause(){
 		update_UI_playing();
 	else 
 		update_UI_stopped();
+
+	if(window.mobileCheck()){
+		$('audio').play();
+	}
 }
 
 var audio_controller = {
@@ -341,6 +345,7 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 
 		audio.play();*/
 		//$('audio').muted = false;
+		$('audio').src = 'audio/woodblock.wav';
 		$('audio').play();
 		return;
 	}
