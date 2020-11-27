@@ -132,7 +132,7 @@ audio_controller.init_sounds =function(){
 
 
 		
-		$('flash_screen').insertAdjacentHTML('beforeend', '<audio id="audio" controls="controls" src="audio/woodblock.wav" type="audio/wav">');
+		$('flash_screen').insertAdjacentHTML('beforeend', '<audio id="audio" controls="controls" src="audio/woodblock.wav" type="audio/wav" autoPlay muted>');
 
 		/*var audio = document.createElement("AUDIO");
 		audio.setAttribute("src", "audio/woodblock.wav");
