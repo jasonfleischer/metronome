@@ -345,6 +345,14 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 
 		audio.play();*/
 		//$('audio').muted = false;
+		if(index == 0){ // resync on one beat
+			time_view.start(model.time_signature, model.BPM);
+
+			if(model.flash_screen){
+				flash_screen_animation();
+			}
+		}
+		
 		$('audio').src = 'audio/woodblock.wav';
 		$('audio').play();
 		return;
