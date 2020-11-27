@@ -353,7 +353,7 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 			}
 		}
 
-		$('audio').src = 'audio/woodblock.wav';
+		//$('audio').src = 'audio/woodblock.wav';
 		$('audio').play();
 		return;
 	}
