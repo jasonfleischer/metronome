@@ -130,7 +130,11 @@ audio_controller.init_sounds =function(){
 		}
 	} else { // mobile
 
-		var audio = document.createElement("AUDIO");
+
+		
+		$('flash_screen').insertAdjacentHTML('beforeend', '<audio id="audio" controls="controls" src="audio/woodblock.wav" type="audio/wav">');
+
+		/*var audio = document.createElement("AUDIO");
 		audio.setAttribute("src", "audio/woodblock.wav");
 		audio.volume = 1.0;
 		this.click_accent_audio = audio;
@@ -143,7 +147,7 @@ audio_controller.init_sounds =function(){
 		var audio = document.createElement("AUDIO");
 		audio.setAttribute("src", "audio/woodblock.wav");
 		audio.volume = 0.2;
-		this.click_division_audio = audio;
+		this.click_division_audio = audio;*/
 
 	}
 }
@@ -330,7 +334,14 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 	var promise;
 
 	if(window.mobileCheck()){
-		audio_queue[index].setAttribute("src", "audio/woodblock.wav")
+		//audio_queue[index].setAttribute("src", "audio/woodblock.wav")
+		/*var audio = document.createElement("AUDIO");
+		audio.setAttribute("src", "audio/woodblock.wav");
+		audio.volume = 1.0;
+
+		audio.play();*/
+		$('audio').play();
+		return;
 	}
 
 	if(index == 0){ // resync on one beat
@@ -361,9 +372,9 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 	        // Auto-play started
 
 	        logE("then =>:  ");
-	        audio_queue[index].src = 'audio/woodblock.wav';
+	        //audio_queue[index].src = 'audio/woodblock.wav';
 	        //audio_queue[index].setAttribute("src", "audio/woodblock.wav")
-			audio_queue[index].play();
+			//audio_queue[index].play();
 	    });
 	}
 }
