@@ -3,11 +3,11 @@
     --row-height: 45px;
     --left-column-width: 320px;
     --header-height: 50px;
-    --highlight-color:#f7f7f7;
-    --primary-background-color: #f3f4f5;
-    --secondary-background-color: #fff;
-    --tertiary-background-color: #eee;
-    --primary-font-color: #111;
+    --highlight-color:#444;
+    --primary-background-color: #252525;
+    --secondary-background-color: #000;
+    --tertiary-background-color: #494949;
+    --primary-font-color: #fff;
 }
 
 @font-face {
