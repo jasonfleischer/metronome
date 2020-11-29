@@ -83,7 +83,9 @@ var audio_controller = {
 	trip_audio: {},
 	let_audio: {},
 	e_audio: {},
-	a_audio: {}
+	a_audio: {},
+
+	mobile_audio: {}
 }
 
 audio_controller.init_sounds =function(){
@@ -137,8 +139,12 @@ audio_controller.init_sounds =function(){
 
 
 		
-		$('flash_screen').insertAdjacentHTML('beforeend', '<audio id="audio" controls="controls" src="audio/woodblock.wav" type="audio/wav">');
+		//$('flash_screen').insertAdjacentHTML('beforeend', '<audio id="audio" controls="controls" src="audio/woodblock.wav" type="audio/wav">');
 
+
+		this.mobile_audio = document.createElement("AUDIO");
+		audio.setAttribute("src", "audio/woodblock.wav");
+		audio.volume = 1.0;
 		/*var audio = document.createElement("AUDIO");
 		audio.setAttribute("src", "audio/woodblock.wav");
 		audio.volume = 1.0;
@@ -345,9 +351,8 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 				flash_screen_animation();
 			}
 		}
-		var audio_elem = $('audio');
-		audio_elem.src = 'audio/woodblock.wav';
-		audio_elem.play();
+		this.mobile_audio.src = 'audio/woodblock.wav';
+		this.mobile_audio.play();
 		return;
 	}
 
