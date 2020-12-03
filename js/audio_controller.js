@@ -56,8 +56,8 @@ function playPause(){
 	if(window.mobileCheck()){
 		if(audio_is_playing) {
 		//	$('audio').play();
-
-			context = new AudioContext()
+			var AudioContextFunc = window.AudioContext || window.webkitAudioContext;
+			context = new AudioContextFunc();
 			audio_controller.o = context.createOscillator()
 			audio_controller.o.type = "sine"
 
