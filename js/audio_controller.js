@@ -43,6 +43,9 @@ function forceStop(){
 	return was_playing;
 }
 
+var context;
+
+var gainNode;
 function playPause(){
 	var audio_is_playing = audio_controller.playPause();
 	if(audio_is_playing) 
@@ -51,8 +54,27 @@ function playPause(){
 		update_UI_stopped();
 
 	if(window.mobileCheck()){
-		if(audio_is_playing) 
-			$('audio').play();
+		if(audio_is_playing) {
+		//	$('audio').play();
+
+			context = new AudioContext()
+			audio_controller.o = context.createOscillator()
+			audio_controller.o.type = "sine"
+
+			gainNode = context.createGain()
+			audio_controller.o.connect(gainNode)
+			audio_controller.o.connect(context.destination)
+
+			var frequency = 440.0
+			audio_controller.o.frequency.value = frequency
+			audio_controller.o.start(0)
+
+		}else {
+			//gainNode.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 0.04)
+
+			audio_controller.o.stop()
+		}
+
 	}
 }
 
@@ -85,7 +107,8 @@ var audio_controller = {
 	e_audio: {},
 	a_audio: {},
 
-	mobile_audio: {}
+	mobile_audio: {},
+	o: {}
 }
 
 audio_controller.init_sounds =function(){
@@ -159,6 +182,8 @@ audio_controller.init_sounds =function(){
 		audio.setAttribute("src", "audio/woodblock.wav");
 		audio.volume = 0.2;
 		this.click_division_audio = audio;*/
+
+
 
 	}
 }
@@ -283,7 +308,7 @@ audio_controller.play = function(){
 
 	function BPMtoMilliSeconds(BPM) { return 1000 / (BPM / 60); }
 	var time_division_milli_seconds = BPMtoMilliSeconds(model.BPM) / model.beat_division;
-	audio_controller.executeAudioTimer(audio_queue_index, this.accent_audio, this.audio_queue, this.text_queue);
+	//audio_controller.executeAudioTimer(audio_queue_index, this.accent_audio, this.audio_queue, this.text_queue);
 	var interval = time_division_milli_seconds;
 	var expected = Date.now() + interval;
 
@@ -351,8 +376,12 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 				flash_screen_animation();
 			}
 		}
-		this.mobile_audio.src = 'audio/woodblock.wav';
-		this.mobile_audio.play();
+		//this.mobile_audio.src = 'audio/woodblock.wav';
+		//this.mobile_audio.play();
+		//gainNode.gain.exponentialRampToValueAtTime(0.00001, 0 + 0.04)
+		//var gainNode = context69.createGain()
+		//gainNode.gain.exponentialRampToValueAtTime(0.00001, context69.currentTime + X)
+		audio_controller.o.frequency.value = Math.floor((Math.random() * 220) + 440)
 		return;
 	}
 	
