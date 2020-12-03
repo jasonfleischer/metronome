@@ -342,7 +342,7 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 	
 	$("count_text").innerHTML = text_queue[index];
 
-	var promise;
+	
 
 	if(window.mobileCheck()){
 		if(index == 0){ // resync on one beat
@@ -355,7 +355,8 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 		this.mobile_audio.play();
 		return;
 	}
-
+	
+	var promise;
 	if(index == 0){ // resync on one beat
 		time_view.start(model.time_signature, model.BPM);
 
