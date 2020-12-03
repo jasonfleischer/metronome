@@ -143,8 +143,8 @@ audio_controller.init_sounds =function(){
 
 
 		this.mobile_audio = document.createElement("AUDIO");
-		audio.setAttribute("src", "audio/woodblock.wav");
-		audio.volume = 1.0;
+		this.mobile_audio.setAttribute("src", "audio/woodblock.wav");
+		this.mobile_audio.volume = 1.0;
 		/*var audio = document.createElement("AUDIO");
 		audio.setAttribute("src", "audio/woodblock.wav");
 		audio.volume = 1.0;
