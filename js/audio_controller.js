@@ -58,16 +58,15 @@ function playPause(){
 		//	$('audio').play();
 			var AudioContextFunc = window.AudioContext || window.webkitAudioContext;
 			context = new AudioContextFunc();
-			audio_controller.o = context.createOscillator()
-			audio_controller.o.type = "sine"
+			audio_controller.oscillator = context.createOscillator()
+			audio_controller.oscillator.type = "sine"
 
 			gainNode = context.createGain()
-			audio_controller.o.connect(gainNode)
-			audio_controller.o.connect(context.destination)
+			audio_controller.oscillator.connect(gainNode)
+			audio_controller.oscillator.connect(context.destination)
 
-			var frequency = 440.0
-			audio_controller.o.frequency.value = frequency
-			audio_controller.o.start(0)
+			audio_controller.oscillator.frequency.value = 440.0
+			audio_controller.oscillator.start(0)
 
 		}else {
 			//gainNode.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 0.04)
@@ -108,7 +107,9 @@ var audio_controller = {
 	a_audio: {},
 
 	mobile_audio: {},
-	o: {}
+
+
+	oscillator: {}
 }
 
 audio_controller.init_sounds =function(){
@@ -381,7 +382,7 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 		//gainNode.gain.exponentialRampToValueAtTime(0.00001, 0 + 0.04)
 		//var gainNode = context69.createGain()
 		//gainNode.gain.exponentialRampToValueAtTime(0.00001, context69.currentTime + X)
-		audio_controller.o.frequency.value = Math.floor((Math.random() * 220) + 440)
+		audio_controller.oscillator.frequency.value = 220.0//Math.floor((Math.random() * 220) + 440)
 		return;
 	}
 	
