@@ -43,9 +43,6 @@ function forceStop(){
 	return was_playing;
 }
 
-var context;
-
-var gainNode;
 function playPause(){
 	var audio_is_playing = audio_controller.playPause();
 	if(audio_is_playing) 
@@ -57,21 +54,25 @@ function playPause(){
 		if(audio_is_playing) {
 		//	$('audio').play();
 			var AudioContextFunc = window.AudioContext || window.webkitAudioContext;
-			context = new AudioContextFunc();
-			audio_controller.oscillator = context.createOscillator()
+			audio_controller.context = new AudioContextFunc();
+			audio_controller.oscillator = audio_controller.context.createOscillator()
 			audio_controller.oscillator.type = "sine"
 
-			gainNode = context.createGain()
-			audio_controller.oscillator.connect(gainNode)
-			audio_controller.oscillator.connect(context.destination)
+			audio_controller.gain_node = audio_controller.context.createGain()
+			audio_controller.oscillator.connect(audio_controller.gain_node)
+			audio_controller.gain_node.connect(audio_controller.context.destination)
 
-			audio_controller.oscillator.frequency.value = 440.0
+			audio_controller.oscillator.frequency.value = 4186.0
 			audio_controller.oscillator.start(0)
 
-		}else {
-			//gainNode.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 0.04)
+			var time = audio_controller.context.currentTime
+		var fade_time = 0.1
+			audio_controller.gain_node.gain.exponentialRampToValueAtTime(0.00001, time + fade_time)
 
-			audio_controller.o.stop()
+		}else {
+			//audio_controller.gain_node.gain.exponentialRampToValueAtTime(0.00001, audio_controller.context.currentTime + 0.04)
+
+			audio_controller.oscillator.stop()
 		}
 
 	}
@@ -109,7 +110,9 @@ var audio_controller = {
 	mobile_audio: {},
 
 
-	oscillator: {}
+	oscillator: {},
+	gain_node: {},
+	context: {}
 }
 
 audio_controller.init_sounds =function(){
@@ -382,7 +385,18 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 		//gainNode.gain.exponentialRampToValueAtTime(0.00001, 0 + 0.04)
 		//var gainNode = context69.createGain()
 		//gainNode.gain.exponentialRampToValueAtTime(0.00001, context69.currentTime + X)
-		audio_controller.oscillator.frequency.value = 220.0//Math.floor((Math.random() * 220) + 440)
+		
+		//audio_controller.oscillator.frequency.value = 320.0//Math.floor((Math.random() * 220) + 440)
+
+		var time = audio_controller.context.currentTime
+		var fade_time = 0.1
+		
+		audio_controller.gain_node.gain.setValueAtTime(1.0, time);
+		audio_controller.gain_node.gain.exponentialRampToValueAtTime(0.00001, time + fade_time)
+		//audio_controller.oscillator.stop()
+		//audio_controller.oscillator.start(0)
+
+		//audio_controller.gain_node.gain.setValueAtTime(10.0, audio_controller.context.currentTime );
 		return;
 	}
 	
