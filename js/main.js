@@ -241,12 +241,19 @@ function setup_bpm_controls() {
 		bpm_range.addEventListener("change", function(e){
 			model.BPM = parseFloat(this.value);
 			log("on BPM range change: " + model.BPM);
-
 			range_control.load(range_control.on_range_control_changed, "", min , max, step, model.BPM, false, 0);
 			cookies.set_BPM(model.BPM);
 			update_UI_BPM(model.BPM);
 			reloadBPM();
 		});
+
+		bpm_range.addEventListener('input', function(){
+			model.BPM = parseFloat(this.value);
+			log("on BPM range change: " + model.BPM);
+			cookies.set_BPM(model.BPM);
+			update_UI_BPM(model.BPM);
+			reloadBPM();
+		}, true);
 	}
 
 	function setup_bpm_prompt(){

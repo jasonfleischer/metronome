@@ -7,7 +7,3 @@ function log(msg){
 function logE(msg){
 	console.log("%c ERROR: " + msg, "background: red; color: white; display: block;");
 }
-
-
-
-

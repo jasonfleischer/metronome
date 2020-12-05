@@ -133,6 +133,8 @@ range_control.mouse_down = function(e) {
     return false;
 }
 
+
+var previous_change_value = -1;
 range_control.mouse_move = function(e) { 
 
 	e.stopPropagation();
@@ -144,11 +146,9 @@ range_control.mouse_move = function(e) {
 		if(range_control.is_mobile_touch_event(e)){
 			pt = range_control.get_mouse_point(this, { x: e.touches[0].pageX, y: e.touches[0].pageY });
 			m_e.mouse_move_pt = pt;
-			//log("mobile mouse_move: " + pt.x + " - " + pt.y);
 		} else if(range_control.is_desktop_touch_event(e)){
 			pt = range_control.get_mouse_point(this, { x: e.clientX, y: e.clientY });
 			m_e.mouse_move_pt = pt;
-			//log("mouse_move " + pt.x + " - " + pt.y);
 		} else {
 			logE("mouse_move pt not found");
 			return;
@@ -174,6 +174,14 @@ range_control.mouse_move = function(e) {
     		range_control.percent_value = Math.max(0, Math.min(100, range_control.percent_value));
     		range_control.value = range_control.to_range_value(range_control.percent_value);
     		range_control.draw(range_control.percent_value);
+
+
+    		
+    		var new_change_value =range_control.to_range_value(range_control.percent_value) 
+    		if(new_change_value != previous_change_value) {
+    			previous_change_value = new_change_value;
+    			range_control.on_range_control_changed(new_change_value);
+    		}
 
     		m_e.mouse_active_pt =  { x: pt.x, y: pt.y};
 
