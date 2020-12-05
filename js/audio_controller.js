@@ -44,38 +44,38 @@ function forceStop(){
 }
 
 function playPause(){
+	
+	if(window.mobileCheck()){
+		if(!audio_controller.playing) {
+			setupMobileOscillator()
+		} else {
+			audio_controller.oscillator.stop()
+		}
+	}
+
 	var audio_is_playing = audio_controller.playPause();
 	if(audio_is_playing) 
 		update_UI_playing();
 	else 
 		update_UI_stopped();
 
-	if(window.mobileCheck()){
-		if(audio_is_playing) {
-		//	$('audio').play();
-			var AudioContextFunc = window.AudioContext || window.webkitAudioContext;
-			audio_controller.context = new AudioContextFunc();
-			audio_controller.oscillator = audio_controller.context.createOscillator()
-			audio_controller.oscillator.type = "sine"
+}
 
-			audio_controller.gain_node = audio_controller.context.createGain()
-			audio_controller.oscillator.connect(audio_controller.gain_node)
-			audio_controller.gain_node.connect(audio_controller.context.destination)
 
-			audio_controller.oscillator.frequency.value = 4186.0
-			audio_controller.oscillator.start(0)
-
-			var time = audio_controller.context.currentTime
-		var fade_time = 0.1
-			audio_controller.gain_node.gain.exponentialRampToValueAtTime(0.00001, time + fade_time)
-
-		}else {
-			//audio_controller.gain_node.gain.exponentialRampToValueAtTime(0.00001, audio_controller.context.currentTime + 0.04)
-
-			audio_controller.oscillator.stop()
-		}
-
-	}
+function setupMobileOscillator(){
+	var AudioContextFunc = window.AudioContext || window.webkitAudioContext;
+	audio_controller.context = new AudioContextFunc();
+	audio_controller.oscillator = audio_controller.context.createOscillator()
+	audio_controller.oscillator.type = "sine"
+	audio_controller.oscillator.frequency.value = (model.accent_first_beat) ? 2000.0 : 3000.0
+	
+	audio_controller.gain_node = audio_controller.context.createGain()
+	audio_controller.gain_node.gain.setValueAtTime(0, audio_controller.context.currentTime);
+	
+	audio_controller.oscillator.connect(audio_controller.gain_node)
+	audio_controller.gain_node.connect(audio_controller.context.destination)
+	
+	audio_controller.oscillator.start()
 }
 
 var audio_controller = {
@@ -107,7 +107,6 @@ var audio_controller = {
 	e_audio: {},
 	a_audio: {},
 
-	mobile_audio: {},
 
 
 	oscillator: {},
@@ -169,9 +168,6 @@ audio_controller.init_sounds =function(){
 		//$('flash_screen').insertAdjacentHTML('beforeend', '<audio id="audio" controls="controls" src="audio/woodblock.wav" type="audio/wav">');
 
 
-		this.mobile_audio = document.createElement("AUDIO");
-		this.mobile_audio.setAttribute("src", "audio/woodblock.wav");
-		this.mobile_audio.volume = 1.0;
 		/*var audio = document.createElement("AUDIO");
 		audio.setAttribute("src", "audio/woodblock.wav");
 		audio.volume = 1.0;
@@ -312,7 +308,9 @@ audio_controller.play = function(){
 
 	function BPMtoMilliSeconds(BPM) { return 1000 / (BPM / 60); }
 	var time_division_milli_seconds = BPMtoMilliSeconds(model.BPM) / model.beat_division;
-	//audio_controller.executeAudioTimer(audio_queue_index, this.accent_audio, this.audio_queue, this.text_queue);
+	//if(!window.mobileCheck()){
+		audio_controller.executeAudioTimer(audio_queue_index, this.accent_audio, this.audio_queue, this.text_queue);
+	//}
 	var interval = time_division_milli_seconds;
 	var expected = Date.now() + interval;
 
@@ -379,9 +377,13 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 			if(model.flash_screen){
 				flash_screen_animation();
 			}
+			
+			audio_controller.oscillator.frequency.value = (model.accent_first_beat) ? 2000.0 : 3000.0
+		} else if(index % model.beat_division == 0 ) {
+			audio_controller.oscillator.frequency.value = 4000.0//4186.0
+		} else {
+			audio_controller.oscillator.frequency.value = 3000.0//4186.0
 		}
-		//this.mobile_audio.src = 'audio/woodblock.wav';
-		//this.mobile_audio.play();
 		//gainNode.gain.exponentialRampToValueAtTime(0.00001, 0 + 0.04)
 		//var gainNode = context69.createGain()
 		//gainNode.gain.exponentialRampToValueAtTime(0.00001, context69.currentTime + X)

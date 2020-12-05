@@ -22,7 +22,9 @@ tap_controller.tap = function(){
 	if(tap_controller.queue.length >= tap_controller.TAPS_NEEDED_TO_CALCULATE){
 		tap_controller.calculatedBPM = tap_controller.calculateBPMValue();
 		tap_controller.current_state = tap_controller.state.HAS_VALUE;
-
+		if(window.mobileCheck()){
+			setupMobileOscillator()
+		}
 	} else {
 		tap_controller.current_state = tap_controller.state.KEEP_TAPPING;
 	}
