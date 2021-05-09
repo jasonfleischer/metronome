@@ -340,12 +340,11 @@ audio_controller.play = function(){
 
 	function BPMtoMilliSeconds(BPM) { return 1000 / (BPM / 60); }
 	var time_division_milli_seconds = BPMtoMilliSeconds(model.BPM) / model.beat_division;
-	//if(!window.mobileCheck()){
-		audio_controller.executeAudioTimer(audio_queue_index, this.accent_audio, this.audio_queue, this.text_queue);
-	//}
+	
+	audio_controller.executeAudioTimer(audio_queue_index, this.accent_audio, this.audio_queue, this.text_queue);
+
 	var interval = time_division_milli_seconds;
 	var expected = Date.now() + interval;
-
 
 	this.timer_id = setTimeout(step, interval);
 	
@@ -372,7 +371,7 @@ audio_controller.play = function(){
 			function playFile(file){
 				var audio = audio_controller.preloaded_audio[0];
 				audio.setAttribute("src", file);
-				audio.volume = model.volume_percent / 100;
+				audio.volume = 0.4 * model.volume_percent / 100;
 				audio.play();
 			}
 
@@ -459,13 +458,6 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 	
 	var promise;
 	if(index == 0){ // resync on one beat
-
-		/*if(isDurationExpired()) {
-			forceStop();
-			update_UI_stopped();
-			clearInterval(audio_controller.timer_id);
-			return;
-		}*/
 
 		time_view.start(model.time_signature, model.BPM);
 
