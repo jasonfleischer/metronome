@@ -1,4 +1,4 @@
-var LOG_NON_ERROR_MESSAGES = true;//false;
+var LOG_NON_ERROR_MESSAGES = false;
 
 function log(msg){
 	if (LOG_NON_ERROR_MESSAGES)
