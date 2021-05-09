@@ -129,7 +129,7 @@ audio_controller.init_sounds =function(){
 
 		init_talking_sounds(this);
 		function init_talking_sounds(self){
-			var volume = 0.4;
+			var volume = 0.4 * model.volume_percent / 100;
 
 			self.and_audio = document.createElement("AUDIO");
 			self.and_audio.setAttribute("src","audio/talking/and.wav");

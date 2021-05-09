@@ -23,6 +23,7 @@ const MIN_BPM = 40;
 var model = {
 	tone: TONE.NORMAL,
 	BPM: 120,
+	volume_percent: 100,
 	time_signature: TIME_SIGNATURE.TS_4_4,
 	accent_first_beat: true,
 	beat_division: 1,

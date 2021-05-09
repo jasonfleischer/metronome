@@ -37,6 +37,7 @@ function init() {
 		setup_accent_first_beat_switch();
 		setup_flash_screen_switch();
 		setup_bpm_controls();
+		setup_volume_control();
 	}
 
 	setup_keyboard_listeners();
@@ -276,6 +277,38 @@ function setup_bpm_controls() {
 				log("Invalid BPM value" + BPM);
 			}
 		}
+	}
+}
+
+function setup_volume_control(){
+
+	var min = 10;
+	var max = 100;
+	var step = 1;
+	setup_volume_range(min, max, step);
+
+	function setup_volume_range(min, max, step){
+		var range = $("volume_range");
+		range.min = min;
+		range.max = max;
+		range.value = model.volume_percent;
+		range.step = step;
+		range.addEventListener("change", function(e){
+			model.volume_percent = parseFloat(this.value);
+			log("on volume range change: " + model.volume_percent);
+			cookies.set_volume(model.volume_percent);
+
+			audio_controller.init_sounds();
+			if(audio_controller.playing && model.tone === TONE.TALKING){
+				forcePlay();
+			}
+		});
+
+		range.addEventListener('input', function(){
+			model.volume_percent = parseFloat(this.value);
+			log("on volume range input: " + model.volume_percent);
+			cookies.set_volume(model.volume_percent);
+		}, true);
 	}
 }
 

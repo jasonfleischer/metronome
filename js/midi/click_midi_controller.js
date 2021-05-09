@@ -40,7 +40,7 @@ click_controller.playSoftClick = function(){
 	this.playPitch(this.isFirefox ? 84 : 96);
 }
 click_controller.playPitch = function(pitch) {
-	this.player.queueWaveTable(this.audioContext, this.audioContext.destination, this.tone, this.audioContext.currentTime, pitch, this.duration_in_sec);
+	this.player.queueWaveTable(this.audioContext, this.audioContext.destination, this.tone, this.audioContext.currentTime, pitch, this.duration_in_sec, 1.0 * model.volume_percent / 100);
 }
 
 class WoodblockSound {

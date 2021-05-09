@@ -37,18 +37,18 @@ drum_controller.load = function(){
 }
 
 drum_controller.playSnare = function(){	
-	this.snare_player.queueWaveTable(this.audioContext, this.audioContext.destination, this.snare_tone, this.audioContext.currentTime, 40, 0.2, 0.3);
+	this.snare_player.queueWaveTable(this.audioContext, this.audioContext.destination, this.snare_tone, this.audioContext.currentTime, 40, 0.2, 0.3 * model.volume_percent / 100);
 	this.playHighhat();
 }
 drum_controller.playBass = function(){
-	this.bass_player.queueWaveTable(this.audioContext, this.audioContext.destination, this.bass_tone, this.audioContext.currentTime, 35, 0.2, 0.4);
+	this.bass_player.queueWaveTable(this.audioContext, this.audioContext.destination, this.bass_tone, this.audioContext.currentTime, 35, 0.2, 0.4 * model.volume_percent / 100);
 	this.playHighhat();
 }
 drum_controller.playHighhat = function(){
-	this.highhat_player.queueWaveTable(this.audioContext, this.audioContext.destination, this.highhat_tone, this.audioContext.currentTime, 42, 0.2, 0.1);
+	this.highhat_player.queueWaveTable(this.audioContext, this.audioContext.destination, this.highhat_tone, this.audioContext.currentTime, 42, 0.2, 0.1 * model.volume_percent / 100);
 }
 drum_controller.playCrash = function(){
-	this.crash_player.queueWaveTable(this.audioContext, this.audioContext.destination, this.crash_tone, this.audioContext.currentTime, 49, 0.6, 0.1);
+	this.crash_player.queueWaveTable(this.audioContext, this.audioContext.destination, this.crash_tone, this.audioContext.currentTime, 49, 0.6, 0.1 * model.volume_percent / 100);
 }
 drum_controller.playBassAndCrash = function(){
 	this.playBass();
