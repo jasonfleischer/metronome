@@ -27,7 +27,9 @@ click_controller.load = function(){
 		click_controller.audioContext = new AudioContextFunc();
 		click_controller.player.adjustPreset(click_controller.audioContext, click_controller.tone);
 		midi_initialized = true;
+		return true
 	}
+	return false
 }
 
 click_controller.playLoudClick = function(){	
@@ -49,7 +51,7 @@ class WoodblockSound {
 	}
 	play(){
 
-		click_controller.load();
+		//click_controller.load();
 		
 		if (this.type == "normal")
 			click_controller.playNormalClick();

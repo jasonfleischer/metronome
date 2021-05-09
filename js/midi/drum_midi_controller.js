@@ -12,6 +12,7 @@ var drum_controller = {
 	crash_player: {}
 };
 
+
 drum_controller.init = function() {
 
 	console.log("drum_controller.init");
@@ -33,7 +34,9 @@ drum_controller.load = function(){
 		drum_controller.highhat_player.adjustPreset(drum_controller.audioContext, drum_controller.highhat_tone);
 		drum_controller.crash_player.adjustPreset(drum_controller.audioContext, drum_controller.crash_tone);
 		drum_initialized = true;
+		return true
 	}
+	return false
 }
 
 drum_controller.playSnare = function(){	
@@ -60,7 +63,6 @@ class DrumSound {
 		this.type = type;
 	}
 	play(){
-		drum_controller.load();
 		
 		if (this.type == "snare")
 			drum_controller.playSnare();

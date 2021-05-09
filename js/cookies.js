@@ -7,6 +7,7 @@ function load_cookies(){
 	model.tone = cookies.get_tone(TONE.NORMAL);
 	model.darkmode = cookies.get_darkmode(true);
 	model.volume_percent = cookies.get_volume(100);
+	model.duration = cookies.get_duration(DURATION.INFINITE);
 	translations.current_language = cookies.get_language(LANGUAGE.ENGLISH);
 }
 
@@ -90,6 +91,14 @@ cookies.get_volume = function(default_value){
 };
 cookies.set_volume = function(value){
 	document.cookie = cookies.VOLUME_KEY + "=" + value;
+};
+
+cookies.DURATION_KEY = "DURATION_KEY";
+cookies.get_duration = function(default_value){
+	return parseFloat(cookies.getCookie(cookies.DURATION_KEY, default_value));
+};
+cookies.set_duration = function(value){
+	document.cookie = cookies.DURATION_KEY + "=" + value;
 };
 
 cookies.setCookie = function(cname, cvalue, exdays) {

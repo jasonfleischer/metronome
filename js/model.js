@@ -17,6 +17,17 @@ const TIME_SIGNATURE = Object.freeze({
 	TS_9_4: 9
 });
 
+const DURATION = Object.freeze({
+    FIVE_MINUTE: 5,
+    TEN_MINUTES: 10,
+    FIFTEEN_MINUTES: 15,
+    TWENTY_MINUTES: 20,
+    THIRTY_MINUTES: 30,
+    FORTY_FIVE_MINUTES: 45,
+    SIXTY_MINUTES: 60,
+    INFINITE: -1
+});
+
 const MAX_BPM = 208;
 const MIN_BPM = 40;
 
@@ -24,6 +35,7 @@ var model = {
 	tone: TONE.NORMAL,
 	BPM: 120,
 	volume_percent: 100,
+	duration: DURATION.INFINITE,
 	time_signature: TIME_SIGNATURE.TS_4_4,
 	accent_first_beat: true,
 	beat_division: 1,

@@ -374,6 +374,12 @@ button:hover {
     height: 100%;
 }
 
+#play_pause_button_span {
+    margin-left: 5px;
+    font-size: 14px;
+    color: #077bff;
+}
+
 #header {
     position: relative;
     background: var(--secondary-background-color);

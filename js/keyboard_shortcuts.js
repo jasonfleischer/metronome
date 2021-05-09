@@ -83,7 +83,7 @@ function setup_keyboard_listeners() {
 
 function show_keyboard_shortcuts(){
 	dismissInfo();
-	var keyboard_shorcut_window = window.open("Keyboard Shortcuts", "_blank", "width=370,height=450,titlebar=no,toolbar=no,status=no,location=no,menubar=no", true);
+	var keyboard_shorcut_window = window.open("Keyboard Shortcuts", "_blank", "width=370,height=450,titlebar=no,toolbar=no,status=no,location=no,menubar=no");
 	keyboard_shorcut_window.document.title = "Keyboard Shortcuts";
 
 	var contents = "<table style='width:100%; text-align: left;'>"+

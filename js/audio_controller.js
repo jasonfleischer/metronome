@@ -44,6 +44,30 @@ function forceStop(){
 }
 
 function playPause(){
+
+	preLoadAudio();
+	function preLoadAudio() {
+		var j;
+		for(j=0; j<4; j++){
+			audio_controller.preloaded_audio[j] = document.createElement("AUDIO");
+		}
+	}
+
+	function loadingMidi(){
+		if(window.mobileCheck()){
+			return click_controller.load()
+		}
+		return click_controller.load() && drum_controller.load();
+	}
+
+	if(loadingMidi()) {
+		setTimeout(function() {
+			log("delayed execution for midi loading")
+			continuePlay();
+		}, 500);
+	} else {
+		continuePlay()
+	}
 	
 	if(window.mobileCheck()){
 		if(!audio_controller.playing) {
@@ -53,12 +77,13 @@ function playPause(){
 		}
 	}
 
-	var audio_is_playing = audio_controller.playPause();
-	if(audio_is_playing) 
-		update_UI_playing();
-	else 
-		update_UI_stopped();
-
+	function continuePlay() {
+		var audio_is_playing = audio_controller.playPause();
+		if(audio_is_playing) 
+			update_UI_playing();
+		else 
+			update_UI_stopped();
+	}
 }
 
 
@@ -83,6 +108,8 @@ var audio_controller = {
 	timer_id: {},
 	audio_queue: [],
 	text_queue: [],
+	start_time: 0,
+	preloaded_audio: [],
 
 	accent_audio: {},
 
@@ -299,8 +326,13 @@ audio_controller.reloadSounds= function(){
 	}	
 }
 
+audio_controller.reloadDuration = function(){
+	audio_controller.start_time = new Date();
+}
+
 audio_controller.play = function(){
 
+	audio_controller.start_time = new Date();
 	this.playing = true;
 	this.reloadSounds();
 
@@ -318,12 +350,34 @@ audio_controller.play = function(){
 	this.timer_id = setTimeout(step, interval);
 	
 	function step() {
+
+
+		
+
 	    var drift = Date.now() - expected; 
 	    if (drift > interval) {
 	    	logE("something really bad happened. Maybe the browser (tab) was inactive? possibly special handling to avoid futile 'catch up' run");
 	        audio_controller.pause();
 	    }
 		audio_queue_index = (audio_queue_index + 1) % audio_controller.audio_queue.length;
+
+
+
+		if(isDurationExpired() && audio_queue_index == 1 ) {
+			clearInterval(audio_controller.timer_id);
+			forceStop();
+			update_UI_stopped();
+			playFile("audio/exercise_completed.mp3")
+
+			function playFile(file){
+				var audio = audio_controller.preloaded_audio[0];
+				audio.setAttribute("src", file);
+				audio.volume = model.volume_percent / 100;
+				audio.play();
+			}
+
+			return;
+		}
 
 		if(audio_controller.model_changed){
 			audio_controller.model_changed = false;
@@ -372,7 +426,8 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 	
 
 	if(window.mobileCheck()){
-		if(index == 0){ // resync on one beat
+		if(index == 0){ 
+			// resync on one beat
 			time_view.start(model.time_signature, model.BPM);
 			if(model.flash_screen){
 				flash_screen_animation();
@@ -404,6 +459,14 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 	
 	var promise;
 	if(index == 0){ // resync on one beat
+
+		/*if(isDurationExpired()) {
+			forceStop();
+			update_UI_stopped();
+			clearInterval(audio_controller.timer_id);
+			return;
+		}*/
+
 		time_view.start(model.time_signature, model.BPM);
 
 		if(model.flash_screen){
@@ -425,4 +488,17 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 	        // Auto-play started
 	    });
 	}
+}
+
+function isDurationExpired(){
+
+	if(model.duration != DURATION.INFINITE) {
+		var running_time = new Date() - audio_controller.start_time;
+		var durationInMS = model.duration * 60000;
+		if(running_time > durationInMS){
+			log("Duration expired")
+			return true;
+		}
+	}
+	return false
 }
