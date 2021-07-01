@@ -103,7 +103,7 @@ html, body {
     }
 
     #kofi_button {
-        width: 121px;
+        width: 156px;
         right: 54px;
     }
     
@@ -484,11 +484,11 @@ button:hover {
 
 #kofi_button span{
     float: right;
-    padding-left: 3px;
+    padding-left: 2px;
     padding-right: 7px;
     line-height: 36px;
     font-size: 12px;
-    width: 77px;
+    width: 112px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
