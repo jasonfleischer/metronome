@@ -134,7 +134,12 @@ var audio_controller = {
 	e_audio: {},
 	a_audio: {},
 
-
+	dhi_audio: {},
+	ka_audio: {},
+	ki_audio: {},
+	mi_audio: {},
+	ta_audio: {},
+	tha_audio: {},
 
 	oscillator: {},
 	gain_node: {},
@@ -177,6 +182,30 @@ audio_controller.init_sounds =function(){
 			self.a_audio = document.createElement("AUDIO");
 			self.a_audio.setAttribute("src","audio/talking/ah.wav");
 			self.a_audio.volume = volume;
+
+			self.dhi_audio = document.createElement("AUDIO");
+			self.dhi_audio.setAttribute("src","audio/solkattu/Dhi.wav");
+			self.dhi_audio.volume = volume;
+
+			self.ka_audio = document.createElement("AUDIO");
+			self.ka_audio.setAttribute("src","audio/solkattu/Ka.wav");
+			self.ka_audio.volume = volume;
+
+			self.ki_audio = document.createElement("AUDIO");
+			self.ki_audio.setAttribute("src","audio/solkattu/Ki.wav");
+			self.ki_audio.volume = volume;
+
+			self.mi_audio = document.createElement("AUDIO");
+			self.mi_audio.setAttribute("src","audio/solkattu/Mi.wav");
+			self.mi_audio.volume = volume;
+
+			self.ta_audio = document.createElement("AUDIO");
+			self.ta_audio.setAttribute("src","audio/solkattu/Ta.wav");
+			self.ta_audio.volume = volume;
+
+			self.tha_audio = document.createElement("AUDIO");
+			self.tha_audio.setAttribute("src","audio/solkattu/Tha.wav");
+			self.tha_audio.volume = volume;
 
 			self.talking_audio_array = [];
 			talking_wavs = ["audio/talking/one.wav", "audio/talking/two.wav", "audio/talking/three.wav", "audio/talking/four.wav", "audio/talking/five.wav", "audio/talking/six.wav", "audio/talking/seven.wav", "audio/talking/eight.wav", "audio/talking/nine.wav"];
@@ -235,7 +264,31 @@ audio_controller.reloadSounds= function(){
 	var division_array = [];
 	var division_text_array = [];
 
-	if(model.tone === TONE.TALKING){
+	if(model.tone === TONE.SOLKATTU){
+
+		beat_array = [];
+		beat_text_array = [];
+
+		this.accent_audio = this.tha_audio;
+
+		var i;
+		for(i=0; i<model.time_signature; i++){
+			beat_array[i] = this.tha_audio;
+			beat_text_array[i] = "Tha";
+		}
+
+		if (model.beat_division === 2){
+			division_array = [this.ka_audio];
+			division_text_array = ["Ka"];
+		} else if (model.beat_division === 3){
+			division_array = [this.ki_audio, this.ta_audio];
+			division_text_array = ["Ki", "Ta"];
+		} else if (model.beat_division === 4) {
+			division_array = [this.ka_audio, this.dhi_audio, this.mi_audio];
+			division_text_array = ["Ka", "Dhi", "Mi"];
+		}	
+		
+	} else if(model.tone === TONE.TALKING){
 
 		beat_array = [];
 		beat_text_array = [];

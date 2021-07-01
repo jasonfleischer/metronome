@@ -3,7 +3,8 @@
 const TONE = Object.freeze({
 	NORMAL: 0,
 	DRUM: 1,
-	TALKING: 2
+	TALKING: 2,
+	SOLKATTU: 3
 });
 
 const TIME_SIGNATURE = Object.freeze({
