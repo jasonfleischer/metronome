@@ -133,13 +133,19 @@ var audio_controller = {
 	let_audio: {},
 	e_audio: {},
 	a_audio: {},
+	tup_audio: {},
+	quin_audio: {},
+	sex_audio: {},
 
 	dhi_audio: {},
+	gi_audio: {},
 	ka_audio: {},
 	ki_audio: {},
 	mi_audio: {},
+	na_audio: {},
 	ta_audio: {},
 	tha_audio: {},
+	thom_audio: {},
 
 	oscillator: {},
 	gain_node: {},
@@ -183,9 +189,25 @@ audio_controller.init_sounds =function(){
 			self.a_audio.setAttribute("src","audio/talking/ah.wav");
 			self.a_audio.volume = volume;
 
+			self.tup_audio = document.createElement("AUDIO");
+			self.tup_audio.setAttribute("src","audio/talking/tup.wav");
+			self.tup_audio.volume = volume;
+
+			self.quin_audio = document.createElement("AUDIO");
+			self.quin_audio.setAttribute("src","audio/talking/quin.wav");
+			self.quin_audio.volume = volume;
+
+			self.sex_audio = document.createElement("AUDIO");
+			self.sex_audio.setAttribute("src","audio/talking/sex.wav");
+			self.sex_audio.volume = volume;
+
 			self.dhi_audio = document.createElement("AUDIO");
 			self.dhi_audio.setAttribute("src","audio/solkattu/Dhi.wav");
 			self.dhi_audio.volume = volume;
+
+			self.gi_audio = document.createElement("AUDIO");
+			self.gi_audio.setAttribute("src","audio/solkattu/Gi.wav");
+			self.gi_audio.volume = volume;
 
 			self.ka_audio = document.createElement("AUDIO");
 			self.ka_audio.setAttribute("src","audio/solkattu/Ka.wav");
@@ -199,6 +221,10 @@ audio_controller.init_sounds =function(){
 			self.mi_audio.setAttribute("src","audio/solkattu/Mi.wav");
 			self.mi_audio.volume = volume;
 
+			self.na_audio = document.createElement("AUDIO");
+			self.na_audio.setAttribute("src","audio/solkattu/Na.wav");
+			self.na_audio.volume = volume;
+
 			self.ta_audio = document.createElement("AUDIO");
 			self.ta_audio.setAttribute("src","audio/solkattu/Ta.wav");
 			self.ta_audio.volume = volume;
@@ -206,6 +232,10 @@ audio_controller.init_sounds =function(){
 			self.tha_audio = document.createElement("AUDIO");
 			self.tha_audio.setAttribute("src","audio/solkattu/Tha.wav");
 			self.tha_audio.volume = volume;
+
+			self.thom_audio = document.createElement("AUDIO");
+			self.thom_audio.setAttribute("src","audio/solkattu/Thom.wav");
+			self.thom_audio.volume = volume;
 
 			self.talking_audio_array = [];
 			talking_wavs = ["audio/talking/one.wav", "audio/talking/two.wav", "audio/talking/three.wav", "audio/talking/four.wav", "audio/talking/five.wav", "audio/talking/six.wav", "audio/talking/seven.wav", "audio/talking/eight.wav", "audio/talking/nine.wav"];
