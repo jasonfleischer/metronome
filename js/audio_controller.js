@@ -286,7 +286,13 @@ audio_controller.reloadSounds= function(){
 		} else if (model.beat_division === 4) {
 			division_array = [this.ka_audio, this.dhi_audio, this.mi_audio];
 			division_text_array = ["Ka", "Dhi", "Mi"];
-		}	
+		} else if (model.beat_division === 5) {
+			division_array = [this.dhi_audio, this.gi_audio, this.na_audio, this.thom_audio];
+			division_text_array = ["Dhi", "Gi", "Na", "Thom"];
+		} else if (model.beat_division === 6) {
+			division_array = [this.ki_audio, this.ta_audio, this.tha_audio, this.ki_audio, this.ta_audio];
+			division_text_array = ["Ki", "Ta", "Tha", "Ki", "Ta"];
+		}
 		
 	} else if(model.tone === TONE.TALKING){
 
@@ -311,7 +317,13 @@ audio_controller.reloadSounds= function(){
 		} else if (model.beat_division === 4) {
 			division_array = [this.e_audio, this.and_audio, this.a_audio];
 			division_text_array = ["e", "&", "a"];
-		}	
+		} else if (model.beat_division === 5) {
+			division_array = [this.quin_audio, this.tup_audio, this.a_audio, this.let_audio];
+			division_text_array = ["quin", "tup", "a", "let"];
+		} else if (model.beat_division === 6) {
+			division_array = [this.sex_audio, this.a_audio, this.tup_audio, this.a_audio, this.let_audio];
+			division_text_array = ["sex", "a", "tup", "a", "let"];
+		}
 		
 	} else if(model.tone === TONE.DRUM){
 
@@ -337,6 +349,12 @@ audio_controller.reloadSounds= function(){
 		} else if (model.beat_division === 4) {
 			division_array = [this.highhat_audio, this.highhat_audio, this.highhat_audio];
 			division_text_array = ["e", "&", "a"];
+		} else if (model.beat_division === 5) {
+			division_array = [this.highhat_audio, this.highhat_audio, this.highhat_audio, this.highhat_audio];
+			division_text_array = ["quin", "tup", "a", "let"];
+		} else if (model.beat_division === 6) {
+			division_array = [this.highhat_audio, this.highhat_audio, this.highhat_audio, this.highhat_audio, this.highhat_audio];
+			division_text_array = ["sex", "a", "tup", "a", "let"];
 		}
 
 	} else { // TONE.NORMAL
@@ -361,6 +379,12 @@ audio_controller.reloadSounds= function(){
 		} else if (model.beat_division === 4) {
 			division_array = [this.click_division_audio, this.click_division_audio, this.click_division_audio];
 			division_text_array = ["e", "&", "a"];
+		} else if (model.beat_division === 5) {
+			division_array = [this.click_division_audio, this.click_division_audio, this.click_division_audio, this.click_division_audio];
+			division_text_array = ["quin", "tup", "a", "let"];
+		} else if (model.beat_division === 6) {
+			division_array = [this.click_division_audio, this.click_division_audio, this.click_division_audio, this.click_division_audio, this.click_division_audio];
+			division_text_array = ["sex", "a", "tup", "a", "let"];
 		}
 	}
 

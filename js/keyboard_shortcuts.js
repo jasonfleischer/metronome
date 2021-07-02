@@ -71,9 +71,9 @@ function setup_keyboard_listeners() {
 		function incrementDivision(){
 			var new_division;
 			if(new_beat_division == 0){
-				new_division = Math.min(model.beat_division + 1, 4);	
+				new_division = Math.min(model.beat_division + 1, 6);	
 			}else{
-				new_division = Math.min(new_beat_division + 1, 4);
+				new_division = Math.min(new_beat_division + 1, 6);
 			}
 			$("division_select").value = new_division;
 			reloadDivisions(new_division);
