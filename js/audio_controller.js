@@ -135,7 +135,6 @@ var audio_controller = {
 	a_audio: {},
 	tup_audio: {},
 	quin_audio: {},
-	sex_audio: {},
 
 	dhi_audio: {},
 	gi_audio: {},
@@ -196,10 +195,6 @@ audio_controller.init_sounds =function(){
 			self.quin_audio = document.createElement("AUDIO");
 			self.quin_audio.setAttribute("src","audio/talking/quin.wav");
 			self.quin_audio.volume = volume;
-
-			self.sex_audio = document.createElement("AUDIO");
-			self.sex_audio.setAttribute("src","audio/talking/sex.wav");
-			self.sex_audio.volume = volume;
 
 			self.dhi_audio = document.createElement("AUDIO");
 			self.dhi_audio.setAttribute("src","audio/solkattu/Dhi.wav");
@@ -384,7 +379,7 @@ audio_controller.reloadSounds= function(){
 			division_text_array = ["quin", "tup", "a", "let"];
 		} else if (model.beat_division === 6) {
 			division_array = [this.highhat_audio, this.highhat_audio, this.highhat_audio, this.highhat_audio, this.highhat_audio];
-			division_text_array = ["sex", "a", "tup", "a", "let"];
+			division_text_array = ["trip", "let", "&", "trip", "let"];
 		}
 
 	} else { // TONE.NORMAL
@@ -414,7 +409,7 @@ audio_controller.reloadSounds= function(){
 			division_text_array = ["quin", "tup", "a", "let"];
 		} else if (model.beat_division === 6) {
 			division_array = [this.click_division_audio, this.click_division_audio, this.click_division_audio, this.click_division_audio, this.click_division_audio];
-			division_text_array = ["sex", "a", "tup", "a", "let"];
+			division_text_array = ["trip", "let", "&", "trip", "let"];
 		}
 	}
 
