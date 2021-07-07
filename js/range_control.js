@@ -69,8 +69,8 @@ range_control.load = function(on_range_control_changed, units, min , max, step, 
 	canvas.addEventListener('mouseout', range_control.mouse_out);	
 
 	// mobile TODO
-	canvas.addEventListener('touchstart', range_control.mouse_down);
-	canvas.addEventListener('touchmove', range_control.mouse_move);
+	canvas.addEventListener('touchstart', range_control.mouse_down, {passive: true});
+	canvas.addEventListener('touchmove', range_control.mouse_move, {passive: true});
 	canvas.addEventListener('touchend', range_control.mouse_up);
 	canvas.addEventListener('touchcancel', range_control.mouse_out);	
 
