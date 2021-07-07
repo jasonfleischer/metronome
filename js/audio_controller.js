@@ -351,8 +351,8 @@ audio_controller.reloadSounds= function(){
 			division_array = [this.quin_audio, this.tup_audio, this.a_audio, this.let_audio];
 			division_text_array = ["quin", "tup", "a", "let"];
 		} else if (model.beat_division === 6) {
-			division_array = [this.sex_audio, this.a_audio, this.tup_audio, this.a_audio, this.let_audio];
-			division_text_array = ["sex", "a", "tup", "a", "let"];
+			division_array = [this.trip_audio, this.let_audio, this.and_audio, this.trip_audio, this.let_audio];
+			division_text_array = ["trip", "let", "&", "trip", "let"];
 		}
 		
 	} else if(model.tone === TONE.DRUM){
