@@ -1,10 +1,18 @@
 {
 	"short_name": "Metronome",
   	"name": "Metronome",
-  	"icons": [],
+  	"icons": [
+  		{
+      		"src": "img/favicon.png",
+      		"sizes": "32x32",
+      		"type": "image/png",
+      		"purpose": "any maskable"
+    	}
+  	],
 	"display": "standalone",
 	"orientation": "portrait",
-	"start_url": "/",
+	"start_url": "/?source=pwa",
 	"theme_color": "#000000",
 	"background_color": "#ffffff"
+
 }
