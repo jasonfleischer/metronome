@@ -23,7 +23,8 @@ self.addEventListener('install', function(event) {
         '/metronome/js/audio_controller.js',
         '/metronome/js/tap_controller.js',
         '/metronome/js/keyboard_shortcuts.js',
-        '/metronome/js/main.js'
+        '/metronome/js/main.js',
+        '/metronome/js/service_worker.js'
       ]);
     })
   );
