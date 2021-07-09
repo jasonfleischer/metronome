@@ -5,7 +5,7 @@ let prompt;
 		
 if ('serviceWorker' in navigator) {
 	installable = true
-  	navigator.serviceWorker.register('/synth/sw.js', { scope: '/synth/' }).then(function(reg) {
+  	navigator.serviceWorker.register('/metronome/sw.js', { scope: '/metronome/' }).then(function(reg) {
 
 	    if(reg.installing) {
 	      console.log('Service worker installing');
