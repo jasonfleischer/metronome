@@ -45,37 +45,47 @@ function forceStop(){
 
 function playPause(){
 
-	preLoadAudio();
-	function preLoadAudio() {
-		var j;
-		for(j=0; j<4; j++){
-			audio_controller.preloaded_audio[j] = document.createElement("AUDIO");
-		}
-	}
-
-	function loadingMidi(){
-		if(window.mobileCheck()){
-			return click_controller.load()
-		}
-		return click_controller.load() && drum_controller.load();
-	}
-
-	if(loadingMidi()) {
-		setTimeout(function() {
-			log("delayed execution for midi loading")
-			continuePlay();
-		}, 500);
-	} else {
-		continuePlay()
-	}
-	
 	if(window.mobileCheck()){
 		if(!audio_controller.playing) {
 			setupMobileOscillator()
 		} else {
 			audio_controller.oscillator.stop()
 		}
+		continuePlay()
+		
+	} else {
+
+
+		preLoadAudio();
+		function preLoadAudio() {
+			var j;
+			for(j=0; j<4; j++){
+				audio_controller.preloaded_audio[j] = document.createElement("AUDIO");
+			}
+		}
+
+		function loadingMidi(){
+			if(window.mobileCheck()){
+				return click_controller.load()
+			}
+			return click_controller.load() && drum_controller.load();
+		}
+
+		if(loadingMidi()) {
+			setTimeout(function() {
+				log("delayed execution for midi loading")
+				continuePlay();
+			}, 500);
+		} else {
+			continuePlay()
+		}
+
+
 	}
+
+	
+	
+	
 
 	function continuePlay() {
 		var audio_is_playing = audio_controller.playPause();
