@@ -314,17 +314,23 @@ function setup_volume_control(){
 }
 
 function setup_duration_select() {
-	$("duration_select").addEventListener("change", function(e){
-		var value = parseInt(this.value);
-		log("on duration_select: " + value);
-		model.duration = value;
-		cookies.set_duration(value);
-		durationStartTime = new Date();
-		audio_controller.reloadDuration();
+
+	setup_duration_control("duration_select");
+	setup_duration_control("mobile_duration_select");
+
+	function setup_duration_control(element_id){
+		$(element_id).addEventListener("change", function(e){
+			var value = parseInt(this.value);
+			log("on duration_select: " + value);
+			model.duration = value;
+			cookies.set_duration(value);
+			durationStartTime = new Date();
+			audio_controller.reloadDuration();
+			update_UI_duration(model.duration * 60000);
+		});
+		$(element_id).value = model.duration;
 		update_UI_duration(model.duration * 60000);
-	});
-	$("duration_select").value = model.duration;
-	update_UI_duration(model.duration * 60000);
+	}
 }
 
 function setup_tone_select() {
