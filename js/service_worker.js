@@ -1,4 +1,5 @@
 let prompt;
+let version = 'v1'
 	
 if ('serviceWorker' in navigator) {
 	
@@ -21,7 +22,7 @@ if ('serviceWorker' in navigator) {
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open('v1').then(function(cache) {
+    caches.open(version).then(function(cache) {
       return cache.addAll([
         '/metronome/',
         '/metronome/index.html',
@@ -72,13 +73,13 @@ self.addEventListener('fetch', function(event) {
         
         console.log("fetch event")
 
-        caches.open('v1').then(function (cache) {
+        caches.open(version).then(function (cache) {
           cache.put(event.request, responseClone);
         });
         return response;
       }).catch(function () {
-        console.log("error")
-        return caches.match('/sw-test/gallery/myLittleVader.jpg');
+        console.log("fetch error")
+        return undefined;
       });
     }
   }));
@@ -90,7 +91,6 @@ window.addEventListener('beforeinstallprompt', function(e){
 });
 
 window.addEventListener('appinstalled', async function(e) {
-	//installButton.style.display = "none";
 	install.showAlert(function(){
    		prompt.prompt();
 	})
