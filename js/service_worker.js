@@ -2,9 +2,7 @@ let prompt;
 let version = 'v1'
 	
 if ('serviceWorker' in navigator) {
-	
   	navigator.serviceWorker.register('/metronome/sw.js', { scope: '/metronome/' }).then(function(reg) {
-
 	    if(reg.installing) {
 	      console.log('Service worker installing');
 	    } else if(reg.waiting) {
@@ -12,7 +10,6 @@ if ('serviceWorker' in navigator) {
 	    } else if(reg.active) {
 	      console.log('Service worker active');
 	    }
-
 	}).catch(function(error) { // registration failed
 	    console.log('Registration failed with ' + error);
 	});
