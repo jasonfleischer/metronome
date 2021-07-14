@@ -30,25 +30,25 @@ function init() {
 	setup_controls();
 	function setup_controls(){
 		setup_language_select();
-		setup_darkmode_switch();
 		setup_tone_select();
 		setup_time_signature_select();
 		setup_beat_division_select();
 		setup_accent_first_beat_switch();
 		setup_flash_screen_switch();
-		setup_bpm_controls();
-		setup_volume_control();
-		setup_duration_select();
+		setup_bpm_controls();	
+		setup_mobile_darkmode_switch();
+		setup_mobile_duration_select();	
 	}
 
 	setup_keyboard_listeners();
-	setup_info_alert();
+	alert.init()
 	setup_settings_menu_on_click();
 
 	if(window.mobileCheck()){
 		setup_mobile();
 	}
 
+	update_UI_darkmode();
 	show_hidden_views();
 	time_view.init();
 
@@ -57,6 +57,7 @@ function init() {
 function setup_mobile(){
 	model.tone = TONE.NORMAL;
 	$("tone").style.display = "none";
+	
 }
 
 function show_hidden_views(){
@@ -136,20 +137,11 @@ function kofi(){
 	window.open("https://ko-fi.com/jasonfleischer", "_blank");
 }
 
-function setup_info_alert(){
-	$("info_alert_container").addEventListener("click", function(event){
-		dismissInfo();
-	});
-	$("info_alert").addEventListener("click", function(event){
-		event.stopPropagation();
-		return false;
-	});
-}
 function info(){
-	$("info_alert_container").style.display = "block"; // show
+	information.showAlert()
 }
 function dismissInfo(){
-	$("info_alert_container").style.display = "none"; // hide
+	information.dismissAlert()
 }
 
 function toggle_settings(){
@@ -281,56 +273,21 @@ function setup_bpm_controls() {
 	}
 }
 
-function setup_volume_control(){
-
-	var min = 10;
-	var max = 100;
-	var step = 1;
-	setup_volume_range(min, max, step);
-
-	function setup_volume_range(min, max, step){
-		var range = $("volume_range");
-		range.min = min;
-		range.max = max;
-		range.value = model.volume_percent;
-		range.step = step;
-		range.addEventListener("change", function(e){
-			model.volume_percent = parseFloat(this.value);
-			log("on volume range change: " + model.volume_percent);
-			cookies.set_volume(model.volume_percent);
-
-			audio_controller.init_sounds();
-			if(audio_controller.playing && model.tone === TONE.TALKING){
-				forcePlay();
-			}
-		});
-
-		range.addEventListener('input', function(){
-			model.volume_percent = parseFloat(this.value);
-			log("on volume range input: " + model.volume_percent);
-			cookies.set_volume(model.volume_percent);
-		}, true);
-	}
-}
-
-function setup_duration_select() {
-
-	setup_duration_control("duration_select");
+function setup_mobile_duration_select() {
 	setup_duration_control("mobile_duration_select");
-
-	function setup_duration_control(element_id){
-		$(element_id).addEventListener("change", function(e){
-			var value = parseInt(this.value);
-			log("on duration_select: " + value);
-			model.duration = value;
-			cookies.set_duration(value);
-			durationStartTime = new Date();
-			audio_controller.reloadDuration();
-			update_UI_duration(model.duration * 60000);
-		});
-		$(element_id).value = model.duration;
+}
+function setup_duration_control(element_id){
+	$(element_id).addEventListener("change", function(e){
+		var value = parseInt(this.value);
+		log("on duration_select: " + value);
+		model.duration = value;
+		cookies.set_duration(value);
+		durationStartTime = new Date();
+		audio_controller.reloadDuration();
 		update_UI_duration(model.duration * 60000);
-	}
+	});
+	$(element_id).value = model.duration;
+	update_UI_duration(model.duration * 60000);
 }
 
 function setup_tone_select() {
@@ -399,27 +356,27 @@ function setup_flash_screen_switch() {
 	$("screen_flash_checkbox").checked = model.flash_screen;
 }
 
-function setup_darkmode_switch() {
-
-	setup_darkmode($("darkmode"), $("darkmode_checkbox_switch"), $("darkmode_checkbox"));
+function setup_mobile_darkmode_switch() {
 	setup_darkmode($("mobile_darkmode"), $("mobile_darkmode_checkbox_switch"), $("mobile_darkmode_checkbox"));
-	function setup_darkmode(background_obj, switch_obj, checkbox_obj ){
+	
+}
+function setup_darkmode(background_obj, switch_obj, checkbox_obj ){
 
-		background_obj.addEventListener("click", function(e){
-			checkbox_obj.click();
-		});
-		switch_obj.addEventListener('keyup', function(event){
-			if (event.code === 'Space'|| event.code === 'Enter') $("darkmode_checkbox").click();
-		});
-		checkbox_obj.addEventListener("change", function(e){
-			var value = this.checked;
-			log("on darkmode change: " + value);
-			model.darkmode = value;
-			cookies.set_darkmode(value);
-			update_UI_darkmode();
-		});
-		checkbox_obj.checked = model.darkmode;
-	}
+	background_obj.addEventListener("click", function(e){
+		checkbox_obj.click();
+	});
+	switch_obj.addEventListener('keyup', function(event){
+		if (event.code === 'Space'|| event.code === 'Enter') $("darkmode_checkbox").click();
+	});
+	checkbox_obj.addEventListener("change", function(e){
+		var value = this.checked;
+		log("on darkmode change: " + value);
+		model.darkmode = value;
+		cookies.set_darkmode(value);
+		update_UI_darkmode();
+	});
+	checkbox_obj.checked = model.darkmode;
+
 	update_UI_darkmode();
 }
 
@@ -563,7 +520,7 @@ function update_UI_darkmode(){
 	range_control.reload_colors();
 	time_view.reload_colors();
 
-	$("darkmode_checkbox").checked = model.darkmode;
+	
 	$("mobile_darkmode_checkbox").checked = model.darkmode;
 
 	function setDarkMode(){

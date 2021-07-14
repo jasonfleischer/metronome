@@ -1,0 +1,52 @@
+#alert_container {
+    display: none;
+    position: absolute;
+     width: 100%;
+    height: 100%;
+    background-color: #00000099; /*transparent*/
+    z-index: 4;
+
+}
+
+#alert{
+    background-color: var(--secondary-background-color);
+    margin-top: 65px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 17px;
+    padding-left: 17px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    max-width: 411px;
+    border: 1px solid var(--tertiary-background-color);
+}
+#alert h3{
+	float: left;
+    margin-top: 0px;
+}
+#alert p{
+    padding-right: 3px;
+    padding-left: 3px;
+    font-size: 15px;
+}
+
+#alert_header {
+    height: 43px
+}
+
+#dismiss_alert_button {
+    height: 36px;
+    width: 36px;
+    position: absolute;
+    top: 7px;
+    cursor: pointer;
+    border-radius: 18px;
+    position: relative;
+    float: right;
+    top: -3px;
+}
+#dismiss_alert_button img {
+    padding-top: 3px;
+    padding-left: 0px;
+    height: 16px;
+}

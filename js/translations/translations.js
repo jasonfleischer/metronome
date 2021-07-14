@@ -49,19 +49,18 @@ function TR(text){
 
 function setup_language_select() {
 	document.documentElement.lang = translations.current_language;
-	setup_language_control("language_select");
 	setup_language_control("mobile_language_select");
-	
-	function setup_language_control(element_id){
-		$(element_id).addEventListener("change", function(e){
-			var value = this.value;
-			log("on language_select: " + value);
-			translations.current_language = value;
-			cookies.set_language(value);
-			location.reload();
-		});
-		$(element_id).value = translations.current_language;
-	}
+}
+
+function setup_language_control(element_id){
+	$(element_id).addEventListener("change", function(e){
+		var value = this.value;
+		log("on language_select: " + value);
+		translations.current_language = value;
+		cookies.set_language(value);
+		location.reload();
+	});
+	$(element_id).value = translations.current_language;
 }
 
 var translations = {

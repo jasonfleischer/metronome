@@ -4,10 +4,13 @@ self.addEventListener('install', function(event) {
       return cache.addAll([
         '/metronome/',
         '/metronome/index.html',
+        '/metronome/css/root.css',
         '/metronome/css/main.css',
         '/metronome/css/select.css',
         '/metronome/css/slider.css',
         '/metronome/css/switch.css',
+        '/metronome/css/button.css',
+        '/metronome/css/alert.css',
         '/metronome/js/midi/webAudioFontPlayer.js',
         '/metronome/js/log.js',
         '/metronome/js/midi/midi_sounds.js',
@@ -23,6 +26,9 @@ self.addEventListener('install', function(event) {
         '/metronome/js/audio_controller.js',
         '/metronome/js/tap_controller.js',
         '/metronome/js/keyboard_shortcuts.js',
+        '/metronome/js/alert.js',
+        '/metronome/js/install.js',
+        '/metronome/js/information.js',
         '/metronome/js/main.js',
         '/metronome/js/service_worker.js'
       ]);

@@ -19,10 +19,13 @@
 	<meta name="theme-color" content="#000"/>
 	<meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
 	<link rel="icon" type="image/png" sizes="32x32" href="img/icon/favicon.png">
+	<link rel="stylesheet" href="css/root.css">
+	<link rel="stylesheet" href="css/button.css">
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="css/slider.css">
 	<link rel="stylesheet" href="css/switch.css">
 	<link rel="stylesheet" href="css/select.css">
+	<link rel="stylesheet" href="css/alert.css">
 	<link rel="manifest" href="manifest.json">
 	<link rel="apple-touch-icon" href="img/icon/192.png">
 	<link rel="apple-touch-icon" sizes="152x152" href="img/icon/152.png">
@@ -33,74 +36,13 @@
 <div style="height: 100vh; width: 100vw; position: fixed; padding: 0px; margin: 0px;">
 	<div id="flash_screen">
 	</div>
-	<!-- alert -->
-	<div id="info_alert_container">
-		<div id="info_alert">
-			<div id="info_alert_header">
-				<h3>Information</h3>
-				<button id="dismiss_alert_button" onclick="dismissInfo()" ><img id="dismiss_close_button_svg" src="img/close_black.svg" alt="Dismiss info"/></button>
+	<div id="alert_container">
+		<div id="alert">
+			<div id="alert_header">
+				<h3 id="alert_title"></h3>
+				<button id="dismiss_alert_button" ><img height="16" id="dismiss_close_button_svg" src="img/close_black.svg" alt="Dismiss alert"/></button>
 			</div>
-			<div>
-			<ul class="desktop-only">
-				<li>
-					<div class="nav-side-menu-item">
-						<span>Language</span>
-						<select id="language_select">
-							<option value="en" selected="selected">English</option>
-							<option value="fr">French</option>
-							<option value="es">Spanish</option>
-							<option value="de">German</option>
-							<option value="it">Italian</option>
-							<option value="pt">Portuguese</option>
-							<option value="ru">Russian</option>
-							<option value="ja">Japan</option>
-							<option value="ko">Korean</option>
-							<option value="zh">Chinese</option>
-						</select>
-					</div>
-				</li>
-				<li id="darkmode">
-					<div class="nav-toggle-item">
-						<span>Dark Mode</span>
-						<label id="darkmode_checkbox_switch" class="switch">
-							<input id="darkmode_checkbox" type="checkbox" checked="checked"/>
-							<span class="switch_track round" tabindex="0"></span>
-						</label>
-					</div>
-				</li>
-				<li id="volume">
-					<div class="nav-side-menu-item">
-						<span id="volume_row_text">Volume</span>
-						<div class="range">
-							<input id="volume_range" type="range" min="10" max="100" step="1" value="100">
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="nav-side-menu-item">
-					<span>Duration</span>
-					<select id="duration_select">
-						<option value="5">5 min</option>
-						<option value="10">10 min</option>
-						<option value="15">15 min</option>
-						<option value="20">20 min</option>
-						<option value="30">30 min</option>
-						<option value="45">45 min</option>
-						<option value="60">1 hour</option>
-						<option value="-1" selected="selected">Infinite</option>
-					</select>
-					</div>
-				</li>
-			</ul>
-		</div>
-			<br class="desktop-only" />
-			<p onclick="openMailToDeveloper()">Thank you for using this website. If you wish to submit feedback, comment or report an error click <strong>here</strong>.</p>
-			<br/>
-			<p onclick="openURL('https://surikov.github.io/webaudiofont/')">Special thanks to Surikov for their <strong>WebAudioFont</strong> library.</p>
-			<br/>
-			<p onclick="openURL('https://jasonfleischer.github.io/website/');">Information about the developer can be found <strong>here</strong>.</p>
-			<br class="desktop-only"/>
-			<button class="desktop-only" onclick="show_keyboard_shortcuts()">Keyboard Shortcuts</button>
+			<div id="alert_contents"></div>
 		</div>
 	</div>
 	<div id="header">
@@ -266,6 +208,9 @@
 	<script src="js/audio_controller.js"></script>
 	<script src="js/tap_controller.js"></script>
 	<script src="js/keyboard_shortcuts.js"></script>
+	<script src="js/alert.js"></script>
+	<script src="js/install.js"></script>
+	<script src="js/information.js"></script>
 	<script src="js/main.js"></script>
 	<script src="js/service_worker.js"></script>
 </body>

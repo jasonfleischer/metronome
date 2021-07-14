@@ -1,0 +1,10 @@
+:root{
+    --row-height: 45px;
+    --left-column-width: 320px;
+    --header-height: 50px;
+    --highlight-color:#444;
+    --primary-background-color: #252525;
+    --secondary-background-color: #000;
+    --tertiary-background-color: #494949;
+    --primary-font-color: #fff;
+}
