@@ -98,7 +98,7 @@ information.setup_volume_control = function(){
 		range.addEventListener("change", function(e){
 			model.volume_percent = parseFloat(this.value);
 			log("on volume range change: " + model.volume_percent);
-			cookies.set_volume(model.volume_percent);
+			storage.set_volume(model.volume_percent);
 
 			audio_controller.init_sounds();
 			if(audio_controller.playing && model.tone === TONE.TALKING){
@@ -109,7 +109,7 @@ information.setup_volume_control = function(){
 		range.addEventListener('input', function(){
 			model.volume_percent = parseFloat(this.value);
 			log("on volume range input: " + model.volume_percent);
-			cookies.set_volume(model.volume_percent);
+			storage.set_volume(model.volume_percent);
 		}, true);
 	}
 }

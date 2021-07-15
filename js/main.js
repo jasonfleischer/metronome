@@ -15,7 +15,7 @@
 
 
 function init() {
-	load_cookies();
+	storage.load();
 	translations.load();
 	
 	setup_audio()
@@ -222,7 +222,7 @@ function setup_bpm_controls() {
 		var on_range_control_changed = function(BPM_value){
 			log("on BPM dial change: " + BPM_value);
 			model.BPM = BPM_value;
-			cookies.set_BPM(model.BPM);
+			storage.set_BPM(model.BPM);
 			update_UI_BPM(model.BPM);
 			reloadBPM();
 		};
@@ -239,7 +239,7 @@ function setup_bpm_controls() {
 			model.BPM = parseFloat(this.value);
 			log("on BPM range change: " + model.BPM);
 			range_control.load(range_control.on_range_control_changed, "", min , max, step, model.BPM, false, 0);
-			cookies.set_BPM(model.BPM);
+			storage.set_BPM(model.BPM);
 			update_UI_BPM(model.BPM);
 			reloadBPM();
 		});
@@ -247,7 +247,7 @@ function setup_bpm_controls() {
 		bpm_range.addEventListener('input', function(){
 			model.BPM = parseFloat(this.value);
 			log("on BPM range change: " + model.BPM);
-			cookies.set_BPM(model.BPM);
+			storage.set_BPM(model.BPM);
 			update_UI_BPM(model.BPM);
 			reloadBPM();
 		}, true);
@@ -265,7 +265,7 @@ function setup_bpm_controls() {
 				log("on BPM prompt change: " + BPM);
 				model.BPM = BPM;
 				range_control.load(range_control.on_range_control_changed, "", MIN_BPM , MAX_BPM, 1, model.BPM, false, 0);
-				cookies.set_BPM(model.BPM);
+				storage.set_BPM(model.BPM);
 				update_UI_BPM(model.BPM);
 				reloadBPM();
 				if(was_playing) playPause(); 
@@ -284,7 +284,7 @@ function setup_duration_control(element_id){
 		var value = parseInt(this.value);
 		log("on duration_select: " + value);
 		model.duration = value;
-		cookies.set_duration(value);
+		storage.set_duration(value);
 		durationStartTime = new Date();
 		audio_controller.reloadDuration();
 		update_UI_duration(model.duration * 60000);
@@ -298,7 +298,7 @@ function setup_tone_select() {
 		var value = parseInt(this.value);
 		log("on tone_select: " + value);
 		model.tone = value;
-		cookies.set_tone(value);
+		storage.set_tone(value);
 		update_UI_tone();
 		audio_controller.reloadSounds();
 	});
@@ -311,7 +311,7 @@ function setup_time_signature_select() {
 		var value = parseInt(this.value);
 		log("on time_signature_select: " + value);
 		model.time_signature = value ;
-		cookies.set_time_signature(value);
+		storage.set_time_signature(value);
 		reloadActivePlayer();
 	});
 	$("time_signature_select").value = model.time_signature;
@@ -321,7 +321,7 @@ function setup_beat_division_select() {
 	$("division_select").addEventListener("change", function(e){
 		var value = parseInt(this.value);
 		log("on division_select: " + value);
-		cookies.set_subdivision(value);
+		storage.set_subdivision(value);
 		reloadDivisions(value);
 	});
 	$("division_select").value = model.beat_division;
@@ -338,7 +338,7 @@ function setup_accent_first_beat_switch() {
 		var value = this.checked;
 		log("on accent beat change: " + value);
 		model.accent_first_beat = value;
-		cookies.set_accent_first_beat(value);
+		storage.set_accent_first_beat(value);
 	});
 	$("accent_first_beat_checkbox").checked = model.accent_first_beat;
 }
@@ -354,7 +354,7 @@ function setup_flash_screen_switch() {
 		var value = this.checked;
 		log("on screen flash change: " + value);
 		model.flash_screen = value;
-		cookies.set_flash_screen(value);
+		storage.set_flash_screen(value);
 	});
 	$("screen_flash_checkbox").checked = model.flash_screen;
 }
@@ -375,7 +375,7 @@ function setup_darkmode(background_obj, switch_obj, checkbox_obj ){
 		var value = this.checked;
 		log("on darkmode change: " + value);
 		model.darkmode = value;
-		cookies.set_darkmode(value);
+		storage.set_darkmode(value);
 		update_UI_darkmode();
 	});
 	checkbox_obj.checked = model.darkmode;

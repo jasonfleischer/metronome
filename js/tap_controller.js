@@ -71,7 +71,7 @@ tap_controller.updateUI = function() {
 	  			model.BPM = bpm;
 				log("on BPM tap changed: " + model.BPM);
 				range_control.load(range_control.on_range_control_changed, "", MIN_BPM , MAX_BPM, 1, model.BPM, false, 0);
-				cookies.set_BPM(model.BPM);
+				storage.set_BPM(model.BPM);
 				update_UI_BPM(model.BPM);
 				forcePlay();
   			}

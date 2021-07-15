@@ -18,7 +18,7 @@ const CACHE = [
         '/metronome/js/translations/generated.js',
         '/metronome/js/translations/translations.js',
         '/metronome/js/prototypes.js',
-        '/metronome/js/cookies.js',
+        '/metronome/js/storage.js',
         '/metronome/js/range_control.js',
         '/metronome/js/time_view.js',
         '/metronome/js/audio_controller.js',

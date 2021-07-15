@@ -57,7 +57,7 @@ function setup_language_control(element_id){
 		var value = this.value;
 		log("on language_select: " + value);
 		translations.current_language = value;
-		cookies.set_language(value);
+		storage.set_language(value);
 		location.reload();
 	});
 	$(element_id).value = translations.current_language;
