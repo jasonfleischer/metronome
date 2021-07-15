@@ -1,6 +1,7 @@
 let CACHE_NAME = 'v2';
 const CACHE = [
         '/metronome/index.html',
+        '/metronome/fonts/SF_Pro_Display_Thin.woff2',
         '/metronome/css/root.css',
         '/metronome/css/main.css',
         '/metronome/css/select.css',
