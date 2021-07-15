@@ -24,13 +24,15 @@ window.onload = function() {
 window.addEventListener('beforeinstallprompt', function(e){
   	e.preventDefault(); // Prevent the mini-infobar from appearing on mobile
   	prompt = e;
-  	install.showAlert(function(){
-   		prompt.prompt();
-	})
+  	if (window.mobileCheck()) {
+	  	install.showAlert(function(){
+	   		prompt.prompt();
+		});
+  	}
 });
 
 window.addEventListener('appinstalled', async function(e) {
-	//todo
+	alert.dismiss();
 });
 
 install.showAlert = function(install_action){
