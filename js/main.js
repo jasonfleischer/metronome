@@ -57,7 +57,10 @@ function init() {
 function setup_mobile(){
 	model.tone = TONE.NORMAL;
 	$("tone").style.display = "none";
-	
+
+	if (isSafari && !isFromHomeScreen()){
+		install.showAlert()
+	}	
 }
 
 function show_hidden_views(){

@@ -2,7 +2,7 @@ var install = {}
 let prompt;
 
 if ('serviceWorker' in navigator) {
-  	navigator.serviceWorker.register('/metronome/js/service_worker.js', { scope: '/metronome/' }).then(function(reg) {
+  	navigator.serviceWorker.register('/metronome/service_worker.js', { scope: '/metronome/' }).then(function(reg) {
 	    if(reg.installing) {
 	      console.log('Service worker installing');
 	    } else if(reg.waiting) {
@@ -16,6 +16,11 @@ if ('serviceWorker' in navigator) {
 } else {
 	console.log('Service worker not available');
 }
+
+window.onload = function() {
+	init();
+};
+
 window.addEventListener('beforeinstallprompt', function(e){
   	e.preventDefault(); // Prevent the mini-infobar from appearing on mobile
   	prompt = e;

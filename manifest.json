@@ -30,7 +30,7 @@
   	],
 	"display": "standalone",
 	"orientation": "portrait",
-	"start_url": "/metronome/",
+	"start_url": "/metronome/?from=homescreen",
 	"theme_color": "#000000",
 	"background_color": "#ffffff"
 }
