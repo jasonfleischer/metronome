@@ -45,8 +45,6 @@ this.addEventListener('fetch', function(event) {
         caches.open(CACHE_NAME).then(function(cache) {
             return cache.match(event.request).then(function(response) {
                 return response || fetch(event.request).then(function(response) {
-                    console.log('metronome: fetch2' + JSON.stringify(response, null, 4));
-                    Object.keys(response).forEach((prop)=> console.log(prop));
                     cache.put(event.request, response.clone());
                     return response;
                 });
