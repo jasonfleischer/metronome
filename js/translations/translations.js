@@ -1,3 +1,11 @@
+// step 1: $ python <path>/find_js_translations.py
+// step 2: paste output (js_translations) in generated.js
+// step 3: uncomment 'translations.generate();' of translations.js
+// step 4: paste output (en) in generated.js
+// step 5: $pip3 install googletrans; $python3 <path>/google_translations.py
+// step 6: paste outputs in generated.js, check for errors
+// step 7: comment 'translations.generate();' of translations.js
+
 const LANGUAGE = Object.freeze({
 	ENGLISH: "en",
 	FRENCH: "fr",
