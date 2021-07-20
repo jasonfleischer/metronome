@@ -260,7 +260,7 @@ function setup_bpm_controls() {
 
 		function bpm_prompt(){
 			var was_playing = forceStop();
-			var BPM = parseInt(prompt("Enter a BPM value:", model.BPM));
+			var BPM = parseInt(prompt(TR("Enter a BPM value:"), model.BPM));
 			if(BPM >= MIN_BPM && BPM <= MAX_BPM){
 				log("on BPM prompt change: " + BPM);
 				model.BPM = BPM;
@@ -392,7 +392,7 @@ function update_UI_BPM(value) {
 	update_UI_tempo_marking(value);
 	range_control.resize_bpm_text();
 
-	$("bpm_row_text").innerHTML = "BPM: " + value
+	$("bpm_row_text").innerHTML = TR("BPM") + ": " + value
 
 	function update_UI_tempo_marking(BPM){
 		var tempo_marking = "";
@@ -453,16 +453,21 @@ function update_UI_duration(duration_in_MS){
 	$("mobile_play_pause_button").innerHTML = new_text
 
 	function human_readable_duration(duration_in_MS){
+
+		var isEnglish = translations.current_language === LANGUAGE.ENGLISH
 		var duration_in_seconds = duration_in_MS / 1000;
 		if(duration_in_seconds < 60) {
 			return formattedSeconds(duration_in_seconds);
 		} else if(duration_in_seconds < 60*60){
 			var mins = parseInt(duration_in_seconds/60)
 			var secs = duration_in_seconds - (mins*60)
-			return mins + " min" +  (secs==0?"":" ") + formattedSeconds(secs)
+			if (isEnglish)
+				return mins + " min" +  (secs==0?"":" ") + formattedSeconds(secs)
+			else 
+				return mins + ":" + formattedSeconds(secs)
 		} else if (duration_in_seconds >= 60*60) {
 			var hours = parseInt(duration_in_seconds/60/60)
-			return hours + " hour"
+			return hours + (isEnglish ? " hour" : ":00")
 		} else {
 			LogE("not handled human readable duration")
 			return ""
@@ -470,9 +475,9 @@ function update_UI_duration(duration_in_MS){
 
 		function formattedSeconds(seconds){
 			seconds = parseInt(seconds)
-			if(seconds == 0) return ""
-			else if (seconds < 10) return "0"+seconds +" s"
-			else return seconds+" s"
+			if(seconds == 0) return (isEnglish ? "":"00")
+			else if (seconds < 10) return "0"+seconds +(isEnglish ? " s":"")
+			else return seconds+(isEnglish ? " s":"")
 		}
 	}
 }

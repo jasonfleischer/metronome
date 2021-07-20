@@ -1,7 +1,7 @@
 // step 1: $ python <path>/find_js_translations.py
 // step 2: paste output (js_translations) in generated.js
 // step 3: uncomment 'translations.generate();' of translations.js
-// step 4: paste output (en) in generated.js
+// step 4: paste output (en) in generated.js and google_translations.py
 // step 5: $pip3 install googletrans; $python3 <path>/google_translations.py
 // step 6: paste outputs in generated.js, check for errors
 // step 7: comment 'translations.generate();' of translations.js
@@ -111,7 +111,7 @@ translations.is_valid_inner_html = function(text){
 
 translations.generate = function(){
 
-	log("GENERATING translations")
+	console.log("GENERATING translations")
 	var generated_translate_string = "var " + this.current_language + " = [\n";
 	var processed_texts = [];
 	var i;
@@ -122,7 +122,7 @@ translations.generate = function(){
 
 			if((translations.is_valid_inner_html(text) || text.includes('<strong>')) && !processed_texts.includes(text)){
 				processed_texts.push(text)
-				generated_translate_string += '"'+text+'"' + ", \n";
+				generated_translate_string += '"'+text+'"' + ",\n";
 			} else {
 				log("text ignored or duplicate |"+element.innerHTML+"|");
 			}
@@ -131,9 +131,16 @@ translations.generate = function(){
 	var j;
 	for(j=0; j<js_translations.length; j++){
 		var text = js_translations[j];
-		if(!processed_texts.includes(text))
-			generated_translate_string += '"' + text + '"' + ((j==js_translations.length-1)? "];" : ",\n");
+		
+		if(!processed_texts.includes(text)){
+			generated_translate_string += '"' + text + '"' + ",\n";
+		}
+		if(j==js_translations.length-1) {
+			generated_translate_string =  generated_translate_string.substring(0, generated_translate_string.length-2)+"];"
+		}
 	}
+
 	console.log(generated_translate_string);
+	console.log("finished GENERATING translations")
 }
-//translations.generate();
+translations.generate();
