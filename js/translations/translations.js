@@ -143,4 +143,4 @@ translations.generate = function(){
 	console.log(generated_translate_string);
 	console.log("finished GENERATING translations")
 }
-translations.generate();
+//translations.generate();
