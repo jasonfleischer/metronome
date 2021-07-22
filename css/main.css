@@ -474,10 +474,11 @@ button {
 }
 
 #kofi_button img {
+    padding-left: 6px;
     float: left;
     padding-top: 2px;
     border:0px;
-    height:32px;
+    height:30px;
 }
 
 #info_alert_container {
