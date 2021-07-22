@@ -44,7 +44,7 @@ function init() {
 	alert.init()
 	setup_settings_menu_on_click();
 
-	if(window.mobileCheck()){
+	if(window.mobileAndTabletCheck()){
 		setup_mobile();
 	}
 
