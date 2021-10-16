@@ -73,7 +73,7 @@ function playPause(){
 
 		if(loadingMidi()) {
 			setTimeout(function() {
-				log("delayed execution for midi loading")
+				log.i("delayed execution for midi loading")
 				continuePlay();
 			}, 500);
 		} else {
@@ -467,7 +467,7 @@ audio_controller.play = function(){
 
 	    var drift = Date.now() - expected; 
 	    if (drift > interval) {
-	    	logE("something really bad happened. Maybe the browser (tab) was inactive? possibly special handling to avoid futile 'catch up' run");
+	    	log.e("something really bad happened. Maybe the browser (tab) was inactive? possibly special handling to avoid futile 'catch up' run");
 	        audio_controller.pause();
 	    }
 		audio_queue_index = (audio_queue_index + 1) % audio_controller.audio_queue.length;
@@ -587,7 +587,7 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 	if (promise !== undefined) {
 	    promise.catch(error => {
 	        // Auto-play was prevented
-	        logE("Play Error:  " + error);
+	        log.e("Play Error:  " + error);
 	    }).then(() => {
 	        // Auto-play started
 	    });
@@ -600,7 +600,7 @@ function isDurationExpired(){
 		var running_time = new Date() - audio_controller.start_time;
 		var durationInMS = model.duration * 60000;
 		if(running_time > durationInMS){
-			log("Duration expired")
+			log.i("Duration expired")
 			return true;
 		}
 	}

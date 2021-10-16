@@ -19,13 +19,7 @@
 	<meta name="theme-color" content="#000"/>
 	<meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
 	<link rel="icon" type="image/png" sizes="32x32" href="img/icon/favicon.png">
-	<link rel="stylesheet" href="css/root.css">
-	<link rel="stylesheet" href="css/button.css">
-	<link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="css/slider.css">
-	<link rel="stylesheet" href="css/switch.css">
-	<link rel="stylesheet" href="css/select.css">
-	<link rel="stylesheet" href="css/alert.css">
+	<link rel="stylesheet" href="css/bundle.css">
 	<link rel="manifest" href="manifest.json">
 	<link rel="apple-touch-icon" href="img/icon/192.png">
 	<link rel="apple-touch-icon" sizes="152x152" href="img/icon/152.png">
@@ -46,13 +40,13 @@
 		</div>
 	</div>
 	<div id="header">
-		<p id="page_name" onclick="info()">Metronome</p>
-		<button id="kofi_button" onclick="kofi()">
+		<p id="page_name">Metronome</p>
+		<button id="kofi_button">
 			<img src="img/kofi.svg" width="25" height="25" alt="Buy Me a Coffee at ko-fi.com" />
 			<span class="desktop-only">Support the Developer</span>
 		</button>
-		<button id="info_button" onclick="info()" ><img id="info_button_svg" src="img/info_black.svg" width="16" height="19" alt="Info"/></button>
-		<button id="setting_button" class="mobile-only" onclick="toggle_settings()" ><img id="setting_button_svg" src="img/gear_black.svg" width="16" height="19" alt="Settings"/></button>
+		<button id="info_button"><img id="info_button_svg" src="img/info_black.svg" width="16" height="19" alt="Info"/></button>
+		<button id="setting_button" class="mobile-only"><img id="setting_button_svg" src="img/gear_black.svg" width="16" height="19" alt="Settings"/></button>
 	</div>
 	<div id="nav-side-menu" >
 		<div id="page_contents">
@@ -63,8 +57,8 @@
 			</div>
 		</div>
 		<div id="button_control_container">
-			<button id="tap_button" class="desktop-only" onclick="tap_controller.tap()">Tap</button>
-			<button id="play_pause_button" class="desktop-only" onclick="playPause()">Play</button>
+			<button id="tap_button" class="desktop-only">Tap</button>
+			<button id="play_pause_button" class="desktop-only">Play</button>
 		</div>
 		<div id="ul_wrapper">
 			<ul id="nav-menu-ul">	
@@ -189,12 +183,13 @@
 		</div>
 	</div>
 	<footer id="mobile_button_control_container" class="mobile-only">
-		<button id="mobile_tap_button" onclick="tap_controller.tap()">Tap</button>
-		<button id="mobile_play_pause_button" onclick="playPause()">Play</button>
+		<button id="mobile_tap_button">Tap</button>
+		<button id="mobile_play_pause_button">Play</button>
 	</footer>
 </div>
 	<script src="js/midi/webAudioFontPlayer.js"></script>
-	<script src="js/log.js"></script>
+	<script src="js/bundle.js"></script>
+	<!--
 	<script src="js/midi/midi_sounds.js"></script>
 	<script src="js/midi/click_midi_controller.js"></script>
 	<script src="js/midi/drum_midi_controller.js"></script>
@@ -212,6 +207,6 @@
 	<script src="js/information.js"></script>
 	<script src="js/main.js"></script>
 	<script src="js/install.js"></script>
-	<script src="service_worker.js"></script>
+	<script src="service_worker.js"></script>-->
 </body>
 </html>

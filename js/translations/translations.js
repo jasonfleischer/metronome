@@ -45,7 +45,7 @@ function TR(text){
 	} else if(translations.current_language === LANGUAGE.SIMPLIFIED_CHINESE){
 		translation = zh[index];
 	} else {
-		logE("Language not supported");
+		log.e("Language not supported");
 		return
 	}
 
@@ -63,7 +63,7 @@ function setup_language_select() {
 function setup_language_control(element_id){
 	$(element_id).addEventListener("change", function(e){
 		var value = this.value;
-		log("on language_select: " + value);
+		log.i("on language_select: " + value);
 		translations.current_language = value;
 		storage.set_language(value);
 		location.reload();
@@ -99,7 +99,7 @@ translations.translate = function(language){
 			if(translations.is_valid_inner_html(text) || text.includes('<strong>') ){
 				element.innerHTML = TR(text);
 			} /*else {
-				logE("not transtalting text: " + text);
+				log.e("not transtalting text: " + text);
 			}*/
 		});
 	}
@@ -124,7 +124,7 @@ translations.generate = function(){
 				processed_texts.push(text)
 				generated_translate_string += '"'+text+'"' + ",\n";
 			} else {
-				log("text ignored or duplicate |"+element.innerHTML+"|");
+				log.i("text ignored or duplicate |"+element.innerHTML+"|");
 			}
 		});
 	}

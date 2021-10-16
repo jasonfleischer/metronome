@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@jasonfleischer/log": "^1.0.8"
+  }
+}

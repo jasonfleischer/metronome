@@ -1,8 +1,10 @@
-let CACHE_NAME = 'v2';
+let CACHE_NAME = 'v3';
 const CACHE = [
         '/metronome/index.html',
         '/metronome/fonts/SF_Pro_Display_Thin.woff2',
-        '/metronome/css/root.css',
+        '/metronome/css/bundle.css',
+        '/metronome/js/bundle.js',
+        /*'/metronome/css/root.css',
         '/metronome/css/main.css',
         '/metronome/css/select.css',
         '/metronome/css/slider.css',
@@ -27,7 +29,7 @@ const CACHE = [
         '/metronome/js/alert.js',
         '/metronome/js/information.js',
         '/metronome/js/main.js',
-        '/metronome/js/install.js'
+        '/metronome/js/install.js'*/
       ];
 	
 self.addEventListener('install', function(event) {
@@ -39,7 +41,7 @@ self.addEventListener('install', function(event) {
     );
 });
 
-this.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', function(event) {
     console.log('metronome: fetch');
     event.respondWith(
         caches.open(CACHE_NAME).then(function(cache) {
@@ -53,7 +55,7 @@ this.addEventListener('fetch', function(event) {
     );
 });
 
-this.addEventListener('activate', function activator(event) {
+self.addEventListener('activate', function activator(event) {
     console.log('metronome: activate');
     event.waitUntil(
         caches.keys().then(function(keys) {

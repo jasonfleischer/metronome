@@ -103,30 +103,30 @@ range_control.mouse_down = function(e) {
 
 	if(range_control.is_mobile_touch_event(e)){
 		pt = range_control.get_mouse_point(this, { x: e.touches[0].pageX, y: e.touches[0].pageY });
-		log("mobile touch_down: " + pt.x + " - " + pt.y);
+		log.i("mobile touch_down: " + pt.x + " - " + pt.y);
 	} else if(range_control.is_desktop_touch_event(e)){
 		pt = range_control.get_mouse_point(this, { x: e.clientX, y: e.clientY });
-		log("mousedown " + pt.x + " - " + pt.y);
+		log.i("mousedown " + pt.x + " - " + pt.y);
 	} else {
-		logE("mouse_down pt not found");
+		log.e("mouse_down pt not found");
 		return;
 	}
 
     if(range_control.getDistance(pt.x, pt.y, range_control.minusX, range_control.minusY) < range_control.track_width /2){
-    	log("minusDown")
+    	log.i("minusDown")
     	m_e.minus_down_event = true;
 
     	if(range_control.is_mobile_touch_event(e))
     		range_control.minus_pressed();
     } else if (range_control.getDistance(pt.x, pt.y, range_control.plusX, range_control.plusY) < range_control.track_width /2){
-    	log("plus Down")
+    	log.i("plus Down")
     	m_e.plus_down_event = true;
 
     	if(range_control.is_mobile_touch_event(e))
 		   	range_control.plus_pressed();
     } else if (range_control.getDistance(pt.x, pt.y, range_control.WIDTH/2.0, range_control.HEIGHT/2.0) > range_control.radius - range_control.track_width*2) {
     	m_e.mouse_is_active = true;
-    	log("move down")
+    	log.i("move down")
     	m_e.mouse_active_pt = { x: pt.x, y: pt.y};
     }
 
@@ -150,12 +150,12 @@ range_control.mouse_move = function(e) {
 			pt = range_control.get_mouse_point(this, { x: e.clientX, y: e.clientY });
 			m_e.mouse_move_pt = pt;
 		} else {
-			logE("mouse_move pt not found");
+			log.e("mouse_move pt not found");
 			return;
 		}
 
     	if(range_control.getDistance(pt.x, pt.y, range_control.WIDTH/2.0, range_control.HEIGHT/2.0) <= range_control.radius - range_control.track_width*2) {
-    		log("mouse move out of bounds")
+    		log.i("mouse move out of bounds")
     		m_e.mouse_is_active = false;
     		range_control.emit_change(range_control.to_range_value(range_control.percent_value));
     	} else {
@@ -204,12 +204,12 @@ range_control.mouse_up = function(e) {
     if(range_control.is_mobile_touch_event(e)){
 		pt = m_e.mouse_move_pt ;
 
-		logE("range mobile mouseup wrong value: " + pt.x + " - " + pt.y);
+		log.e("range mobile mouseup wrong value: " + pt.x + " - " + pt.y);
 	} else if(range_control.is_desktop_touch_event(e)){
 		pt = range_control.get_mouse_point(this, { x: e.clientX, y: e.clientY });
-		log("mouseup " + pt.x + " - " + pt.y);
+		log.i("mouseup " + pt.x + " - " + pt.y);
 	} else {
-		logE("mouseup pt not found");
+		log.e("mouseup pt not found");
 		return;
 	}
 
@@ -263,7 +263,7 @@ range_control.get_mouse_point = function(canvas, evt_pt) {
 }
 
 range_control.minus_pressed = function(){
-	log("minus trigger")
+	log.i("minus trigger")
 	handle_range_minus_button_click($(".minus"));
 	function handle_range_minus_button_click(element){
 		var new_value = range_control.value - range_control.step;
@@ -273,7 +273,7 @@ range_control.minus_pressed = function(){
 }
 
 range_control.plus_pressed = function(){
-	log("plus trigger")
+	log.i("plus trigger")
 	handle_range_plus_button_click($(".plus"));
 	function handle_range_plus_button_click(element){
 		var new_value = range_control.value + range_control.step;
@@ -450,7 +450,7 @@ range_control.to_range_value = function(percent){
 	return stepped_value;
 }
 range_control.emit_change = function(value){
-	log("on range change: " + value);
+	log.i("on range change: " + value);
 	range_control.on_range_control_changed(value);
 
 	range_control.value = value;

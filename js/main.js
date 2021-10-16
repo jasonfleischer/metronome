@@ -1,4 +1,4 @@
-
+const log = require("@jasonfleischer/log");
 //todo 
 
  
@@ -27,6 +27,7 @@ function init() {
 		}
 	}
 
+	setupOnClicks();
 	setup_controls();
 	function setup_controls(){
 		setup_language_select();
@@ -136,6 +137,33 @@ function flash_screen_animation(){
 
 // on click
 
+function setupOnClicks() {
+	$("page_name").addEventListener('click', function(e) {
+  		info();
+	});
+	$("kofi_button").addEventListener('click', function(e) {
+  		kofi();
+	});
+	$("info_button").addEventListener('click', function(e) {
+  		info();
+	});
+	$("setting_button").addEventListener('click', function(e) {
+  		toggle_settings();
+	});
+	$("tap_button").addEventListener('click', function(e) {
+  		tap_controller.tap();
+	});
+	$("play_pause_button").addEventListener('click', function(e) {
+  		playPause();
+	});
+	$("mobile_tap_button").addEventListener('click', function(e) {
+  		tap_controller.tap();
+	});
+	$("mobile_play_pause_button").addEventListener('click', function(e) {
+  		playPause();
+	});
+}
+
 function kofi(){
 	window.open("https://ko-fi.com/jasonfleischer", "_blank");
 }
@@ -220,7 +248,7 @@ function setup_bpm_controls() {
 
 	function setup_bpm_dial(min, max, step){
 		var on_range_control_changed = function(BPM_value){
-			log("on BPM dial change: " + BPM_value);
+			log.i("on BPM dial change: " + BPM_value);
 			model.BPM = BPM_value;
 			storage.set_BPM(model.BPM);
 			update_UI_BPM(model.BPM);
@@ -237,7 +265,7 @@ function setup_bpm_controls() {
 		bpm_range.step = step;
 		bpm_range.addEventListener("change", function(e){
 			model.BPM = parseFloat(this.value);
-			log("on BPM range change: " + model.BPM);
+			log.i("on BPM range change: " + model.BPM);
 			range_control.load(range_control.on_range_control_changed, "", min , max, step, model.BPM, false, 0);
 			storage.set_BPM(model.BPM);
 			update_UI_BPM(model.BPM);
@@ -246,7 +274,7 @@ function setup_bpm_controls() {
 
 		bpm_range.addEventListener('input', function(){
 			model.BPM = parseFloat(this.value);
-			log("on BPM range change: " + model.BPM);
+			log.i("on BPM range change: " + model.BPM);
 			storage.set_BPM(model.BPM);
 			update_UI_BPM(model.BPM);
 			reloadBPM();
@@ -262,7 +290,7 @@ function setup_bpm_controls() {
 			var was_playing = forceStop();
 			var BPM = parseInt(prompt(TR("Enter a BPM value:"), model.BPM));
 			if(BPM >= MIN_BPM && BPM <= MAX_BPM){
-				log("on BPM prompt change: " + BPM);
+				log.i("on BPM prompt change: " + BPM);
 				model.BPM = BPM;
 				range_control.load(range_control.on_range_control_changed, "", MIN_BPM , MAX_BPM, 1, model.BPM, false, 0);
 				storage.set_BPM(model.BPM);
@@ -270,7 +298,7 @@ function setup_bpm_controls() {
 				reloadBPM();
 				if(was_playing) playPause(); 
 			}else {
-				log("Invalid BPM value" + BPM);
+				log.i("Invalid BPM value" + BPM);
 			}
 		}
 	}
@@ -282,7 +310,7 @@ function setup_mobile_duration_select() {
 function setup_duration_control(element_id){
 	$(element_id).addEventListener("change", function(e){
 		var value = parseInt(this.value);
-		log("on duration_select: " + value);
+		log.i("on duration_select: " + value);
 		model.duration = value;
 		storage.set_duration(value);
 		durationStartTime = new Date();
@@ -296,7 +324,7 @@ function setup_duration_control(element_id){
 function setup_tone_select() {
 	$("tone_select").addEventListener("change", function(e){
 		var value = parseInt(this.value);
-		log("on tone_select: " + value);
+		log.i("on tone_select: " + value);
 		model.tone = value;
 		storage.set_tone(value);
 		update_UI_tone();
@@ -309,7 +337,7 @@ function setup_tone_select() {
 function setup_time_signature_select() {
 	$("time_signature_select").addEventListener("change", function(e){
 		var value = parseInt(this.value);
-		log("on time_signature_select: " + value);
+		log.i("on time_signature_select: " + value);
 		model.time_signature = value ;
 		storage.set_time_signature(value);
 		reloadActivePlayer();
@@ -320,7 +348,7 @@ function setup_time_signature_select() {
 function setup_beat_division_select() {
 	$("division_select").addEventListener("change", function(e){
 		var value = parseInt(this.value);
-		log("on division_select: " + value);
+		log.i("on division_select: " + value);
 		storage.set_subdivision(value);
 		reloadDivisions(value);
 	});
@@ -336,7 +364,7 @@ function setup_accent_first_beat_switch() {
 	});
 	$("accent_first_beat_checkbox").addEventListener("change", function(e){
 		var value = this.checked;
-		log("on accent beat change: " + value);
+		log.i("on accent beat change: " + value);
 		model.accent_first_beat = value;
 		storage.set_accent_first_beat(value);
 	});
@@ -352,7 +380,7 @@ function setup_flash_screen_switch() {
 	});
 	$("screen_flash_checkbox").addEventListener("change", function(e){
 		var value = this.checked;
-		log("on screen flash change: " + value);
+		log.i("on screen flash change: " + value);
 		model.flash_screen = value;
 		storage.set_flash_screen(value);
 	});
@@ -373,7 +401,7 @@ function setup_darkmode(background_obj, switch_obj, checkbox_obj ){
 	});
 	checkbox_obj.addEventListener("change", function(e){
 		var value = this.checked;
-		log("on darkmode change: " + value);
+		log.i("on darkmode change: " + value);
 		model.darkmode = value;
 		storage.set_darkmode(value);
 		update_UI_darkmode();

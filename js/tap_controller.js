@@ -69,7 +69,7 @@ tap_controller.updateUI = function() {
 			setBPM(tap_controller.calculatedBPM);
 			function setBPM(bpm){
 	  			model.BPM = bpm;
-				log("on BPM tap changed: " + model.BPM);
+				log.i("on BPM tap changed: " + model.BPM);
 				range_control.load(range_control.on_range_control_changed, "", MIN_BPM , MAX_BPM, 1, model.BPM, false, 0);
 				storage.set_BPM(model.BPM);
 				update_UI_BPM(model.BPM);

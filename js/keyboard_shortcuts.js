@@ -3,7 +3,7 @@ function setup_keyboard_listeners() {
 
 	document.addEventListener('keyup', function(event){
 
-		//log(event.code)
+		//log.i(event.code)
 		var code = event.code;
 		if (code === 'Space') {
 			var play_button = is_compact_window() ? $("mobile_play_pause_button"): $('play_pause_button');
@@ -51,7 +51,7 @@ function setup_keyboard_listeners() {
 
 		function setBPM(bpm){
 			model.BPM = bpm;
-			log("on BPM change: " + model.BPM);
+			log.i("on BPM change: " + model.BPM);
 			range_control.load(range_control.on_range_control_changed, "", MIN_BPM , MAX_BPM, 1, model.BPM, false, 0);
 			storage.set_BPM(model.BPM);
 			update_UI_BPM(model.BPM);

@@ -57,20 +57,36 @@ information.showAlert = function(){
 			</ul>
 		</div>
 		<br class="desktop-only" />
-		<p onclick="openMailToDeveloper()">`+TR("Thank you for using this website. If you wish to submit feedback, comment or report an error click <strong>here</strong>.")+`</p>
+		<p id="mail_link">`+TR("Thank you for using this website. If you wish to submit feedback, comment or report an error click <strong>here</strong>.")+`</p>
 		<br/>
-		<p onclick="openURL('https://surikov.github.io/webaudiofont/')">`+TR("Special thanks to Surikov for their <strong>WebAudioFont</strong> library.")+`</p>
+		<p id="surikov_link">`+TR("Special thanks to Surikov for their <strong>WebAudioFont</strong> library.")+`</p>
 		<br/>
-		<p onclick="openURL('https://jasonfleischer.github.io/website/');">`+TR("Information about the developer can be found <strong>here</strong>.")+`</p>
+		<p id="website_link">`+TR("Information about the developer can be found <strong>here</strong>.")+`</p>
 		<br class="desktop-only"/>
-		<button class="desktop-only" onclick="show_keyboard_shortcuts()">`+TR("Keyboard Shortcuts")+`</button>
+		<button class="desktop-only" id="keyboard_shortcuts">`+TR("Keyboard Shortcuts")+`</button>
 	`
 	alert.show(TR("Information"), contents)
 
 	setup_language_control("language_select");
-	information.setup_darkmode()
-	information.setup_volume_control()
+	information.setup_darkmode();
+	information.setup_volume_control();
+	information.setupOnClicks();
 	setup_duration_control("duration_select");
+}
+
+information.setupOnClicks = function() {
+	$("mail_link").addEventListener('click', function(e) {
+  		openMailToDeveloper();
+	});
+	$("surikov_link").addEventListener('click', function(e) {
+  		openURL('https://surikov.github.io/webaudiofont/');
+	});
+	$("website_link").addEventListener('click', function(e) {
+  		openURL('https://jasonfleischer.github.io/website/');
+	});
+	$("keyboard_shortcuts").addEventListener('click', function(e) {
+  		show_keyboard_shortcuts();
+	});
 }
 
 information.dismissAlert = function(){
@@ -97,7 +113,7 @@ information.setup_volume_control = function(){
 		range.step = step;
 		range.addEventListener("change", function(e){
 			model.volume_percent = parseFloat(this.value);
-			log("on volume range change: " + model.volume_percent);
+			log.i("on volume range change: " + model.volume_percent);
 			storage.set_volume(model.volume_percent);
 
 			audio_controller.init_sounds();
@@ -108,7 +124,7 @@ information.setup_volume_control = function(){
 
 		range.addEventListener('input', function(){
 			model.volume_percent = parseFloat(this.value);
-			log("on volume range input: " + model.volume_percent);
+			log.i("on volume range input: " + model.volume_percent);
 			storage.set_volume(model.volume_percent);
 		}, true);
 	}
