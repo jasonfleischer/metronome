@@ -21,6 +21,8 @@ function setup_keyboard_listeners() {
 			incrementDivision();
 		} else if (code == 'KeyT') {
 			tap_controller.tap();
+		} else if (code == 'KeyR') {
+			setBPM(Math.floor((Math.random() * MAX_BPM) + MIN_BPM));
 		} else if (code == 'KeyD') {
 			var new_BPM = model.BPM*2;
 			if(new_BPM <= MAX_BPM && new_BPM >= MIN_BPM) setBPM(new_BPM);
@@ -96,6 +98,7 @@ function show_keyboard_shortcuts(){
 			"<tr><td>"+TR("Letter")+" T</td><td>"+TR("Tap tempo")+"</td></tr>"+
 			"<tr><td>"+TR("Letter")+" D</td><td>"+TR("Double tempo")+"</td></tr>"+
 			"<tr><td>"+TR("Letter")+" H</td><td>"+TR("Half tempo")+"</td></tr>"+
+			"<tr><td>"+TR("Letter")+" R</td><td>"+TR("Random tempo")+"</td></tr>"+
 			"<tr><td>"+TR("Digit")+" 1</td><td>60 BPM</td></tr>"+
 			"<tr><td>"+TR("Digit")+" 2</td><td>75 BPM</td></tr>"+
 			"<tr><td>"+TR("Digit")+" 3</td><td>90 BPM</td></tr>"+
