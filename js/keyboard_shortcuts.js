@@ -11,11 +11,15 @@ function setup_keyboard_listeners() {
 				playPause();
 				play_button.focus();
 			}
-		} else if (code === 'ArrowUp' || code === 'NumpadAdd' || code === 'Equal') {
+		} else if (code === 'ArrowUp') {
+			range_control.up_pressed();
+		} else if (code === 'ArrowDown') {
+			range_control.down_pressed();
+		} else if (code === 'NumpadAdd' || code === 'Equal') {
 			range_control.plus_pressed();
-		} else if (code === 'ArrowDown' || code === 'NumpadSubtract' || code === 'Minus') {
+		} else if (code === 'NumpadSubtract' || code === 'Minus') {
 			range_control.minus_pressed();
-		} else if (code === 'ArrowLeft') {
+		}else if (code === 'ArrowLeft') {
 			decrementDivision();
 		} else if (code === 'ArrowRight') {
 			incrementDivision();

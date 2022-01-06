@@ -262,11 +262,30 @@ range_control.get_mouse_point = function(canvas, evt_pt) {
 	return { x: (evt_pt.x - rect.left) * scaleX, y: (evt_pt.y - rect.top) * scaleY }
 }
 
+range_control.up_pressed = function(){
+	log.i("up trigger")
+	handle_range_minus_button_click($(".minus"));
+	function handle_range_minus_button_click(element){
+		var new_value = range_control.value - range_control.step;
+		if(new_value >= range_control.min)	
+			range_control.emit_change(new_value);
+	}
+}
+
+range_control.down_pressed = function(){
+	log.i("down trigger")
+	handle_range_plus_button_click($(".plus"));
+	function handle_range_plus_button_click(element){
+		var new_value = range_control.value + range_control.step;
+		if(new_value <= range_control.max)	
+			range_control.emit_change(new_value);
+	}
+}
 range_control.minus_pressed = function(){
 	log.i("minus trigger")
 	handle_range_minus_button_click($(".minus"));
 	function handle_range_minus_button_click(element){
-		var new_value = range_control.value - range_control.step;
+		var new_value = range_control.value - 10;
 		if(new_value >= range_control.min)	
 			range_control.emit_change(new_value);
 	}
@@ -276,7 +295,7 @@ range_control.plus_pressed = function(){
 	log.i("plus trigger")
 	handle_range_plus_button_click($(".plus"));
 	function handle_range_plus_button_click(element){
-		var new_value = range_control.value + range_control.step;
+		var new_value = range_control.value + 10;
 		if(new_value <= range_control.max)	
 			range_control.emit_change(new_value);
 	}
