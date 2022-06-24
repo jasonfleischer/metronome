@@ -7,8 +7,6 @@
 # $ npm install -g uglify-js
 # $ npm install -g browserify
 
-CWD=`pwd`
-
 npm update;
 
 uglifycss css/alert.css css/button.css css/main.css css/root.css css/select.css css/slider.css css/switch.css > css/bundle.css
@@ -19,4 +17,4 @@ uglifyjs js/bundle.js -o js/bundle.js
 
 git add *; git commit -m 'update'; git push;
 
-cd $CWD
+echo '-- Finished build.sh for metronome --'
