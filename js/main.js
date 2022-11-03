@@ -1,5 +1,5 @@
 const log = require("@jasonfleischer/log");
-
+const volumeRadialView = new RadialPercentView("volume_percent_view");
 
 function init() {
 	storage.load();
@@ -16,19 +16,20 @@ function init() {
 		}
 	}
 	setup_controls();
-
 	setup_keyboard_listeners();
+	
 	alert.init()
-	setup_settings_menu_on_click();
+	
 
 	if(window.mobileAndTabletCheck()){
 		setup_mobile();
 	}
 
 	update_UI_darkmode();
+	update_UI_duration(model.duration * 60000);
 	show_hidden_views();
-	time_view.init();
 
+	time_view.init();
 }
 
 function setup_mobile(){
@@ -98,16 +99,6 @@ function hide_settings(){
 	$("info_button").style.display = "block";
 	$("setting_button_svg").src = (model.darkmode) ? "img/gear_white.svg" : "img/gear_black.svg";
 }
-function setup_settings_menu_on_click(){
-	$("ul_wrapper").addEventListener("click", function(event){
-		if(is_compact_window())
-			hide_settings();
-	});
-	$("nav-menu-ul").addEventListener("click", function(event){
-		event.stopPropagation();
-		return false;
-	});
-}
 
 function openURL(url){
 	window.open(url, '_blank');
@@ -118,10 +109,6 @@ function openMailToDeveloper(){
 	subject = subject.replaceAll(" ", "%20");
 	openURL("mailto:jason_fleischer@hotmail.ca?Subject=" + subject);
 }
-
-// setup controls
-
-
 
 // update_UI
 
@@ -192,6 +179,13 @@ function update_UI_duration(duration_in_MS){
 	$("play_pause_button").innerHTML = new_text
 	$("mobile_play_pause_button").innerHTML = new_text
 
+	if(model.duration == -1) {
+		volumeRadialView.draw(0,model.darkmode?"#EEE":"#000", 0.8, model.darkmode?"#000":"#FFF");
+	}else {
+		let percentage = (duration_in_MS / (model.duration*60000))*100;
+		volumeRadialView.draw(percentage,model.darkmode?"#EEE":"#000", 0.8, model.darkmode?"#000":"#FFF");
+	}
+
 	function human_readable_duration(duration_in_MS){
 
 		var isEnglish = translations.current_language === LANGUAGE.ENGLISH
@@ -223,8 +217,6 @@ function update_UI_duration(duration_in_MS){
 }
 
 function update_UI_playing(){
-	//$("play_pause_button").innerHTML = TR("Stop"); 
-	//$("mobile_play_pause_button").innerHTML = TR("Stop");
 	$("init_view").style.display = "none"; // hide
 	time_view.start(model.time_signature, model.BPM);
 	startDurationTimer();
@@ -246,9 +238,7 @@ function startDurationTimer(){
 }
 
 function update_UI_stopped(){
-	update_UI_duration(model.duration*60000)
-	//$("play_pause_button").innerHTML = TR("Play");
-	//$("mobile_play_pause_button").innerHTML = TR("Play");
+	update_UI_duration(model.duration*60000);
 	$("count_text").innerHTML = "\xa0";
 	$("init_view").style.display = "block"; // show
 	time_view.stop();
@@ -267,8 +257,8 @@ function update_UI_darkmode(){
 
 	range_control.reload_colors();
 	time_view.reload_colors();
+	update_UI_duration(model.duration * 60000);
 
-	
 	$("mobile_darkmode_checkbox").checked = model.darkmode;
 
 	function setDarkMode(){

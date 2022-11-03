@@ -79,13 +79,7 @@ function playPause(){
 		} else {
 			continuePlay()
 		}
-
-
 	}
-
-	
-	
-	
 
 	function continuePlay() {
 		var audio_is_playing = audio_controller.playPause();
@@ -252,31 +246,7 @@ audio_controller.init_sounds =function(){
 				self.talking_audio_array[i] = audio;
 			}
 		}
-	} else { // mobile
-
-
-		
-		//$('flash_screen').insertAdjacentHTML('beforeend', '<audio id="audio" controls="controls" src="audio/woodblock.wav" type="audio/wav">');
-
-
-		/*var audio = document.createElement("AUDIO");
-		audio.setAttribute("src", "audio/woodblock.wav");
-		audio.volume = 1.0;
-		this.click_accent_audio = audio;
-		
-		var audio = document.createElement("AUDIO");
-		audio.setAttribute("src", "audio/woodblock.wav");
-		audio.volume = 0.6;
-		this.click_audio = audio;
-
-		var audio = document.createElement("AUDIO");
-		audio.setAttribute("src", "audio/woodblock.wav");
-		audio.volume = 0.2;
-		this.click_division_audio = audio;*/
-
-
-
-	}
+	} // else mobile
 }
 
 audio_controller.playPause = function(){
@@ -291,7 +261,6 @@ audio_controller.pause = function(){
 	if (this.playing) clearInterval(this.timer_id);
 	this.playing = false;
 }
-
 
 audio_controller.reloadSounds= function(){
 	var beat_array = [];
@@ -462,17 +431,12 @@ audio_controller.play = function(){
 	
 	function step() {
 
-
-		
-
 	    var drift = Date.now() - expected; 
 	    if (drift > interval) {
 	    	log.e("something really bad happened. Maybe the browser (tab) was inactive? possibly special handling to avoid futile 'catch up' run");
 	        audio_controller.pause();
 	    }
 		audio_queue_index = (audio_queue_index + 1) % audio_controller.audio_queue.length;
-
-
 
 		if(isDurationExpired() && audio_queue_index == 1 ) {
 			clearInterval(audio_controller.timer_id);
@@ -486,7 +450,6 @@ audio_controller.play = function(){
 				audio.volume = 0.4 * model.volume_percent / 100;
 				audio.play();
 			}
-
 			return;
 		}
 
@@ -534,8 +497,6 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 	
 	$("count_text").innerHTML = text_queue[index];
 
-	
-
 	if(window.mobileCheck()){
 		if(index == 0){ 
 			// resync on one beat
@@ -550,46 +511,37 @@ audio_controller.executeAudioTimer = function(index, accent_audio, audio_queue, 
 		} else {
 			audio_controller.oscillator.frequency.value = 3000.0//4186.0
 		}
-		//gainNode.gain.exponentialRampToValueAtTime(0.00001, 0 + 0.04)
-		//var gainNode = context69.createGain()
-		//gainNode.gain.exponentialRampToValueAtTime(0.00001, context69.currentTime + X)
-		
-		//audio_controller.oscillator.frequency.value = 320.0//Math.floor((Math.random() * 220) + 440)
 
 		var time = audio_controller.context.currentTime
 		var fade_time = 0.1
 		
 		audio_controller.gain_node.gain.setValueAtTime(1.0, time);
 		audio_controller.gain_node.gain.exponentialRampToValueAtTime(0.00001, time + fade_time)
-		//audio_controller.oscillator.stop()
-		//audio_controller.oscillator.start(0)
-
-		//audio_controller.gain_node.gain.setValueAtTime(10.0, audio_controller.context.currentTime );
 		return;
 	}
 	
 	var promise;
-	if(index == 0){ // resync on one beat
-
-		time_view.start(model.time_signature, model.BPM);
-
-		if(model.flash_screen){
-			flash_screen_animation();
+	if(index == 0){
+		resync_on_beat_one();
+		function resync_on_beat_one(){
+			time_view.start(model.time_signature, model.BPM);
+			if(model.flash_screen){
+				flash_screen_animation();
+			}
+			if(model.accent_first_beat)
+				promise = accent_audio.play();
+			else
+				promise = audio_queue[index].play();
 		}
-		if(model.accent_first_beat)
-			promise = accent_audio.play();
-		else
-			promise = audio_queue[index].play();
-	}else {
+	} else {
 		promise = audio_queue[index].play();
 	}
 
 	if (promise !== undefined) {
 	    promise.catch(error => {
-	        // Auto-play was prevented
-	        log.e("Play Error:  " + error);
+	        log.e("Play Error: Auto-play was prevented " + error);
 	    }).then(() => {
-	        // Auto-play started
+	        /* Auto-play started */
 	    });
 	}
 }

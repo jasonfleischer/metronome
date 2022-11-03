@@ -1,6 +1,7 @@
 function setup_controls(){
 
 	setup_on_clicks();
+
 	setup_bpm_controls();
 	setup_tone_select();
 	setup_time_signature_select();
@@ -39,6 +40,18 @@ function setup_controls(){
 		$("mobile_play_pause_button").addEventListener('click', function(e) {
 	  		playPause();
 		});
+
+		setup_settings_menu_on_click();
+		function setup_settings_menu_on_click(){
+			$("ul_wrapper").addEventListener("click", function(event){
+				if(is_compact_window())
+					hide_settings();
+			});
+			$("nav-menu-ul").addEventListener("click", function(event){
+				event.stopPropagation();
+				return false;
+			});
+		}
 	}
 
 	function setup_bpm_controls() {
