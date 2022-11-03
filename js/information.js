@@ -45,7 +45,7 @@ information.showAlert = function(){
 	`
 	alert.show(TR("Information"), contents)
 
-	setup_language_control("language_select");
+	information.setup_language_select();
 	information.setup_darkmode();
 	information.setupOnClicks();
 }
@@ -70,9 +70,43 @@ information.dismissAlert = function(){
 }
 
 information.setup_darkmode = function(){
-	setup_darkmode($("darkmode"), $("darkmode_checkbox_switch"), $("darkmode_checkbox"));
-	$("darkmode_checkbox").checked = model.darkmode;
+
+	setup_darkmode($("darkmode"), $("darkmode_checkbox_switch"), $("darkmode_checkbox"));	
+
+	function setup_darkmode(background_obj, switch_obj, checkbox_obj ){
+
+		background_obj.addEventListener("click", function(e){
+			checkbox_obj.click();
+		});
+		switch_obj.addEventListener('keyup', function(event){
+			if (event.code === 'Space'|| event.code === 'Enter') $("darkmode_checkbox").click();
+		});
+		checkbox_obj.addEventListener("change", function(e){
+			var value = this.checked;
+			log.i("on darkmode change: " + value);
+			model.darkmode = value;
+			storage.set_darkmode(value);
+			update_UI_darkmode();
+		});
+		checkbox_obj.checked = model.darkmode;
+
+		update_UI_darkmode();
+	}
 }
+
+information.setup_language_select = function(){
+	var element_id = "language_select";
+	$(element_id).addEventListener("change", function(e){
+		var value = this.value;
+		log.i("on language_select: " + value);
+		translations.current_language = value;
+		storage.set_language(value);
+		location.reload();
+	});
+	$(element_id).value = translations.current_language;
+}
+
+	
 
 
 

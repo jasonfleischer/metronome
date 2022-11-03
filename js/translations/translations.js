@@ -55,22 +55,6 @@ function TR(text){
 		return "Missing " + translations.current_language;
 }
 
-function setup_language_select() {
-	document.documentElement.lang = translations.current_language;
-	setup_language_control("mobile_language_select");
-}
-
-function setup_language_control(element_id){
-	$(element_id).addEventListener("change", function(e){
-		var value = this.value;
-		log.i("on language_select: " + value);
-		translations.current_language = value;
-		storage.set_language(value);
-		location.reload();
-	});
-	$(element_id).value = translations.current_language;
-}
-
 var translations = {
 	current_language: LANGUAGE.ENGLISH,
 	search_tags: ["p", "button", "option", "span", "h1", "h2", "h3", "h4"]
