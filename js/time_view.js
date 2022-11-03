@@ -197,7 +197,7 @@ time_view.draw_background = function(){
 	var track_width = time_view.point_size * 2;
 
 
-	if (number_of_beats == 2) { // draw arc
+	if (number_of_beats == 2) {
 		
 		ctx.beginPath();
 		ctx.strokeStyle = time_view.color_secondary;
@@ -244,7 +244,6 @@ time_view.draw_background = function(){
 								time_view.getYofCircle(time_view.radius - time_view.point_size * 2, centerPt.y, angle));
 
 		var line = new Line(prev_pt, next_pt);
-		//line.draw(ctx);
 
 		time_view.array_of_lines.push(line);
 		array_of_points.push(next_pt);
