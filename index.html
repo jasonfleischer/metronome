@@ -110,10 +110,14 @@
 					</select>
 					</div>
 				</li>
-				<li class="mobile-only">
+				<li>
 					<div class="nav-side-menu-item">
 					<span>Duration</span>
 					<select id="mobile_duration_select">
+						<option value="1">1 min</option>
+						<option value="2">2 min</option>
+						<option value="3">3 min</option>
+						<option value="4">4 min</option>
 						<option value="5">5 min</option>
 						<option value="10">10 min</option>
 						<option value="15">15 min</option>
@@ -123,6 +127,14 @@
 						<option value="60">1 hour</option>
 						<option value="-1" selected="selected">Infinite</option>
 					</select>
+					</div>
+				</li>
+				<li id="volume">
+					<div class="nav-side-menu-item">
+						<span id="volume_row_text">Volume</span>
+						<div class="range">
+							<input id="volume_range" type="range" min="10" max="100" step="1" value="100">
+						</div>
 					</div>
 				</li>
 				<li id="accent_first_beat">

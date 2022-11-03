@@ -7,7 +7,7 @@
 # $ npm install -g uglify-js
 # $ npm install -g browserify
 
-npm update;
+#npm update;
 
 uglifycss css/alert.css css/button.css css/main.css css/root.css css/select.css css/slider.css css/switch.css > css/bundle.css
 

@@ -19,6 +19,10 @@ const TIME_SIGNATURE = Object.freeze({
 });
 
 const DURATION = Object.freeze({
+	ONE_MINUTE: 1,
+	TWO_MINUTE: 2,
+	THREE_MINUTE: 3,
+	FOUR_MINUTE: 4,
     FIVE_MINUTE: 5,
     TEN_MINUTES: 10,
     FIFTEEN_MINUTES: 15,
