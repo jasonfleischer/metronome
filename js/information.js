@@ -40,6 +40,9 @@ information.showAlert = function(){
 		<p id="surikov_link">`+TR("Special thanks to Surikov for their <strong>WebAudioFont</strong> library.")+`</p>
 		<br/>
 		<p id="website_link">`+TR("Information about the developer can be found <strong>here</strong>.")+`</p>
+		<br/>
+		<p id="musicAppWebsite">`+TR("Other music apps created by this developer can be found <strong>here</strong>."+`</p>
+		<br class="desktop-only"/>
 		<br class="desktop-only"/>
 		<button class="desktop-only" id="keyboard_shortcuts">`+TR("Keyboard Shortcuts")+`</button>
 	`
@@ -59,6 +62,9 @@ information.setupOnClicks = function() {
 	});
 	$("website_link").addEventListener('click', function(e) {
   		openURL('https://jasonfleischer.github.io/website/');
+	});
+	$("musicAppWebsite").addEventListener('click', function(e) {
+		openURL('https://jasonfleischer.github.io/music-apps/'); 
 	});
 	$("keyboard_shortcuts").addEventListener('click', function(e) {
   		show_keyboard_shortcuts();
