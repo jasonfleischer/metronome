@@ -41,7 +41,7 @@ information.showAlert = function(){
 		<br/>
 		<p id="website_link">`+TR("Information about the developer can be found <strong>here</strong>.")+`</p>
 		<br/>
-		<p id="musicAppWebsite">`+TR("Other music apps created by this developer can be found <strong>here</strong>."+`</p>
+		<p id="musicAppWebsite">`+TR("Other music apps created by this developer can be found <strong>here</strong>.")+`</p>
 		<br class="desktop-only"/>
 		<br class="desktop-only"/>
 		<button class="desktop-only" id="keyboard_shortcuts">`+TR("Keyboard Shortcuts")+`</button>
