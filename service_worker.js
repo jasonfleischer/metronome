@@ -1,4 +1,4 @@
-let CACHE_NAME = 'v8';
+let CACHE_NAME = 'v9';
 const CACHE = [
         '/metronome/index.html',
         '/metronome/fonts/SF_Pro_Display_Thin.woff2',
